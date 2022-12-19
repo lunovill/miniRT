@@ -1,6 +1,7 @@
 #include "../includes/new_miniRT.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 int		main()
 {
@@ -21,7 +22,7 @@ int		main()
 	printf("%f\n%f\n%f\n%f\n", test2.x, test2.y, test2.z, test2.w);
 	ok->c->coor = test2;
 //	ok->c->coor = (Coor4f){1.0, 2.0, 3.0, 4.0};
-//	printf("%f\n", ok->c->coor.x);*/
+//	printf("%f\n", ok->c->coor.x);
 //	t_miniRT	ok;
 
 //	ok = malloc(sizeof(ok));
@@ -41,6 +42,12 @@ int		main()
 	test->c->matrix = (Matrix4f){1.0, 2.0, 3.0, 4.0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 //	test->c->matrix = (Matrix4f){1.0, 2.0, 3.0, 4.0}{0, 0, 0, 0}{0, 0, 0, 0}{0, 0, 0, 0};
 	printf("%f\n", test->c->matrix.sd);
-//	printf("%f\n%f\n%f\n%f\n", test->c->matrix.x, test->c->matrix.x, test->c->matrix.x, test->c->matrix.x);
+//	printf("%f\n%f\n%f\n%f\n", test->c->matrix.x, test->c->matrix.x, test->c->matrix.x, test->c->matrix.x);*/
+	int i = 0;
+	int j = 5;
+	int	k = 3;
+	i = pow(10, (j - k));
+	printf("%d\n", i);
 	return (0);
+
 }

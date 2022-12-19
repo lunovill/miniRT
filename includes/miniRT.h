@@ -1,84 +1,85 @@
 #ifndef MINIRT_H
  #define MINIRT_H
 
- #include <stdio.h>
+// CODE ERREUR
+# define ERROR_MALLOC 1
+# define ERROR_MLX 2
 
-typedef struct	s_ambient_l
-{
-	float	ratio;
-	int		R;
-	int		G;
-	int		B;
-}				t_ambient_l;
+//# include <X11/keysymdef.h>
+# include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
-typedef struct	s_camera
+//# include "mlxRT.h"
+
+typedef float Matrix4f __attribute__((ext_vector_type(4*4)));
+typedef float Vector4f __attribute__((ext_vector_type(4)));
+typedef float Coor4f __attribute__((ext_vector_type(4)));
+
+typedef struct	s_check_file
 {
-	float	x;
-	float	y;
-	float	z;
-	float	dir_x;
-	float	dir_y;
-	float	dir_z;
-	int		fov;
+	int			camera;
+	int			light;
+	int			sphere;
+	int			plane;
+	int			cylinder;
+	int			line;
+}				t_check_file;
+
+
+typedef struct s_camera
+{
+	Coor4f		coor;
+	Vector4f	vector;
+	Matrix4f	matrix;
+	float		FOV;
 }				t_camera;
 
-typedef struct	s_light
+typedef struct s_light
 {
-	float	x;
-	float	y;
-	float	z;
-	float	ratio;
-	int		R;
-	int		G;
-	int		B;
+	Coor4f		coor;
+	float		brightness;
+	int			color;
 }				t_light;
 
-/*
-	si le type = 1 : sphere
-	si le type = 2 : plan
-	si le type = 3 : cylindre
-*/
-
-typedef	struct	s_object
+typedef struct s_sphere
 {
-	int			type;
-	float		x;
-	float		y;
-	float		z;
-	float		dir_x;
-	float		dir_y;
-	float		dir_z;
-	float		diameter;
+	Coor4f			coor;
+	float			rayon;
+	int				color;
+}				t_sphere;
+
+typedef struct s_plane
+{
+	Coor4f		coor;
+	Vector4f	vector;
+	int			color;
+}				t_plane;
+
+typedef struct s_cylinder
+{
+	Coor4f		coor;
+	Vector4f	vector;
+	float		rayon;
 	float		height;
-	int			R;
-	int			G;
-	int			B;
-	t_object	*next;
-}				t_object;
+	int			color;
+}				t_cylinder;
 
-typedef struct	s_obj_info
+typedef struct s_miniRT
 {
-	int			type;
-	float		x;
-	float		y;
-	float		z;
-	float		dir_x;
-	float		dir_y;
-	float		dir_z;
-	float		diameter;
-	float		height;
-	int			R;
-	int			G;
-	int			B;
-}				t_obj_info;
+//	t_mlx			*mlx;
+	t_check_file	*check;
+	t_camera		*c;
+	t_light			**l;
+	t_sphere		**sp;
+	t_plane			**pl;
+	t_cylinder		**cy;
+//	t_garbage		*garbage;
+}				t_miniRT;
 
+/*      fonction        */
 
-typedef struct	s_data
-{
-	t_ambient_l	amb;
-	t_camera	cam;
-	t_light		light;
-	t_object	*obj;
-}				t_data;
+t_miniRT    *init();
 
 #endif

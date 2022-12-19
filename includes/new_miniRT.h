@@ -4,6 +4,7 @@ typedef float Coor4f __attribute__((ext_vector_type(4)));
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 typedef struct          s_camera
 {
@@ -12,6 +13,12 @@ typedef struct          s_camera
     Matrix4f            matrix;
     float               FOV;
 }                       t_camera;
+
+typedef struct          s_ambiante
+{
+    float               brightness;
+    int                 color;
+}                       t_ambiante;
 
 typedef struct          s_light
 {
@@ -50,8 +57,9 @@ typedef struct          s_cylinder
 typedef struct          s_miniRT
 {
 //    t_mlx               *mlx;
+    t_ambiante          *amb;
     t_camera            *c;
-    t_light             **l;
+    t_light             *l;
     t_sphere            **sp;
     t_plane             **pl;
     t_cylinder          **cy;
@@ -61,3 +69,4 @@ typedef struct          s_miniRT
 /***********FONCTION**************/
 
 t_miniRT	*init();
+int	parsing(char *file);

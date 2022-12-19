@@ -11,8 +11,8 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	miniRT = init();
-	if (parsing(argv[1]) == -1)
+	if (parsing(miniRT, argv[1]) == -1)
 		return (0);
 //	printf("%f\n%f\n%f\n%f\n", miniRT->c->coor.x, miniRT->c->coor.y, miniRT->c->coor.z, miniRT->c->coor.w);
 	return (0);
-}
+} 
