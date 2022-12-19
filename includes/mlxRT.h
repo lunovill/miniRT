@@ -17,6 +17,8 @@
 # include "libft.h"
 # include "mlx.h"
 # include "mlx_int.h"
+#define K_Home 65360
+#define K_End 65367
 
 typedef struct s_data
 {
@@ -33,6 +35,8 @@ typedef struct s_key
 	int	left;
 	int	down;
 	int	right;
+	int befor;
+	int behind;
 }				t_key;
 
 typedef struct s_mlx

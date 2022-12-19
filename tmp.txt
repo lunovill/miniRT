@@ -1,0 +1,242 @@
+Ludivine Novillo
+calculer la distance entre deux point dans un espace 3d
+
+Pour calculer la distance entre deux points dans un espace 3D, vous pouvez utiliser la formule suivante :
+
+distance = √((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2)
+
+Où (x1, y1, z1) et (x2, y2, z2) sont les coordonnées des deux points dans l'espace 3D.
+
+Voici un exemple de code Python qui utilise cette formule pour calculer la distance entre deux points :
+
+Copy code
+import math
+
+def distance(x1, y1, z1, x2, y2, z2):
+  return math.sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
+
+# Calcul de la distance entre les points (1, 2, 3) et (4, 5, 6)
+distance(1, 2, 3, 4, 5, 6)
+Cela renverra la valeur 5.196152422706632, qui est la distance entre les deux points.
+
+
+
+
+Ludivine Novillo
+comment calculer le rayon aparent d'un sphere dans un espace 3d en C
+Pour calculer le rayon apparent d'une sphère dans un espace 3D en C, vous pouvez utiliser la formule suivante :
+
+rayon_apparent = rayon / cos(angle)
+
+Où rayon est le rayon de la sphère et angle est l'angle formé entre le vecteur de direction de la vue et la normale à la surface de la sphère.
+
+Voici un exemple de code C qui utilise cette formule pour calculer le rayon apparent d'une sphère :
+
+Copy code
+#include <math.h>
+
+double calc_apparent_radius(double radius, double angle) {
+  return radius / cos(angle);
+}
+
+int main() {
+  // Calcul du rayon apparent de la sphère de rayon 2 lorsque l'angle est de 45 degrés
+  double apparent_radius = calc_apparent_radius(2, M_PI / 4);
+  printf("Rayon apparent : %f\n", apparent_radius);
+  return 0;
+}
+Cela affichera "Rayon apparent : 2.8284271247461903" sur la sortie standard, qui est le rayon apparent de la sphère.
+
+Notez que la constante M_PI définie dans math.h représente la valeur de pi (3.14159265358979323846). Vous pouvez utiliser cette constante pour convertir les angles en radians. Par exemple, pour convertir 45 degrés en radians, vous pouvez utiliser l'expression M_PI / 4.
+
+
+
+
+Ludivine Novillo
+modiliser une sphere avec pour seul parametre son rayon r ses coordonnees cx cy cz la fov f une camera 3d de coordonnes x y z et son veteur forward vx vy vz en C avec la mlx
+Pour dessiner une sphère avec un seul paramètre (son rayon r) et en utilisant la bibliothèque MLX (ou toute autre bibliothèque de rendu 3D), vous pouvez utiliser une boucle for pour parcourir tous les points de la sphère et dessiner un pixel pour chaque point. Voici un exemple de code C qui montre comment faire cela :
+
+Copy code
+#include <stdio.h>
+#include <math.h>
+
+#define PI 3.14159265358979323846
+
+void draw_sphere(int cx, int cy, int cz, int r) {
+  for (int x = cx - r; x <= cx + r; x++) {
+    for (int y = cy - r; y <= cy + r; y++) {
+      for (int z = cz - r; z <= cz + r; z++) {
+        if ((x - cx)*(x - cx) + (y - cy)*(y - cy) + (z - cz)*(z - cz) <= r*r) {
+          // Dessiner un pixel à la position (x, y, z)
+          draw_pixel(x, y, z);
+        }
+      }
+    }
+  }
+}
+
+int main() {
+  // Dessiner une sphère de rayon 10 et de centre (0, 0, 0)
+  draw_sphere(0, 0, 0, 10);
+  return 0;
+}
+Pour inclure la fov (champ de vision) et la caméra dans le rendu de la sphère, vous pouvez utiliser la formule suivante pour calculer le point de vue de la caméra sur la sphère :
+
+point_vue = (x - cx) / r * tan(fov/2)
+
+Où x est la coordonnée de la caméra, cx est la coordonnée de la sphère et r est le rayon de la sphère.
+
+Voici un exemple de code qui utilise cette formule pour dessiner une sphère en prenant en compte la fov et la caméra :
+
+Copy code
+#include <stdio.h>
+#include <math.h>
+
+#define PI 3.14159265358979323846
+
+void draw_sphere(int cx, int cy, int cz, int r, double fov, int camera_x, int camera_y, int camera_z) {
+  for (int x = cx - r; x <= cx + r; x++) {
+    for (int y = cy - r; y <= cy + r; y++) {
+      for (int z = cz - r; z <= cz + r; z++) {
+        if ((x - cx)*(x - cx) + (y - cy)*(y - cy) + (z - cz)*(z - cz) <= r*r) {
+          double point_vue = (x - camera_x) / r * tan(fov/2);
+          // Dessiner un pixel à la position (x, y, z) en prenant en com
+
+
+
+Ludivine Novillo
+la suite
+Pour continuer, vous pouvez utiliser la formule suivante pour calculer le vecteur de direction de la vue depuis la caméra vers le point sur la sphère :
+
+vecteur_direction = normalise(point - position_caméra)
+
+Où point est le point sur la sphère et position_caméra est la position de la caméra. La fonction normalise permet de normaliser le vecteur en le ramenant à une longueur de 1.
+
+Voici un exemple de code qui utilise cette formule pour dessiner une sphère en prenant en compte la fov, la caméra et son vecteur de direction :
+
+Copy code
+#include <stdio.h>
+#include <math.h>
+
+#define PI 3.14159265358979323846
+
+typedef struct {
+  double x;
+  double y;
+  double z;
+} Vector3D;
+
+Vector3D normalise(Vector3D v) {
+  double length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+  return (Vector3D){ v.x / length, v.y / length, v.z / length };
+}
+
+void draw_sphere(int cx, int cy, int cz, int r, double fov, Vector3D camera_position, Vector3D camera_forward) {
+  for (int x = cx - r; x <= cx + r; x++) {
+    for (int y = cy - r; y <= cy + r; y++) {
+      for (int z = cz - r; z <= cz + r; z++) {
+        if ((x - cx)*(x - cx) + (y - cy)*(y - cy) + (z - cz)*(z - cz) <= r*r) {
+          Vector3D point = (Vector3D){ x, y, z };
+          Vector3D view_vector = normalise(point - camera_position);
+          double dot_product = view_vector.x * camera_forward.x + view_vector.y * camera_forward.y + view_vector.z * camera_forward.z;
+          if (dot_product > 0) {
+            // Dessiner un pixel à la position (x, y, z) seulement si le point est visible depuis la caméra
+            draw_pixel(x, y, z);
+          }
+        }
+      }
+    }
+  }
+}
+
+int main() {
+  Vector3D camera_position = (Vector3D){ 0, 0, 0 };
+  Vector3D camera_forward = (Vector3D){ 0, 0, 1 };
+  // Dessiner une sphère de rayon 10 et de centre (0, 0, 10) en prenant en compte la fov de 90 degrés et la caméra située à l'origine
+  draw_sphere(0, 0, 10, 10, PI/2, camera_position, camera_forward);
+  return 0;
+}
+Ce code dessinera une sphère de rayon 10 centrée en (0, 0, 10
+
+
+
+
+Ludivine Novillo
+comment fonctionne draw_piwel ?
+La fonction draw_pixel est une fonction fictive que j'ai utilisée dans mes exemples de code pour illustrer comment dessiner une sphère. Cette fonction n'existe pas en tant que telle dans aucune bibliothèque.
+
+Pour dessiner un pixel à une position donnée (x, y, z) dans un espace 3D, vous pouvez utiliser une bibliothèque de rendu 3D telle que MLX (ou toute autre bibliothèque de votre choix). La manière de dessiner un pixel dépend de la bibliothèque que vous utilisez.
+
+Voici un exemple de code qui utilise la bibliothèque MLX pour dessiner un pixel à une position (x, y, z) :
+
+Copy code
+#include "mlx.h"
+
+void draw_pixel(int x, int y, int z) {
+  mlx_pixel_put(mlx, win, x, y, z);
+}
+Dans cet exemple, mlx et win sont des variables globales qui représentent respectivement le contexte MLX et la fenêtre MLX. Vous devrez les initialiser avec les fonctions mlx_init et mlx_new_window avant de pouvoir utiliser la fonction mlx_pixel_put.
+
+Notez que la bibliothèque MLX ne prend en compte que les coordonnées x et y pour dessiner un pixel. Si vous souhaitez utiliser l'axe z pour la profondeur, vous devrez utiliser une autre bibliothèque ou écrire votre propre code de rendu 3D.
+
+
+
+
+Ludivine Novillo
+fais moi draw_pixel avec mlx_pixel_put()mlx, win, x, y) en C
+Voici comment implémenter la fonction draw_pixel en utilisant la fonction mlx_pixel_put de la bibliothèque MLX :
+
+Copy code
+#include "mlx.h"
+
+void draw_pixel(void *mlx, void *win, int x, int y) {
+  mlx_pixel_put(mlx, win, x, y, 0xFFFFFF); // Dessine un pixel blanc à la position (x, y)
+}
+Pour utiliser cette fonction, vous devez d'abord initialiser le contexte MLX et la fenêtre MLX avec les fonctions mlx_init et mlx_new_window. Voici un exemple de code qui utilise la fonction draw_pixel pour dessiner un pixel blanc en (10, 10) :
+
+Copy code
+#include "mlx.h"
+
+int main() {
+  void *mlx = mlx_init(); // Initialise le contexte MLX
+  void *win = mlx_new_window(mlx, 800, 600, "Ma fenêtre MLX"); // Crée une fenêtre MLX de 800x600 pixels
+  draw_pixel(mlx, win, 10, 10); // Dessine un pixel blanc en (10, 10)
+  mlx_loop(mlx); // Lance la boucle de rendu
+  return 0;
+}
+Notez que la fonction mlx_loop est une boucle infinie qui attend les événements de la fenêtre et met à jour l'affichage. Vous devez l'appeler pour que la fenêtre soit affichée et réagisse aux événements de la souris et du clavier.
+
+
+
+
+Ludivine Novillo
+comment calculer des coordonnees x y z d'un repere 3d en i j  d'un repere 2d ?
+Pour calculer les coordonnées (x, y, z) d'un repère 3D en coordonnées (i, j) d'un repère 2D, vous pouvez utiliser une projection en perspective. Cela consiste à simuler la vision humaine en projetant les points de l'espace 3D sur un plan en prenant en compte la distance de chaque point par rapport à l'observateur (la caméra).
+
+Voici une formule générale qui permet de faire cette projection en perspective :
+
+i = x * f / z
+j = y * f / z
+
+Où (x, y, z) sont les coordonnées du point dans l'espace 3D et (i, j) sont les coordonnées du point sur le plan 2D. f est la distance focale de la caméra, qui représente la distance à laquelle le plan de projection est situé par rapport à la caméra. Plus la distance focale est grande, plus la projection sera "zoomée".
+
+Voici un exemple de code qui utilise cette formule pour calculer les coordonnées (i, j) d'un point (x, y, z) dans un repère 2D :
+
+Copy code
+#define FOCAL_DISTANCE 100
+
+void project(double x, double y, double z, double *i, double *j) {
+  *i = x * FOCAL_DISTANCE / z;
+  *j = y * FOCAL_DISTANCE / z;
+}
+
+int main() {
+  double x = 1, y = 2, z = 3;
+  double i, j;
+  project(x, y, z, &i, &j);
+  printf("Coordonnées du point (%.2f, %.2f, %.2f) dans le repère 2D : (%.2f, %.2f)\n", x, y, z, i, j);
+  return 0;
+}
+Cela affichera "Coordonnées du point (1.00, 2.00, 3.00) dans le repère 2D : (33.33, 66.67)" sur la sortie standard.
+
+Notez que cette formule ne prend pas en compte les transformations de rotations ou de translations appliquées à l'espace 3D. Pour inclure ces transformations dans la projection, vous pouvez utiliser des matrices de transformation

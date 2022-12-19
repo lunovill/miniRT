@@ -18,8 +18,6 @@ void	mlx_put_pixel(t_mlx *mlx, int x, int y, int color)
 	char	*dst;
 
 	data = mlx->data;
-	if (!(0 <= x && x < mlx->wrslt && 0 <= y && y < mlx->hrslt))
-		return ;
 	dst = data->addr + (y * data->sline + x * (data->bpp / 8));
 	*(unsigned int *)dst = color;
 }

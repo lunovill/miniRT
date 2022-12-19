@@ -25,10 +25,15 @@ SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(MLX_DIR)/mlx_init_key\
 				$(MLX_DIR)/mlx_init_window\
 				$(MLX_DIR)/mlx_put_pixel\
+				$(RTC_DIR)/mt_init\
+				$(RTC_DIR)/mt_cross\
+				$(RTC_DIR)/rt_camcoor\
 				$(RTC_DIR)/rt_circle\
+				$(RTC_DIR)/rt_draw_pixel\
 				$(RTC_DIR)/rt_free\
 				$(RTC_DIR)/rt_image\
 				$(RTC_DIR)/rt_line\
+				$(RTC_DIR)/mt_rotate\
 				miniRT\
 				trgb_color\
 				

@@ -21,20 +21,23 @@ void	rt_empty_circle(t_mlx *mlx, t_sphere *sp)
 	float	x;
 	float	y;
 
-	r = sp->rayon / sp->coor.z;
+	if (sp->camc.z)
+		r  = sp->rayon / sp->camc.z;
+	else
+		r  = sp->rayon;
 	x = 0;
 	y = r;
 	mlx->color = sp->color;
 	while (x <= y)
 	{
-		mlx_put_pixel(mlx, sp->coor.x + x, sp->coor.y - y, mlx->color);
-		mlx_put_pixel(mlx, sp->coor.x - x, sp->coor.y - y, mlx->color);
-		mlx_put_pixel(mlx, sp->coor.x + y, sp->coor.y - x, mlx->color);
-		mlx_put_pixel(mlx, sp->coor.x - y, sp->coor.y - x, mlx->color);
-		mlx_put_pixel(mlx, sp->coor.x + y, sp->coor.y + x, mlx->color);
-		mlx_put_pixel(mlx, sp->coor.x - y, sp->coor.y + x, mlx->color);
-		mlx_put_pixel(mlx, sp->coor.x + x, sp->coor.y + y, mlx->color);
-		mlx_put_pixel(mlx, sp->coor.x - x, sp->coor.y + y, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x + x, sp->camc.y - y, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x - x, sp->camc.y - y, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x + y, sp->camc.y - x, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x - y, sp->camc.y - x, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x + y, sp->camc.y + x, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x - y, sp->camc.y + x, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x + x, sp->camc.y + y, mlx->color);
+		mlx_put_pixel(mlx, sp->camc.x - x, sp->camc.y + y, mlx->color);
 		x++;
 		if (0 < (x + 1) * (x + 1) + (y - 0.5f) * (y - 0.5f) - r * r)
 			y--;
@@ -45,13 +48,13 @@ static void	rt_filling_circle(t_mlx *mlx, t_sphere *sp, float x, float y)
 {
 	Coor4f	line;
 
-	line = (Coor4f){sp->coor.x + x, sp->coor.x - x, sp->coor.y - y, sp->coor.y - y};
+	line = (Coor4f){sp->camc.x + x, sp->camc.x - x, sp->camc.y - y, sp->camc.y - y};
 	rt_line(mlx, line);
-	line = (Coor4f){sp->coor.x + y, sp->coor.x - y, sp->coor.y - x, sp->coor.y - x};
+	line = (Coor4f){sp->camc.x + y, sp->camc.x - y, sp->camc.y - x, sp->camc.y - x};
 	rt_line(mlx, line);
-	line = (Coor4f){sp->coor.x + y, sp->coor.x - y, sp->coor.y + x, sp->coor.y + x};
+	line = (Coor4f){sp->camc.x + y, sp->camc.x - y, sp->camc.y + x, sp->camc.y + x};
 	rt_line(mlx, line);
-	line = (Coor4f){sp->coor.x + x, sp->coor.x - x, sp->coor.y + y, sp->coor.y + y};
+	line = (Coor4f){sp->camc.x + x, sp->camc.x - x, sp->camc.y + y, sp->camc.y + y};
 	rt_line(mlx, line);
 }
 
@@ -61,7 +64,10 @@ void	rt_filled_circle(t_mlx *mlx, t_sphere *sp)
 	float	x;
 	float	y;
 
-	r  = sp->rayon / sp->coor.z;
+	if (sp->camc.z)
+		r  = sp->rayon / sp->camc.z;
+	else
+		r  = sp->rayon;
 	x = 0;
 	y = r;
 	mlx->color = sp->color;
