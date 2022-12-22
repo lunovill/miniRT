@@ -1,21 +1,43 @@
 #include "../includes/miniRT.h"
 
-int		check_begin(t_miniRT *data, char **tab)
+int	check_name(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (strchr(tab[i], "A") == 0)
+	while (str[i])
+		i++;
+	if (i < 4)
+		return (0);
+	i = i - 3;
+	if (str[i] == '.')
+	{
+		if (str[i + 1] == 'r')
+		{
+			if (str[i + 2] == 't')
+			{
+				if (str[i - 1] == '/')
+					return (0);
+                return (1);
+			}
+		}
+	}
+	return (0);
+}
+
+int		check_begin(t_miniRT *data, char **tab)
+{
+	if (ft_strncmp(tab[0], "A", 2) == 0)
 		data->check->light = data->check->light + 2;
-	else if (strchr(tab[i], "C") == 0)
+	else if (ft_strncmp(tab[0], "C", 2) == 0)
 		data->check->camera++;
-	else if (strchr(tab[i], "L") == 0)
+	else if (ft_strncmp(tab[0], "L", 2) == 0)
 		data->check->light++;
-	else if (strchr(tab[i], "pl") == 0)
+	else if (ft_strncmp(tab[0], "pl", 3) == 0)
 		data->check->plane++;
-	else if (strchr(tab[i], "sp") == 0)
+	else if (ft_strncmp(tab[0], "sp", 3) == 0)
 		data->check->sphere++;
-	else if (strchr(tab[i], "cy") == 0)
+	else if (ft_strncmp(tab[0], "cy", 3) == 0)
 		data->check->cylinder++;
     else
         return (-1);
@@ -30,16 +52,19 @@ int     parsing(t_miniRT *data, char *file)
     char    **tab;
 
     ret = 1;
-    if (fd = open(file, O_RDONLY) < 0)
+    if ((fd = open(file, O_RDONLY)) < 0)
         return (-1);
-    while (ret = get_next_line(fd, &line) != 0)
+    while (ret != 0)
     {
-        tab = ft_split(line);
+        ret = my_gnl(fd, &line);
+        if (line[0] == '\r')
+            continue;
+        tab = ft_split(line, ' ');
         data->check->line++;
         if (check_begin(data, tab) == -1)
         {
-            return (-1);
             close(fd);
+            return (-1);
         }
         free(line);
     }

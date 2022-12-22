@@ -1,35 +1,77 @@
-SRCS		=	./srcs/main.c \
-				./srcs/init.c \
+ #=============================================================================#
+#								SOURCES											#
+ #=============================================================================#
 
-OBJS		= ${SRCS:.c=.o}
+SRCS_DIR = srcs_2
+MLX_DIR = minilibx
+RTC_DIR = raytracer
+SRCS_DIRS = $(MLX_DIR)\
+				$(RTC_DIR)\
 
-NAME		= miniRT
+SRC_FILES =		main\
+				init\
+				parsing\
+				get_next_line\
+				get_next_line_utils\
 
-#MLX_PATH	= ./mlx/
-#MLX_NAME	= $(MLX_PATH)libmlx_Linux.a
+SRCS = $(addsuffix .c, $(SRC_FILES))
 
-INC		= ./includes
+ #=============================================================================#
+#									OBJETS										#
+ #=============================================================================#
 
-CC		= clang -Wall -Werror -Wextra -g
-RM		= rm -f
+OBJS_DIR = objets
+OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
+DEPS = $(SRCS:%.c=$(OBJS_DIR)/%.d)
 
-CFLAGS		= -lm -lmlx -lXext -lX11
+ #=============================================================================#
+#									LIBRARY										#
+ #=============================================================================#
 
-all:		${NAME}
+LIB_DIR = libft
 
-.c.o:
-		${CC} -I${INC} -c $< -o ${<:.c=.o}
-#		${CC} -I${INC} -I${MLX_PATH} -c $< -o ${<:.c=.o}
+ #=============================================================================#
+#									COMPILATION									#
+ #=============================================================================#
 
-$(NAME):	${OBJS}
-#		make -C ${MLX_PATH}
-		${CC} ${OBJS} -I${INC} ${CFLAGS} -o${NAME}
+CC = clang
+CFLAGS = -Wall -Wextra -Werror -g
+CDFLAGS = -MMD -MP
+CIFLAGS = -Iincludes -I$(LIB_DIR)/includes -I$(MLX_DIR)
+CLFLAGS = -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
-clean:		
-#		make clean -C ${MLX_PATH}
-		${RM} ${OBJS}
+ #=============================================================================#
+#									MAKEFILE									#
+ #=============================================================================#
 
-fclean:		clean
-		${RM} ${NAME}
+NAME = miniRT
 
-re:		fclean all
+all : $(NAME)
+
+$(NAME) : $(OBJS_DIR) $(OBJS)
+	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(CLFLAGS) -o $(NAME)
+
+$(OBJS_DIR) :
+	$(MAKE) -C $(LIB_DIR)
+	$(MAKE) -C $(MLX_DIR)
+	mkdir $(OBJS_DIR)
+	mkdir $(OBJS_DIR)/$(MLX_DIR)
+	mkdir $(OBJS_DIR)/$(RTC_DIR)
+
+$(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
+	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
+
+clean :
+	$(MAKE) clean -C $(LIB_DIR)
+	$(MAKE) clean -C $(MLX_DIR)
+	rm -rf $(OBJS_DIR)
+
+fclean: clean
+	$(MAKE) fclean -C $(LIB_DIR)
+	rm -rf $(NAME)
+
+re : fclean all
+
+-include $(DEPS)
+
+.PHONY: all clean fclean re

@@ -10,6 +10,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include "../libft/includes/libft.h"
 
 //# include "mlxRT.h"
 
@@ -80,6 +81,17 @@ typedef struct s_miniRT
 
 /*      fonction        */
 
-t_miniRT    *init();
+t_miniRT    *init_miniRT();
+int     parsing(t_miniRT *data, char *file);
+int     fill_struct(t_miniRT *data, char *file);
+int		check_name(char *str);
+
+
+/*					mon_get_next_line					*/
+
+int		my_gnl(int fd, char **line);
+char	*ft_strdup(char const *s1);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+
 
 #endif

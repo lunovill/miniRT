@@ -3,20 +3,20 @@
 t_miniRT    *init_miniRT()
 {
     t_miniRT    *data;
+    t_check_file    *tmp;
 
     data = malloc(sizeof(*data));
     if (!data)
-        return (1);
-    data->check->camera = 0;
-    data->check->light = 0;
-    data->check->sphere = 0;
-    data->check->plane = 0;
-    data->check->cylinder = 0;
-    data->check->line = 0;
-//    data->c == NULL;
-//    data->cy == NULL;
-//    data->sp == NULL;
-//    data->pl == NULL;
-//    data->l == NULL;
+        return (NULL);
+    tmp = malloc(sizeof(*tmp));
+    if (!tmp)
+        return (NULL);
+    tmp->camera = 0;
+    tmp->light = 0;
+    tmp->sphere = 0;
+    tmp->plane = 0;
+    tmp->cylinder = 0;
+    tmp->line = 0;
+    data->check = tmp;
     return (data);
 }
