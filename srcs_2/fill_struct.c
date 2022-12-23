@@ -78,6 +78,7 @@ void       init_struct(t_miniRT *data)
     t_sphere    **sphere;
     t_plane     **plane;
     t_cylinder  **cylinder;
+    t_camera    *camera;
 
     light = malloc(sizeof(*light) * (3));
     if (!light)
@@ -91,10 +92,14 @@ void       init_struct(t_miniRT *data)
     cylinder = malloc(sizeof(*cylinder) * (data->check->cylinder + 1));
     if (!cylinder)
         return ;
+    camera = malloc(sizeof(camera) * (2));
+    if (!camera)
+        return ;
     data->cy = cylinder;
     data->l = light;
     data->sp = sphere;
     data->pl = plane;
+    data->c = camera;
 }
 
 int     fill_struct(t_miniRT *data, char *file)
