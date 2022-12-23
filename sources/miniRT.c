@@ -15,11 +15,13 @@
 t_miniRT    *test(t_miniRT *main)
 {
 	main->c = malloc(sizeof(t_camera));
-	main->c->coor = (Coor4f){0, 0, 0, 1};
-	main->c->vector = (Vector4f){0, 0, 1, 0};
-	main->c->fov = 130;
+	main->c->coor = (Coor4f){0., 0., 0., 1.};
+	main->c->vector = (Vector4f){0., 0., 1., 0.};
+	main->c->fov = 130. * M_PI / 180;
+	main->c->near = 0.1;
+	main->c->far = 100.;
 	mt_view(&main->c->view, main->c->coor, main->c->vector);
-	mt_perspective(&main->c->prspct, main->c->fov, main->mlx->hrslt / main->mlx->wrslt);
+	mt_perspective(&main->c->prspct, main->c, (float)main->mlx->hrslt / (float)main->mlx->wrslt);
 	printf("%f %f %f %f\n", main->c->view.s0, main->c->view.s1, main->c->view.s2, main->c->view.s3);
 	printf("%f %f %f %f\n", main->c->view.s4, main->c->view.s5, main->c->view.s6, main->c->view.s7);
 	printf("%f %f %f %f\n", main->c->view.s8, main->c->view.s9, main->c->view.sa, main->c->view.sb);

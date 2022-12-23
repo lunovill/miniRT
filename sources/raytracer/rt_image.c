@@ -70,13 +70,17 @@ void refresh(t_miniRT *main)
 
 int	rt_image(t_miniRT *main)
 {
-	Coor4f point = {1, 1, 1, 1};
+	Coor4f point = {0., 0., 1., 1.};
 	Coor4f point_t;
-	Matrix4f transf;
+	Coor4f point_c;
+	// Matrix4f transf;
 
-	mt_cross_mt(&transf, &main->c->view, &main->c->prspct);
-	cr_cross_mt(&point_t, point, &transf);
-	rt_draw_pixel(main->mlx, point_t, main->c->fov, trgb_color(1, 255, 255, 255));
+	// mt_cross_mt(&transf, &main->c->view, &main->c->prspct);
+	cr_cross_mt(&point_c, point, &main->c->view);
+	printf("C = %f, %f, %f, %f\n\n", point_c.x,point_c.y,point_c.z,point_c.w);
+	cr_cross_mt(&point_t, point_c, &main->c->prspct);
+	printf("T = %f, %f, %f, %f\n\n", point_t.x,point_t.y,point_t.z,point_t.w);
+	rt_draw_pixel(main->mlx, point_t, trgb_color(1, 255, 255, 255));
 	// printf("%f %f %f %f\n", point.x, point.y, point.z, point.w);
 	// printf("%f %f %f %f\n\n", point_t.x, point_t.y, point_t.z, point_t.w);
 	refresh(main);

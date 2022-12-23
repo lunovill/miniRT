@@ -25,14 +25,6 @@ typedef float Matrix4f __attribute__((ext_vector_type(16)));
 typedef float Vector4f __attribute__((ext_vector_type(4)));
 typedef float Coor4f __attribute__((ext_vector_type(4)));
 
-// typedef struct s_matrix
-// {
-// 	Vector4f	vx;
-// 	Vector4f	vy;
-// 	Vector4f	vz;
-// 	Coor4f		cx;
-// }				t_matrix;
-
 typedef struct s_camera
 {
 	Coor4f		coor;
@@ -40,6 +32,8 @@ typedef struct s_camera
 	Matrix4f	view;
 	Matrix4f	prspct;
 	float		fov;
+	float		near;
+	float		far;
 }				t_camera;
 
 typedef struct s_light
@@ -91,12 +85,13 @@ int		mlx_key_press(int keycode, t_miniRT *main);
 void 	cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx);
 void	mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2);
 void	mt_view(Matrix4f *view, Coor4f coor, Vector4f vector);
-void	mt_perspective(Matrix4f *prspct, float fov, float window);
+void	mt_perspective(Matrix4f *prspct, t_camera *c, float window);
 void	rt_camcoor(t_miniRT *main);
 void    mt_rotate_x(Matrix4f *rx, float theta);
 void    mt_rotate_y(Matrix4f *ry, float theta);
 void    mt_rotate_z(Matrix4f *rz, float theta);
-void	rt_draw_pixel(t_mlx *mlx, Coor4f coor, float fov, int color);
+// void	rt_draw_pixel(t_mlx *mlx, Coor4f coor, float fov, int color);
+void	rt_draw_pixel(t_mlx *mlx, Coor4f coor, int color);
 void	rt_line(t_mlx *mlx, Coor4f coor);
 void	rt_empty_circle(t_mlx *mlx, t_sphere *sp);
 void	rt_filled_circle(t_mlx *mlx, t_sphere *sp);
