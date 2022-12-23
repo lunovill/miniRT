@@ -11,6 +11,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
     data = init_miniRT();
+	printf("OK\n");
 	if (parsing(data, argv[1]) != 0)
 	{
 		printf("Error parsing\n");

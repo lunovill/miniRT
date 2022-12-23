@@ -7,10 +7,10 @@ float   cara_to_float(char *str)
 {
     int             neg;
     float           n;
-    int             div;
+    float			div;
     unsigned int    i;
 
-    div = 0;
+    div = 1;
     i = 0;
     n = 0;
     neg = 1;
@@ -18,12 +18,12 @@ float   cara_to_float(char *str)
         neg = -1;
     if (str[i] == '-' || str[i] == '+')
         i++;
-    while (ft_isdigit_dot(str[i]))
+    while (ft_isdigit(str[i]) == 1 || str[i] == '.')
     {
         if (str[i] == '.')
         {
-            div = pow(10, (ft_strlen(str) - i));
             i++;
+            div = pow(10, (strlen(str) - i));
         }
         else
         {
@@ -31,7 +31,7 @@ float   cara_to_float(char *str)
             n += str[i++] - '0';
         }
     }
-    return (((n * (float)neg) % (float)div));
+    return ((n * neg) / div);
 }
 
 int     fill_ambiant(t_miniRT *data, char **tab)
@@ -110,27 +110,28 @@ int     fill_struct(t_miniRT *data, char *file)
     char    **tab;
 
     ret = 1;
-    line = NULL;
-    if (fd = open(file, O_RDONLY) < 0)
+    if ((fd = open(file, O_RDONLY)) < 0)
         return (-1);
     init_struct(data);
-    while (ret = get_next_line(fd, &line) != 0)
+    while (ret != 0)
     {
-        tab = ft_split(line);
-        if (strchr(tab[0], "A") == 0)
+        ret = my_gnl(fd, &line);
+        tab = ft_split(line, ' ');
+        if (ft_strncmp(tab[0], "A", 2) == 0)
             fill_ambiant(data, tab);
-	    else if (strchr(tab[0], "C") == 0)
+	    else if (ft_strncmp(tab[0], "C", 2) == 0)
             fill_camera(data, tab);
-	    else if (strchr(tab[0], "L") == 0)
+	    else if (ft_strncmp(tab[0], "L", 2) == 0)
             fill_light(data, tab);
-	    else if (strchr(tab[0], "pl") == 0)
+	    else if (ft_strncmp(tab[0], "pl", 3) == 0)
             fill_plane(data, tab);
-	    else if (strchr(tab[0], "sp") == 0)
+	    else if (ft_strncmp(tab[0], "sp", 3) == 0)
             fill_sphere(data, tab);
-	    else if (strchr(tab[0], "cy") == 0)
+	    else if (ft_strncmp(tab[0], "cy", 3) == 0)
             fill_cylinder(data, tab);
         else
         {
+            fre(line);
             close(fd);
             return (-1);
         }
