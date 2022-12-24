@@ -9,6 +9,7 @@ t_miniRT    *init_miniRT()
     if (!data)
         return (NULL);
     tmp = malloc(sizeof(*tmp));
+    data->garbage = gbg_add(data->garbage, tmp);
     if (!tmp)
         return (NULL);
     tmp->camera = 0;

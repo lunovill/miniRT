@@ -34,33 +34,37 @@ typedef struct s_camera
 	Coor4f		coor;
 	Vector4f	vector;
 	Matrix4f	matrix;
-	float		FOV;
+	float		fov;
 }				t_camera;
 
 typedef struct s_light
 {
-	Coor4f		coor;
+	Coor4f		orgc;
+	Coor4f		camc;
 	float		brightness;
 	int			color;
 }				t_light;
 
 typedef struct s_sphere
 {
-	Coor4f			coor;
+	Coor4f			orgc;
+	Coor4f		camc;
 	float			rayon;
 	int				color;
 }				t_sphere;
 
 typedef struct s_plane
 {
-	Coor4f		coor;
+	Coor4f		orgc;
+	Coor4f		camc;
 	Vector4f	vector;
 	int			color;
 }				t_plane;
 
 typedef struct s_cylinder
 {
-	Coor4f		coor;
+	Coor4f		orgc;
+	Coor4f		camc;
 	Vector4f	vector;
 	float		rayon;
 	float		height;
@@ -76,7 +80,7 @@ typedef struct s_miniRT
 	t_sphere		**sp;
 	t_plane			**pl;
 	t_cylinder		**cy;
-//	t_garbage		*garbage;
+	t_garbage		*garbage;
 }				t_miniRT;
 
 /*      fonction        */

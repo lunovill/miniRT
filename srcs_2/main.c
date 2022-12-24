@@ -10,8 +10,8 @@ int	main(int argc, char **argv)
 		printf("Error\nBad arguments\n");
 		return (0);
 	}
+	data->garbage = NULL;
     data = init_miniRT();
-	printf("OK\n");
 	if (parsing(data, argv[1]) != 0)
 	{
 		printf("Error parsing\n");

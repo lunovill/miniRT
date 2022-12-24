@@ -46,34 +46,45 @@ int		check_begin(t_miniRT *data, char **tab)
 
 int		check_nb(char **tab)
 {
+	char	**tmp;
 	int i;
 	int	j;
+	int	k;
 	int p;
+	int	min;
 
 	i = 1;
 	while (tab[i])
 	{
+		tmp = ft_split(tab[i], ',');
 		j = 0;
-		p = 0;
-		while (tab[i][j])
+		while (tmp[j])
 		{
-			if (ft_isdigit(tab[i][j]) == 1 || tab[i][j] == '.')
+			p = 0;
+			min = 0;
+			k = 0;
+			while (tmp[j][k])
 			{
-				if (tab[i][j] == '.')
-					p++;
+				if (ft_isdigit(tmp[j][k]) == 1 || tmp[j][k] == '.' ||
+					tmp[j][k] == 13 || tmp[j][k] == '-')
+				{
+					if (tmp[j][k] == '.')
+						p++;
+					else if (tmp[j][k] == '-')
+						min++;
+				}
+				else	
+					return (-1);
+				k++;
 			}
-			else
+			if (p > 1 || min > 1)
 				return (-1);
 			j++;
 		}
-		if (p > 1)
-			return (-1);
 		i++;
 	}
 	return (0);
 }
-
-//parsing check les nb, pars par ',' 
 
 int     parsing(t_miniRT *data, char *file)
 {
@@ -94,6 +105,7 @@ int     parsing(t_miniRT *data, char *file)
         data->check->line++;
         if (check_begin(data, tab) == -1 || check_nb(tab) == -1)
         {
+			printf("Error in parsing\n");
 			free(line);
             close(fd);
             return (-1);
