@@ -88,7 +88,7 @@ typedef struct s_miniRT
 
 /*      fonction        */
 
-t_miniRT    *init_miniRT();
+t_miniRT    *init_minirt(void);
 int     parsing(t_miniRT *data, char *file);
 int     fill_struct(t_miniRT *data, char *file);
 

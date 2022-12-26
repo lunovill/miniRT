@@ -18,7 +18,7 @@ int	check_name(char *str)
 			{
 				if (str[i - 1] == '/')
 					return (0);
-                return (1);
+				return (1);
 			}
 		}
 	}
@@ -36,13 +36,13 @@ int	main(int argc, char **argv)
 		printf("Error\nBad arguments\n");
 		return (0);
 	}
-    data = init_miniRT();
-	if (parsing(data, argv[1]) != 0)
+	data = init_minirt();
+	if	(parsing(data, argv[1]) != 0)
 	{
 		printf("Error parsing\n");
-        gestion_error(data);
+		gestion_error(data);
 	}
-    if (fill_struct(data, argv[1]) != 0)
+	if (fill_struct(data, argv[1]) != 0)
 	{
 		printf("Error filling\n");
 		gestion_error(data);
