@@ -1,30 +1,5 @@
 #include "../includes/miniRT.h"
 
-int	check_name(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	if (i < 4)
-		return (0);
-	i = i - 3;
-	if (str[i] == '.')
-	{
-		if (str[i + 1] == 'r')
-		{
-			if (str[i + 2] == 't')
-			{
-				if (str[i - 1] == '/')
-					return (0);
-                return (1);
-			}
-		}
-	}
-	return (0);
-}
-
 int		check_begin(t_miniRT *data, char **tab)
 {
 	if (ft_strncmp(tab[0], "A", 2) == 0)
@@ -81,6 +56,8 @@ int		check_nb(char **tab)
 				return (-1);
 			j++;
 		}
+		if (j != 1 && j != 3)
+			return (-1);
 		i++;
 	}
 	return (0);
@@ -105,6 +82,7 @@ int     parsing(t_miniRT *data, char *file)
         data->check->line++;
         if (check_begin(data, tab) == -1 || check_nb(tab) == -1)
         {
+//			pour le debug
 			printf("Error in parsing\n");
 			free(line);
             close(fd);

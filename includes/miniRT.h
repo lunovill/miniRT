@@ -11,6 +11,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../libft/includes/libft.h"
+# include "../libft/includes/gbg_collector.h"
 
 //# include "mlxRT.h"
 
@@ -26,8 +27,10 @@ typedef struct	s_check_file
 	int			plane;
 	int			cylinder;
 	int			line;
+	int			nb_sp;
+	int			nb_pl;
+	int			nb_cy;
 }				t_check_file;
-
 
 typedef struct s_camera
 {
@@ -88,8 +91,6 @@ typedef struct s_miniRT
 t_miniRT    *init_miniRT();
 int     parsing(t_miniRT *data, char *file);
 int     fill_struct(t_miniRT *data, char *file);
-int		check_name(char *str);
-
 
 /*					mon_get_next_line					*/
 
@@ -97,5 +98,8 @@ int		my_gnl(int fd, char **line);
 char	*ft_strdup(char const *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
+/*					Error				*/
+
+void	gestion_error(t_miniRT *data);
 
 #endif

@@ -9,10 +9,12 @@ SRCS_DIRS = $(MLX_DIR)\
 				$(RTC_DIR)\
 
 SRC_FILES =		main\
-			init\
+				init\
 				parsing\
 				get_next_line\
 				get_next_line_utils\
+				fill_struct\
+				error\
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
 
