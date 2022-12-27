@@ -41,16 +41,3 @@ int	minirt(t_miniRT *data)
 	mlx_loop(data->mlx->init);
 	return (0);
 }
-
-int	main(void)
-{
-	t_miniRT	*data;
-
-	data = malloc(sizeof(*data));
-	if (!data)
-		return (rt_free(data, ERROR_MALLOC));
-	data->mlx = NULL;
-	data->garbage = NULL;
-	minirt(data);
-	return (0);
-}

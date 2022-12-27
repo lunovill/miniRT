@@ -17,8 +17,10 @@
 SRCS_DIR = sources
 MLX_DIR = minilibx
 RTC_DIR = raytracer
+PSG_DIR = parsing
 SRCS_DIRS = $(MLX_DIR)\
 				$(RTC_DIR)\
+				$(PSG_DIR)\
 
 SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(MLX_DIR)/mlx_event\
@@ -32,6 +34,14 @@ SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(RTC_DIR)/rt_free\
 				$(RTC_DIR)/rt_image\
 				$(RTC_DIR)/mt_rotate\
+				$(PSG_DIR)/init\
+				$(PSG_DIR)/error\
+				$(PSG_DIR)/parsing\
+				$(PSG_DIR)/fill_struct\
+				$(PSG_DIR)/get_next_line\
+				$(PSG_DIR)/fill_struct_utils\
+				$(PSG_DIR)/get_next_line_utils\
+				main\
 				miniRT\
 				rgb_color\
 				
@@ -79,6 +89,7 @@ $(OBJS_DIR) :
 	mkdir $(OBJS_DIR)
 	mkdir $(OBJS_DIR)/$(MLX_DIR)
 	mkdir $(OBJS_DIR)/$(RTC_DIR)
+	mkdir $(OBJS_DIR)/$(PSG_DIR)
 
 $(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
