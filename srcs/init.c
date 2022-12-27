@@ -1,29 +1,29 @@
-#include "../includes/new_miniRT.h"
+#include "../includes/miniRT.h"
 
-void	init_camera(t_miniRT *miniRT)
+t_miniRT	*init_minirt(void)
 {
-	t_camera	*camera;
+	t_miniRT		*data;
+	t_check_file	*tmp;
+	t_garbage		*gbg;
 
-	camera = malloc(sizeof(*camera));
-	if (!camera)
-		return ;
-	camera->coor = (Coor4f){0, 0, 0, 1};
-	camera->vector = (Vector4f){0, 0, 0, 0};
-	camera->matrix = (Matrix4f){0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	camera->FOV = -1;
-	miniRT->c = camera;
-}
-
-t_miniRT	*init()
-{
-	t_miniRT	*miniRT;
-	miniRT = malloc(sizeof(*miniRT));
-	if (!miniRT)
+	data = malloc(sizeof(*data));
+	if (!data)
 		return (NULL);
-	init_camera(miniRT);
-	miniRT->l = NULL;
-	miniRT->sp = NULL;
-	miniRT->pl = NULL;
-	miniRT->cy = NULL;
-	return (miniRT);
+	gbg = NULL;
+	data->garbage = gbg;
+	tmp = malloc(sizeof(*tmp));
+	if (!tmp)
+		return (NULL);
+	data->garbage = gbg_add(data->garbage, tmp);
+	tmp->camera = 0;
+	tmp->light = 0;
+	tmp->sphere = 0;
+	tmp->plane = 0;
+	tmp->cylinder = 0;
+	tmp->line = 0;
+	tmp->nb_cy = 0;
+	tmp->nb_sp = 0;
+	tmp->nb_pl = 0;
+	data->check = tmp;
+	return (data);
 }

@@ -91,6 +91,11 @@ typedef struct s_miniRT
 t_miniRT    *init_minirt(void);
 int     parsing(t_miniRT *data, char *file);
 int     fill_struct(t_miniRT *data, char *file);
+int		rgb_color(int r, int g, int b);
+int		check_tab(t_miniRT *data, char **tab);
+float	cara_to_float(char *str);
+int		fill_ambiant(t_miniRT *data, char **tab);
+int	fill_camera(t_miniRT *data, char **tab);
 
 /*					mon_get_next_line					*/
 

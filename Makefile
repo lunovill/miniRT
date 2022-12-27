@@ -2,7 +2,7 @@
 #								SOURCES											#
  #=============================================================================#
 
-SRCS_DIR = srcs_2
+SRCS_DIR = srcs
 MLX_DIR = minilibx
 RTC_DIR = raytracer
 SRCS_DIRS = $(MLX_DIR)\
@@ -10,11 +10,12 @@ SRCS_DIRS = $(MLX_DIR)\
 
 SRC_FILES =		main\
 				init\
-				parsing\
-				get_next_line\
-				get_next_line_utils\
-				fill_struct\
 				error\
+				parsing\
+				fill_struct\
+				get_next_line\
+				fill_struct_utils\
+				get_next_line_utils\
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
 

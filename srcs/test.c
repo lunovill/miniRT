@@ -1,53 +1,100 @@
-#include "../includes/new_miniRT.h"
-#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include "../includes/miniRT.h"
 
-int		main()
+int	ft_isdigit(int c)
 {
-/*	Coor4f	test;
-	test = (Coor4f){1.0, 2.0, 3.0, 4.0};
-//	printf("%f\n%f\n%f\n%f\n", test.x, test.y, test.z, test.w);
-//	printf("%f\n", test.x);
-	t_miniRT	*ok;
-
-	ok = malloc(sizeof(*ok));
-	if (!ok)
-		return (0);
-	t_camera	*test3;
-	test3->coor = (Coor4f){9.0, 10.0, 11.0, 12.0};
-	printf("%f\n%f\n%f\n%f\n", test3->coor.x, test3->coor.y, test3->coor.z, test3->coor.w);
-	Coor4f test2;
-	test2 = (Coor4f){5.0, 6.0, 7.0, 8.0};
-	printf("%f\n%f\n%f\n%f\n", test2.x, test2.y, test2.z, test2.w);
-	ok->c->coor = test2;
-//	ok->c->coor = (Coor4f){1.0, 2.0, 3.0, 4.0};
-//	printf("%f\n", ok->c->coor.x);
-//	t_miniRT	ok;
-
-//	ok = malloc(sizeof(ok));
-//	if (!ok)
-//		return (0);
-//	ok.c->coor = (Coor4f){1.0, 2.0, 3.0, 4.0};
-//	printf("%f\n%f\n%f\n%f\n", ok.c->coor.x, ok.c->coor.y, ok.c->coor.z, ok.c->coor.w);
-	t_miniRT	*test;
-
-	test = malloc(sizeof(*test));
-	if (!test)
-		return (0);
-	t_camera	*camera;
-	camera = malloc(sizeof(*camera));
-	test->c = camera;
-	test->c->matrix = (Matrix4f){1.0, 2.0, 3.0, 4.0};
-	test->c->matrix = (Matrix4f){1.0, 2.0, 3.0, 4.0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-//	test->c->matrix = (Matrix4f){1.0, 2.0, 3.0, 4.0}{0, 0, 0, 0}{0, 0, 0, 0}{0, 0, 0, 0};
-	printf("%f\n", test->c->matrix.sd);
-//	printf("%f\n%f\n%f\n%f\n", test->c->matrix.x, test->c->matrix.x, test->c->matrix.x, test->c->matrix.x);*/
-	int i = 0;
-	int j = 5;
-	int	k = 3;
-	i = pow(10, (j - k));
-	printf("%d\n", i);
+	if (c >= '0' && c <= '9')
+		return (1);
 	return (0);
+}
 
+/*
+float   cara_to_float(char *str)
+{
+    int             neg;
+    float           n;
+    float			div;
+    unsigned int    i;
+
+    div = 1;
+    i = 0;
+    n = 0;
+    neg = 1;
+    if (str[i] == '-')
+        neg = -1;
+    if (str[i] == '-' || str[i] == '+')
+        i++;
+    while (ft_isdigit(str[i]) || str[i] == '.')
+    {
+        if (str[i] == '.')
+        {
+            printf("%lu / %d\n", strlen(str), i);
+            i++;
+            div = pow(10, (strlen(str) - i));
+        }
+        else
+        {
+            n *= 10;
+            n += str[i++] - '0';
+            printf("%.f\n", n);
+        }
+    }
+    return ((n * neg) / div);
+}*/
+
+int    trgb_color(int t, int r, int g, int b)
+{
+    return (t << 24 | r << 16 | g << 8 | b);
+}
+
+int	ft_atoi(const char *str)
+{
+	int				morl;
+	int				n;
+	unsigned int	i;
+
+	i = 0;
+	n = 0;
+	morl = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-')
+		morl = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
+	{
+		n *= 10;
+		n += str[i++] - '0';
+	}
+	return (n * morl);
+}
+
+int	main(int argc, char **argv)
+{/*
+	int     tmp;
+
+    tmp = 0;
+    if (argc != 4)
+    {
+        printf("Wrong number of args");
+        return (0);
+    }
+	tmp = trgb_color(tmp, ft_atoi(argv[1]), ft_atoi(argv[2]), ft_atoi(argv[3]));   
+	printf("%d\n", tmp);*/
+    t_miniRT    *data;
+    t_camera    *cam;
+
+    data = malloc(sizeof(*data));
+    if (!data)
+        return (0);
+    cam = malloc(sizeof(*cam));
+    if (!cam)
+        return (0);
+    cam->matrix = (Matrix4f){1.0, 2.0, 3.0};
+    data->c = cam;
+    printf("%f %f %f %f\n", data->c->matrix.s0, data->c->matrix.s1, data->c->matrix.s2, data->c->matrix.s3);
 }
