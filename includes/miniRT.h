@@ -93,13 +93,13 @@ typedef struct s_cylinder
 typedef struct s_miniRT
 {
 	t_check_file	*check;
-	t_mlx		*mlx;
-	t_camera	*c;
-	t_light		**l;
-	t_sphere	**sp;
-	t_plane		**pl;
-	t_cylinder	**cy;
-	t_garbage	*garbage;
+	t_mlx			*mlx;
+	t_camera		*c;
+	t_light			**l;
+	t_sphere		**sp;
+	t_plane			**pl;
+	t_cylinder		**cy;
+	t_garbage		*garbage;
 }				t_miniRT;
 
 int		mlx_key_press(int keycode, t_miniRT *main);
@@ -126,22 +126,22 @@ int		minirt(t_miniRT *main);
 /*      fonction        */
 
 t_miniRT    *init_minirt(void);
-int     parsing(t_miniRT *data, char *file);
-int     fill_struct(t_miniRT *data, char *file);
-int		rgb_color(int r, int g, int b);
-int		check_tab(t_miniRT *data, char **tab);
-float	cara_to_float(char *str);
-int		fill_ambiant(t_miniRT *data, char **tab);
-int	fill_camera(t_miniRT *data, char **tab);
+int     	parsing(t_miniRT *data, char *file);
+int     	fill_struct(t_miniRT *data, char *file);
+int			rgb_color(int r, int g, int b);
+int			check_tab(t_miniRT *data, char **tab);
+float		cara_to_float(char *str);
+int			fill_ambiant(t_miniRT *data, char **tab);
+int			fill_camera(t_miniRT *data, char **tab);
 
 /*					mon_get_next_line					*/
 
-int		my_gnl(int fd, char **line);
-char	*ft_strdup(char const *s1);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+int			my_gnl(int fd, char **line);
+char		*ft_strdup(char const *s1);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
 
 /*					Error				*/
 
-void	gestion_error(t_miniRT *data);
+void		gestion_error(t_miniRT *data);
 
 #endif

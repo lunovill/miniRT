@@ -1,101 +1,4 @@
-#include "../includes/miniRT.h"
-
-int	trgb_color(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-float	cara_to_float(char *str)
-{
-	int				neg;
-	float			n;
-	float			div;
-	unsigned int	i;
-
-	div = 1;
-	i = 0;
-	n = 0;
-	neg = 1;
-	if (str[i] == '-')
-		neg = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (ft_isdigit(str[i]) == 1 || str[i] == '.')
-	{
-		if (str[i] == '.')
-		{
-			i++;
-			div = pow(10, (ft_strlen(str) - i));
-		}
-		else
-		{
-			n *= 10;
-			n += str[i++] - '0';
-		}
-	}
-	return ((n * neg) / div);
-}
-
-int	fill_ambiant(t_miniRT *data, char **tab)
-{
-	char		**tab_nb;
-	t_light		*tmp;
-	int			i;
-
-	i = 0;
-	tmp = malloc(sizeof(*tmp));
-	if (!tmp)
-		gestion_error(data);
-	data->garbage = gbg_add(data->garbage, tmp);
-	while (tab[i])
-		i++;
-	if (i != 3)
-		gestion_error(data);
-	tmp->brightness = cara_to_float(tab[1]);
-	if (tmp->brightness < 0.0 || tmp->brightness > 1.0)
-		gestion_error(data);
-	tab_nb = ft_split(tab[2], ',');
-	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
-			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
-			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
-		gestion_error(data);
-	tmp->color = trgb_color(0, ft_atoi(tab_nb[0]), 
-			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
-	tmp->camc = (Coor4f){0, 0, 0, 1};
-	tmp->orgc = (Coor4f){0, 0, 0, 2};
-	data->l[0] = tmp;
-	return (0);
-}
-
-int	fill_camera(t_miniRT *data, char **tab)
-{
-char			**tab_coor;
-	char		**tab_vect;
-	t_camera	*tmp;
-	int			i;
-
-	i = 0;
-	tmp = malloc(sizeof(*tmp));
-	if (!tmp)
-		return (0);
-	data->garbage = gbg_add(data->garbage, tmp);
-	while (tab[i])
-		i++;
-	if (i != 4)
-		gestion_error(data);
-	tab_coor = ft_split(tab[1], ',');
-	tmp->coor = (Coor4f){cara_to_float(tab_coor[0]), cara_to_float(tab_coor[1]), cara_to_float(tab_coor[2]), 1};
-	tab_vect = ft_split(tab[2], ',');
-	tmp->vector = (Vector4f){cara_to_float(tab_vect[0]), cara_to_float(tab_vect[1]), cara_to_float(tab_vect[2]), 0};
-	if ((tmp->vector.s0 < -1.0 || tmp->vector.s0 > 1.0) ||
-			(tmp->vector.s1 < -1.0 || tmp->vector.s1 > 1.0) ||
-			(tmp->vector.s2 < -1.0 || tmp->vector.s2 > 1.0))
-		gestion_error(data);
-	tmp->fov = cara_to_float(tab[3]);
-	//view et prspct matrce 
-	data->c = tmp;
-	return (0);
-}
+#include "../../includes/miniRT.h"
 
 int	fill_light(t_miniRT *data, char **tab)
 {
@@ -116,16 +19,19 @@ int	fill_light(t_miniRT *data, char **tab)
 	if (tmp->brightness < 0.0 || tmp->brightness > 1.0)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
+	check_tab(data, tab_nb);
 	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tab_nb = ft_split(tab[3], ',');
+	check_tab(data, tab_nb);
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = trgb_color(0, ft_atoi(tab_nb[0]), 
+	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
 			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
 	tmp->camc = (Coor4f){0, 0, 0, 2};
 	data->l[1] = tmp;
+	data->l[2] = NULL;
 	return (0);
 }
 
@@ -145,18 +51,22 @@ int	fill_plane(t_miniRT *data, char **tab)
 	if (i != 4)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
+	check_tab(data, tab_nb);
 	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tab_nb = ft_split(tab[2], ',');
+	check_tab(data, tab_nb);
 	tmp->vector = (Vector4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
 	tab_nb = ft_split(tab[3], ',');
+	check_tab(data, tab_nb);
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = trgb_color(0, ft_atoi(tab_nb[0]), 
+	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
 			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
 	tmp->camc = (Coor4f){0, 0, 0, 2};
 	data->pl[data->check->nb_pl] = tmp;
+	data->pl[data->check->nb_pl + 1] = NULL;
 	data->check->nb_pl++;
 	return (0);
 }
@@ -177,17 +87,20 @@ int	fill_sphere(t_miniRT *data, char **tab)
 	if (i != 4)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
+	check_tab(data, tab_nb);
 	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
-	tmp->rayon = cara_to_float(tab[2]);
+	tmp->rayon = cara_to_float(tab[2]) / 2;
 	tab_nb = ft_split(tab[3], ',');
+	check_tab(data, tab_nb);
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = trgb_color(0, ft_atoi(tab_nb[0]), 
+	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
 			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
 	tmp->camc = (Coor4f){0, 0, 0, 2};
 	data->sp[data->check->nb_sp] = tmp;
+	data->sp[data->check->nb_sp + 1] = NULL;
 	data->check->nb_sp++;
 	return (0);
 }
@@ -208,25 +121,29 @@ int	fill_cylinder(t_miniRT *data, char **tab)
 	if (i != 6)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
+	check_tab(data, tab_nb);
 	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tab_nb = ft_split(tab[2], ',');
+	check_tab(data, tab_nb);
 	tmp->vector = (Vector4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
-	tmp->rayon = cara_to_float(tab[3]);
+	tmp->rayon = cara_to_float(tab[3]) / 2;
 	tmp->height = cara_to_float(tab[4]);
 	tab_nb = ft_split(tab[5], ',');
+	check_tab(data, tab_nb);
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = trgb_color(0, ft_atoi(tab_nb[0]), 
+	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
 			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
 	tmp->camc = (Coor4f){0, 0, 0, 2};
 	data->cy[data->check->nb_cy] = tmp;
+	data->cy[data->check->nb_cy + 1] = NULL;
 	data->check->nb_cy++;
 	return (0);
 }
 
-// rayon , diameter / 2 ou simplement diameter
+// si on nous envoye un nb au lieu de trois
 
 void		init_struct(t_miniRT *data)
 {

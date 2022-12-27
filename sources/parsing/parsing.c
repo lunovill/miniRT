@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 int	check_begin(t_miniRT *data, char **tab)
 {

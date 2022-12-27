@@ -43,7 +43,6 @@ SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(PSG_DIR)/get_next_line_utils\
 				main\
 				miniRT\
-				rgb_color\
 				
 
 SRCS = $(addsuffix .c, $(SRC_FILES))

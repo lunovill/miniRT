@@ -2,7 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 int	ft_isdigit(int c)
 {
