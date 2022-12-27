@@ -12,59 +12,45 @@
 
 #include "miniRT.h"
 
-t_miniRT    *test(t_miniRT *main)
+t_miniRT    *test(t_miniRT *data)
 {
-	main->c = malloc(sizeof(t_camera));
-	main->c->coor = (Coor4f){0., 0., 0., 1.};
-	main->c->vector = (Vector4f){0., 0., 1., 0.};
-	main->c->fov = 130. * M_PI / 180;
-	main->c->near = 0.1;
-	main->c->far = 100.;
-	mt_view(&main->c->view, main->c->coor, main->c->vector);
-	mt_perspective(&main->c->prspct, main->c, (float)main->mlx->hrslt / (float)main->mlx->wrslt);
-	printf("%f %f %f %f\n", main->c->view.s0, main->c->view.s1, main->c->view.s2, main->c->view.s3);
-	printf("%f %f %f %f\n", main->c->view.s4, main->c->view.s5, main->c->view.s6, main->c->view.s7);
-	printf("%f %f %f %f\n", main->c->view.s8, main->c->view.s9, main->c->view.sa, main->c->view.sb);
-	printf("%f %f %f %f\n\n", main->c->view.sc, main->c->view.sd, main->c->view.se, main->c->view.sf);
-    // main->sp = malloc(sizeof(t_sphere *) * 2);
-    // main->garbage = gbg_add(main->garbage, main->sp);
-    // main->sp[0] = malloc(sizeof(t_sphere));
-    // main->garbage = gbg_add(main->garbage, main->sp[0]);
-	// main->sp[0]->orgc = (Coor4f){150, 150, 50, 1};
-	// main->sp[0]->rayon = 100;
-	// main->sp[0]->color = trgb_color(1, 255, 255, 255);
-    // main->sp[1] = NULL;
-	// main->pl = NULL;
-	// main->cy = NULL;
-	// rt_camcoor(main);
-    return (main);
+	data->c = malloc(sizeof(t_camera));
+	data->c->coor = (Coor4f){0., 0., 0., 1.};
+	data->c->vector = (Vector4f){0., 0., 1., 0.};
+	data->c->fov = 180. * M_PI / 180;
+	data->c->near = 0.1;
+	data->c->far = 100.;
+	mt_view(&data->c->view, data->c->coor, data->c->vector);
+	mt_perspective(&data->c->prspct, data->c, (float)data->mlx->hrslt / (float)data->mlx->wrslt);
+	mt_cross_mt(&data->c->trsfrm, &data->c->view, &data->c->prspct);
+    return (data);
 }
 
-int	minirt(t_miniRT *main)
+int	minirt(t_miniRT *data)
 {
-	main->mlx = mlx_init_window(NULL, 500, 500);
-	if (!main->mlx)
-		return (rt_free(main, ERROR_MLX));
-	main->mlx->key = mlx_init_key();
-	main = test(main);
-	mlx_loop_hook(main->mlx->init, rt_image, main);
-	mlx_hook(main->mlx->win, KeyPress, KeyPressMask, mlx_key_press, main);
-	mlx_hook(main->mlx->win, KeyRelease, KeyReleaseMask, mlx_key_release,
-		main->mlx);
-	mlx_hook(main->mlx->win, DestroyNotify, NoEventMask, rt_free, main);
-	mlx_loop(main->mlx->init);
+	data->mlx = mlx_init_window(NULL, 500, 500);
+	if (!data->mlx)
+		return (rt_free(data, ERROR_MLX));
+	data->mlx->key = mlx_init_key();
+	data = test(data);
+	mlx_loop_hook(data->mlx->init, rt_image, data);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, mlx_key_press, data);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, mlx_key_release,
+		data->mlx);
+	mlx_hook(data->mlx->win, DestroyNotify, NoEventMask, rt_free, data);
+	mlx_loop(data->mlx->init);
 	return (0);
 }
 
 int	main(void)
 {
-	t_miniRT	*main;
+	t_miniRT	*data;
 
-	main = malloc(sizeof(*main));
-	if (!main)
-		return (rt_free(main, ERROR_MALLOC));
-	main->mlx = NULL;
-	main->garbage = NULL;
-	minirt(main);
+	data = malloc(sizeof(*data));
+	if (!data)
+		return (rt_free(data, ERROR_MALLOC));
+	data->mlx = NULL;
+	data->garbage = NULL;
+	minirt(data);
 	return (0);
 }

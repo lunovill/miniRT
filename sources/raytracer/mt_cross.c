@@ -27,3 +27,11 @@ void    cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx)
 	(*result).z = coor.x * (*mtx).s2 + coor.y * (*mtx).s6 + coor.z * (*mtx).sa + coor.w * (*mtx).se;
 	(*result).w = coor.x * (*mtx).s3 + coor.y * (*mtx).s7 + coor.z * (*mtx).sb + coor.w * (*mtx).sf;
 }
+
+void	mt_cross_cr(Coor4f *result, Matrix4f *mtx, Coor4f coor)
+{
+	(*result).x = (*mtx).s0 * coor.x + (*mtx).s1 * coor.y + (*mtx).s2 * coor.z + (*mtx).s3 * coor.w;
+	(*result).y = (*mtx).s4 * coor.x + (*mtx).s5 * coor.y + (*mtx).s6 * coor.z + (*mtx).s7 * coor.w;
+	(*result).z = (*mtx).s8 * coor.x + (*mtx).s9 * coor.y + (*mtx).sa * coor.z + (*mtx).sb * coor.w;
+	(*result).w = (*mtx).sc * coor.x + (*mtx).sd * coor.y + (*mtx).se * coor.z + (*mtx).sf * coor.w;
+}

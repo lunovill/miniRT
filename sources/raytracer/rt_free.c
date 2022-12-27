@@ -20,15 +20,15 @@ static void	rt_print_error(int code_error)
 		ft_putstr_fd(" mlx: window initialization failed\n", 2);
 }
 
-int	rt_free(t_miniRT *main, int code_error)
+int	rt_free(t_miniRT *data, int code_error)
 {
 	if (code_error)
 		rt_print_error(code_error);
-	if (main)
+	if (data)
 	{
-		gbg_remove(main->garbage);
-		mlx_close(main->mlx);
+		gbg_remove(data->garbage);
+		mlx_close(data->mlx);
 	}
-	ft_free(main);
+	ft_free(data);
 	return (exit(code_error), 0);
 }

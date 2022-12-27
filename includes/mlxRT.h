@@ -43,14 +43,14 @@ typedef struct s_mlx
 {
 	void	*init;
 	void	*win;
-	t_data	*data;
+	t_data	*scene;
 	int		wrslt;
 	int		hrslt;
 	t_key	*key;
 	int		color;
 }				t_mlx;
 
-void	mlx_put_pixel(t_mlx *mlx, int x, int y, int color);
+void	mlx_put_pixel(t_data *img, int x, int y, int color);
 void	mlx_close(t_mlx *mlx);
 int		mlx_key_release(int keycode, t_mlx *mlx);
 t_key	*mlx_init_key(void);

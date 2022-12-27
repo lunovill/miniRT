@@ -12,82 +12,56 @@
 
 #include "miniRT.h"
 
-void refresh(t_miniRT *main)
+void refresh(t_mlx *mlx)
 {
-	int j, i = 0;
-	int color = trgb_color(0, 0, 0, 0);
-
-	while (i < main->mlx->hrslt)
+	int x = 0;
+	while (x < mlx->hrslt)
 	{
-		j = 0;
-		while (j < main->mlx->wrslt)
-			mlx_put_pixel(main->mlx, j++, i, color);
-		i++;
+		int y = 0;
+		while (y < mlx->wrslt)
+			mlx_put_pixel(mlx->scene, y++, x, 0);
+		x++;
 	}
 }
 
-// void	rt(t_mlx *mlx, t_camera *c, t_sphere *sp)
-// {
-// 	float x, y, z;
+int move(t_camera *c, t_key *key)
+{
+	int ret = 0;
+	if (key->up == 1)
+		c->coor.y += .1, ret = 1;
+	if (key->down == 1)
+		c->coor.y -= .1, ret = 1;
+	if (key->right == 1)
+		c->coor.x += .1, ret = 1;
+	if (key->left == 1)
+		c->coor.x -= .1, ret = 1;
+	mt_view(&c->view, c->coor, c->vector);
+	mt_cross_mt(&c->trsfrm, &c->view, &c->prspct);
+	return ret;
+}
 
-// 	x = sp->camc.x - sp->rayon;
-// 	while (x <= sp->camc.x + sp->rayon)
-// 	{ 
-// 		y = sp->camc.y - sp->rayon;
-// 		while (y <= sp->camc.z + sp->rayon)
-// 		{
-// 			z = sp->camc.z - sp->rayon;
-// 			while (z <= sp->camc.z + sp->rayon)
-// 			{
-// 				rt_draw_pixel(mlx, c, x, y, z, sp->color);
-// 				z++;
-// 			}
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// }
-
-// void	rt_cammove(t_miniRT *main, t_camera *c, t_key *key)
-// {
-// 	if (key->up == 1)
-// 		c->coor.y++;
-// 	if (key->left == 1)
-// 		c->coor.x--;
-// 	if (key->down == 1)
-// 		c->coor.y--;
-// 	if (key->right == 1)
-// 		c->coor.x++;
-// 	if (key->befor == 1)
-// 		c->coor.z++;
-// 	if (key->behind == 1)
-// 		c->coor.z--;
-// 	mt_view(c->coor, c->vector);
-// 	int i = 0;
-// 	if (i)
-// 		rt_camcoor(main);
-// }
-
-int	rt_image(t_miniRT *main)
+int	rt_image(t_miniRT *data)
 {
 	Coor4f point = {0., 0., 1., 1.};
-	Coor4f point_t;
-	Coor4f point_c;
-	// Matrix4f transf;
-
-	// mt_cross_mt(&transf, &main->c->view, &main->c->prspct);
-	cr_cross_mt(&point_c, point, &main->c->view);
-	printf("C = %f, %f, %f, %f\n\n", point_c.x,point_c.y,point_c.z,point_c.w);
-	cr_cross_mt(&point_t, point_c, &main->c->prspct);
-	printf("T = %f, %f, %f, %f\n\n", point_t.x,point_t.y,point_t.z,point_t.w);
-	rt_draw_pixel(main->mlx, point_t, trgb_color(1, 255, 255, 255));
-	// printf("%f %f %f %f\n", point.x, point.y, point.z, point.w);
-	// printf("%f %f %f %f\n\n", point_t.x, point_t.y, point_t.z, point_t.w);
-	refresh(main);
-	// rt(main->mlx, main->c, main->sp[0]);
-	// rt_filled_circle(main->mlx, main->sp[0]);
-	mlx_put_image_to_window(main->mlx->init, main->mlx->win,
-		main->mlx->data->img, 0, 0);
-	// rt_cammove(main, main->c, main->mlx->key);
+	Coor4f result;
+	cr_cross_mt(&result, point, &data->c->view);
+	cr_cross_mt(&point, result, &data->c->prspct);
+	rt_draw_pixel(data->mlx, result, rgb_color(255, 255, 255));
+	// int i = 50;
+	// while (i--)
+	// {
+	// 	cr_cross_mt(&result, point, &data->c->view);
+	// 	// printf("%f, %f, %f, %f\n\n", result.x, result.y, result.z, result.w);
+	// 	rt_draw_pixel(data->mlx, result, rgb_color(255, 255, 255));
+	// 	// if (!(0 <= result.x && result.x < data->mlx->wrslt && 0 <= result.y && result.y < data->mlx->hrslt))
+	// 		// mlx_put_pixel(data->mlx->scene, result.x, result.y, rgb_color(255, 255, 255));
+	// 	// printf("%f, %f, %f, %f\n\n", point.x, point.y, point.z, point.w);
+	// 	point.x += .01;
+	// }
+	mlx_put_image_to_window(data->mlx->init, data->mlx->win, data->mlx->scene->img, 0, 0);
+	// move(data->c, data->mlx->key);
+	if (move(data->c, data->mlx->key))
+		refresh(data->mlx);
+	usleep(20000);
 	return (0);
 }

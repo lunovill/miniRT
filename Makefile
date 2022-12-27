@@ -28,14 +28,12 @@ SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(RTC_DIR)/mt_init\
 				$(RTC_DIR)/mt_cross\
 				$(RTC_DIR)/rt_camcoor\
-				$(RTC_DIR)/rt_circle\
 				$(RTC_DIR)/rt_draw_pixel\
 				$(RTC_DIR)/rt_free\
 				$(RTC_DIR)/rt_image\
-				$(RTC_DIR)/rt_line\
 				$(RTC_DIR)/mt_rotate\
 				miniRT\
-				trgb_color\
+				rgb_color\
 				
 
 SRCS = $(addsuffix .c, $(SRC_FILES))

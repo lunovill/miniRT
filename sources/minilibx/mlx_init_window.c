@@ -21,13 +21,13 @@ t_mlx	*ft_malloc_window(void)
 		return (NULL);
 	mlx->init = NULL;
 	mlx->win = NULL;
-	mlx->data = NULL;
+	mlx->scene = NULL;
 	mlx->key = NULL;
 	mlx->init = mlx_init();
 	if (!mlx->init)
 		return (mlx_close(mlx), NULL);
-	mlx->data = malloc(sizeof(t_data));
-	if (!mlx->data)
+	mlx->scene = malloc(sizeof(t_data));
+	if (!mlx->scene)
 		return (mlx_close(mlx), NULL);
 	return (mlx);
 }
@@ -48,10 +48,10 @@ t_mlx	*mlx_init_window(char *window_name, int width, int height)
 	mlx->win = mlx_new_window(mlx->init, mlx->wrslt, mlx->hrslt, window_name);
 	if (!mlx->win)
 		return (mlx_close(mlx), NULL);
-	mlx->data->img = mlx_new_image(mlx->init, width, height);
-	if (!mlx->data->img)
+	mlx->scene->img = mlx_new_image(mlx->init, width, height);
+	if (!mlx->scene->img)
 		return (mlx_close(mlx), NULL);
-	mlx->data->addr = mlx_get_data_addr(mlx->data->img, &mlx->data->bpp,
-			&mlx->data->sline, &mlx->data->endian);
+	mlx->scene->addr = mlx_get_data_addr(mlx->scene->img, &mlx->scene->bpp,
+			&mlx->scene->sline, &mlx->scene->endian);
 	return (mlx);
 }

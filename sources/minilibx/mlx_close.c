@@ -17,9 +17,9 @@ void	mlx_close(t_mlx *mlx)
 	if (!mlx)
 		return ;
 	ft_free(mlx->key);
-	if (mlx->data && mlx->data->img)
-		mlx_destroy_image(mlx->init, mlx->data->img);
-	ft_free(mlx->data);
+	if (mlx->scene && mlx->scene->img)
+		mlx_destroy_image(mlx->init, mlx->scene->img);
+	ft_free(mlx->scene);
 	if (mlx->win)
 		mlx_destroy_window(mlx->init, mlx->win);
 	if (mlx->init)

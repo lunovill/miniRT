@@ -12,12 +12,10 @@
 
 #include "mlxRT.h"
 
-void	mlx_put_pixel(t_mlx *mlx, int x, int y, int color)
+void	mlx_put_pixel(t_data *img, int x, int y, int color)
 {
-	t_data	*data;
 	char	*dst;
 
-	data = mlx->data;
-	dst = data->addr + (y * data->sline + x * (data->bpp / 8));
+	dst = img->addr + (y * img->sline + x * (img->bpp / 8));
 	*(unsigned int *)dst = color;
 }
