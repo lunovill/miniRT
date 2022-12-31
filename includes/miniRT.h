@@ -104,6 +104,7 @@ typedef struct s_miniRT
 
 int		mlx_key_press(int keycode, t_miniRT *main);
 
+void	ft_print_cam(t_camera *c);
 void 	cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx);
 void	mt_cross_cr(Coor4f *result, Matrix4f *mtx, Coor4f coor);
 void	mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2);

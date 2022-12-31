@@ -35,6 +35,10 @@ typedef struct s_key
 	int	left;
 	int	down;
 	int	right;
+	int rot_up;
+	int rot_down;
+	int rot_right;
+	int rot_left;
 	int befor;
 	int behind;
 }				t_key;

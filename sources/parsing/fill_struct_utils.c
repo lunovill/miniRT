@@ -104,12 +104,9 @@ char			**tab_coor;
 			(tmp->vector.s1 < -1.0 || tmp->vector.s1 > 1.0) ||
 			(tmp->vector.s2 < -1.0 || tmp->vector.s2 > 1.0))
 		gestion_error(data);
-	tmp->fov = cara_to_float(tab[3]);
-	tmp->far = 0;
-	tmp->near = 0;
-	tmp->view = (Matrix4f){1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
-	tmp->prspct = (Matrix4f){1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
-	tmp->trsfrm = (Matrix4f){1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+	tmp->fov = cara_to_float(tab[3]) * M_PI / 180.;
+	tmp->near = 0.1;
+	tmp->far = 100.0;
 	data->c = tmp;
 	return (0);
 }

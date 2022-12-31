@@ -194,6 +194,8 @@ int	fill_struct(t_miniRT *data, char *file)
 	while (ret != 0)
 	{
 		ret = my_gnl(fd, &line);
+		if (ret == 0)
+			break;
 		if (line[0] == '\r')
 			continue;
 		tab = ft_split(line, ' ');

@@ -82,6 +82,8 @@ int	parsing_utils(t_miniRT *data, int fd)
 	while (ret != 0)
 	{
 		ret = my_gnl(fd, &line);
+		if (ret == 0)
+			break;
 		if (line[0] == '\r')
 			continue ;
 		tab = ft_split(line, ' ');

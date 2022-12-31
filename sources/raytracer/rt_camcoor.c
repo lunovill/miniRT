@@ -8,7 +8,7 @@ void	rt_camcoor(t_miniRT *data)
 	if (data->sp)
 		while(data->sp[i])
 		{
-			cr_cross_mt(&data->sp[i]->camc, data->sp[i]->orgc, &data->c->trsfrm);
+			cr_cross_mt(&data->sp[i]->camc, data->sp[i]->orgc, &data->c->view);
 			i++;
 		}
 	// i = 0;
