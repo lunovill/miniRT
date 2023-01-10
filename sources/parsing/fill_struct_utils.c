@@ -104,7 +104,7 @@ char			**tab_coor;
 			(tmp->vector.s1 < -1.0 || tmp->vector.s1 > 1.0) ||
 			(tmp->vector.s2 < -1.0 || tmp->vector.s2 > 1.0))
 		gestion_error(data);
-	tmp->fov = cara_to_float(tab[3]) * M_PI / 180.;
+	tmp->fov = cara_to_float(tab[3]) * M_PI / 180.0;
 	tmp->near = 0.1;
 	tmp->far = 100.0;
 	data->c = tmp;

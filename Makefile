@@ -29,20 +29,21 @@ SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(MLX_DIR)/mlx_put_pixel\
 				$(RTC_DIR)/mt_init\
 				$(RTC_DIR)/mt_cross\
-				$(RTC_DIR)/rt_camcoor\
-				$(RTC_DIR)/rt_draw_pixel\
+				$(RTC_DIR)/raytracing\
 				$(RTC_DIR)/rt_free\
-				$(RTC_DIR)/rt_image\
+				$(RTC_DIR)/rt_intersection\
+				$(RTC_DIR)/rt_sphere\
 				$(RTC_DIR)/mt_rotate\
-				$(PSG_DIR)/init\
-				$(PSG_DIR)/error\
-				$(PSG_DIR)/parsing\
-				$(PSG_DIR)/fill_struct\
-				$(PSG_DIR)/get_next_line\
-				$(PSG_DIR)/fill_struct_utils\
-				$(PSG_DIR)/get_next_line_utils\
+				trgb_color\
 				main\
 				miniRT\
+				# $(PSG_DIR)/init\
+				# $(PSG_DIR)/error\
+				# $(PSG_DIR)/parsing\
+				# $(PSG_DIR)/fill_struct\
+				# $(PSG_DIR)/get_next_line\
+				# $(PSG_DIR)/fill_struct_utils\
+				# $(PSG_DIR)/get_next_line_utils\
 				
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
@@ -107,3 +108,5 @@ re : fclean all
 -include $(DEPS)
 
 .PHONY: all clean fclean re
+
+#.SILENT:

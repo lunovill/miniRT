@@ -35,3 +35,19 @@ void	mt_cross_cr(Coor4f *result, Matrix4f *mtx, Coor4f coor)
 	(*result).z = (*mtx).s8 * coor.x + (*mtx).s9 * coor.y + (*mtx).sa * coor.z + (*mtx).sb * coor.w;
 	(*result).w = (*mtx).sc * coor.x + (*mtx).sd * coor.y + (*mtx).se * coor.z + (*mtx).sf * coor.w;
 }
+
+void cross_product(Vector4f *result, Vector4f u, Vector4f v)
+{
+	(*result).x = u.y * v.z - u.z * v.y;
+	(*result).y = u.z * v.x - u.x * v.z;
+	(*result).z = u.x * v.y - u.y * v.x;
+	(*result).w = 0;
+}
+
+void normalize(Vector4f *result)
+{
+	float size;
+	
+	size = sqrtf((*result).x * (*result).x + (*result).y * (*result).y + (*result).z * (*result).z);
+	(*result).xyz /= size;
+}

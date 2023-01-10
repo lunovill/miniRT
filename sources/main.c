@@ -1,4 +1,4 @@
-#include "../includes/miniRT.h"
+#include "miniRT.h"
 
 int	check_name(char *str)
 {
@@ -27,26 +27,60 @@ int	check_name(char *str)
 
 //comment fonctionne la fct pour rgb en detail
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	t_miniRT	*data;
 
-	if (argc != 2 || (check_name(argv[1]) == 0))
-	{
-		printf("Error\nBad arguments\n");
-		return (0);
-	}
-	data = init_minirt();
-	if	(parsing(data, argv[1]) != 0)
-	{
-		printf("Error parsing\n");
-		gestion_error(data);
-	}
-	if (fill_struct(data, argv[1]) != 0)
-	{
-		printf("Error filling\n");
-		gestion_error(data);
-	}
+	// if (argc != 2 || (check_name(argv[1]) == 0))
+	// {
+	// 	printf("Error\nBad arguments\n");
+	// 	return (0);
+	// }
+	// data = init_minirt();
+	// if	(parsing(data, argv[1]) != 0)
+	// {
+	// 	printf("Error parsing\n");
+	// 	gestion_error(data);
+	// }
+	// if (fill_struct(data, argv[1]) != 0)
+	// {
+	// 	printf("Error filling\n");
+	// 	gestion_error(data);
+	// }
+	data  = malloc(sizeof(t_miniRT));
+	data->garbage = NULL;
+	// Camera
+	data->c = malloc(sizeof(t_camera));
+	data->garbage = gbg_add(data->garbage, data->c);
+	data->c->coor = (Coor4f){0.0, 0.0, 0.0, 1};
+	data->c->vector = (Vector4f){0.0, 0.0, 1.0, 0.0};
+	data->c->fov = 160 * M_PI / 180.0;
+	// Lumiere Ambiante
+	data->l = malloc(sizeof(t_light *) * 3);
+	data->garbage = gbg_add(data->garbage, data->l);
+	data->l[0] = malloc(sizeof(t_light));
+	data->garbage = gbg_add(data->garbage, data->l[0]);
+	data->l[0]->color = (Color4f){0.1, 255.0, 255.0, 255.0};
+	// Lumiere Verte
+	data->l[1] = malloc(sizeof(t_light));
+	data->garbage = gbg_add(data->garbage, data->l[1]);
+	data->l[1]->coor = (Coor4f){100.0, 100.0, 75.0};
+	data->l[1]->color = (Color4f){0.8, 0.0, 255.0, 0.0};
+	// Lumiere Rouge
+	data->l[2] = malloc(sizeof(t_light));
+	data->garbage = gbg_add(data->garbage, data->l[1]);
+	data->l[2]->coor = (Coor4f){-100.0, 100.0, 75.0};
+	data->l[2]->color = (Color4f){0.8, 255.0, 0.0, 0.0};
+	data->l[3] = NULL;
+	// Sphere Bleue
+	data->sp = malloc(sizeof(t_sphere *) * 3);
+	data->garbage = gbg_add(data->garbage, data->sp);
+	data->sp[0] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[0]);
+	data->sp[0]->coor = (Coor4f){0.0, 0.0, 300.0};
+	data->sp[0]->rayon = 3.0;
+	data->sp[0]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	data->sp[1] = NULL;
 	minirt(data);
 	// check all
 	// check ambiant light
