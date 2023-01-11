@@ -40,26 +40,41 @@
 // 	return ret;
 // }
 
-static void rt_pixel_to_point(Coor4f *point, t_miniRT *data, float x, float y)
-{
-	float	px;
-	float	py;
-	// Coor4f	pixel;
+// static void rt_pixel_to_point(Coor4f *point, t_miniRT *data, float x, float y)
+// {
+// 	float	px;
+// 	float	py;
+// 	// Coor4f	pixel;
 
-	px = (2.0 * x / data->mlx->wrslt - 1.0) * tanf(data->c->fov / 2.0) * data->mlx->wrslt / data->mlx->hrslt;
-	py = (1.0 - 2.0 * y / data->mlx->hrslt) * tanf(data->c->fov * data->mlx->wrslt / data->mlx->hrslt / 2.0);
-	(*point) = (Coor4f){px, py, -1.0, 1.0};
-	// pixel = (*point);
-	// cr_cross_mt(&(*point), pixel, &data->c->view);
-	// if ((x == 0.0 && y == 0.0) || (x == 0.0 && y == 499.0) || (x == 499.0 && y == 0.0) || (x == 499.0 && y == 499.0))
-		// printf("%f %f %f %f\n", (*point).x, (*point).y, (*point).z, (*point).w);
+// 	px = (2.0 * x / data->mlx->wrslt - 1.0) * tanf(data->c->fov / 2.0) * data->mlx->wrslt / data->mlx->hrslt;
+// 	py = (1.0 - 2.0 * y / data->mlx->hrslt) * tanf(data->c->fov * data->mlx->wrslt / data->mlx->hrslt / 2.0);
+// 	(*point) = (Coor4f){px, py, -1.0, 1.0};
+// 	// pixel = (*point);
+// 	// cr_cross_mt(&(*point), pixel, &data->c->view);
+// 	// if ((x == 0.0 && y == 0.0) || (x == 0.0 && y == 499.0) || (x == 499.0 && y == 0.0) || (x == 499.0 && y == 499.0))
+// 		// printf("%f %f %f %f\n", (*point).x, (*point).y, (*point).z, (*point).w);
+// }
+
+static void rt_pixel_to_point(Vector4f *ray, t_miniRT *data, float x, float y)
+{
+	float i_x;
+	float i_y;
+	Coor4f	clip;
+
+	float size = tanf(data->c->fov / 2.0);
+	clip = data->c->coor + (Vector4f)data->c->view.s89ab + (Vector4f)data->c->view.s4567 * size - (Vector4f)data->c->view.s0123 * size;
+	i_x = 2.0 * size / data->mlx->wrslt;
+	i_y = 2.0 * size / data->mlx->hrslt;
+	(*ray) = clip  + (Vector4f)data->c->view.s0123 * i_x * x - (Vector4f)data->c->view.s4567 * i_y * y;
+	// (*ray) *= 1 / size;
+	normalize(&*ray);
 }
 
 int	raytracing(t_miniRT *data)
 {
 	int	x;
 	int	y;
-	Coor4f			point;
+	Vector4f	ray;
 
 	y = 0;
 	while (y < data->mlx->hrslt)
@@ -69,8 +84,8 @@ int	raytracing(t_miniRT *data)
 		{
 			// if ((x == 0 && y == 0) || (x == 0 && y == 499) || (x == 499 && y == 0) || (x == 499 && y == 499))
 				// printf("%i %i\t", x, y);
-			rt_pixel_to_point(&point, data, x, y);
-			mlx_put_pixel(data->mlx->scene, x, y, rt_intersection(data, point, data->c->vector));
+			rt_pixel_to_point(&ray, data, x, y);
+			mlx_put_pixel(data->mlx->scene, x, y, rt_intersection(data, data->c->coor, ray));
 			x++;
 		}
 		y++;
