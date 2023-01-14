@@ -10,25 +10,10 @@ static float	rt_intersection_cy(t_cylinder **cy, int *object, Coor4f rorg, Vecto
 	(void)rdrt;
 }
 
-static float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt)
-{
-	return (0.0);
-	object = 0;
-	(void)pl;
-	(void)rorg;
-	(void)rdrt;
-}
-
 int	rt_cylinder(t_cylinder *cy)
 {
 	return (0);
 	(void)cy;
-}
-
-int	rt_plane(t_plane *pl)
-{
-	return (0);
-	(void)pl;
 }
 
 int	rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt)
@@ -60,7 +45,7 @@ int	rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt)
 	else if (d_min && d_min == d[1])
 		color = rt_cylinder(data->cy[object[1]]);
 	else if (d_min && d_min == d[2])
-		color = rt_plane(data->pl[object[2]]);
+		color = rt_plane(data->pl[object[2]], rorg, rdrt, d_min, data->l);
 	else
 		color = trgb_color(data->l[0]->color * data->l[0]->color.x);
 	return (color);

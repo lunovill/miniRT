@@ -85,7 +85,7 @@ int main()
 	data->garbage = gbg_add(data->garbage, data->l);
 	data->l[0] = malloc(sizeof(t_light));
 	data->garbage = gbg_add(data->garbage, data->l[0]);
-	data->l[0]->color = (Color4f){0.2, 255.0, 255.0, 255.0};
+	data->l[0]->color = (Color4f){0.1, 255.0, 255.0, 255.0};
 	// Lumiere Verte
 	data->l[1] = malloc(sizeof(t_light));
 	data->garbage = gbg_add(data->garbage, data->l[1]);
@@ -103,7 +103,7 @@ int main()
 	data->l[3]->color = (Color4f){0.5, 255.0, 255.0, 255.0};
 	data->l[4] = NULL;
 	// Sphere 0
-	data->sp = malloc(sizeof(t_sphere *) * 3);
+	data->sp = malloc(sizeof(t_sphere *) * 16);
 	data->garbage = gbg_add(data->garbage, data->sp);
 	data->sp[0] = malloc(sizeof(t_sphere));
 	data->garbage = gbg_add(data->garbage, data->sp[0]);
@@ -113,7 +113,7 @@ int main()
 	// Sphere 1
 	data->sp[1] = malloc(sizeof(t_sphere));
 	data->garbage = gbg_add(data->garbage, data->sp[1]);
-	data->sp[1]->orgc = (Coor4f){-50.0, -50.0, 50.0};
+	data->sp[1]->orgc = (Coor4f){-50.0, -50.0, 20.0};
 	data->sp[1]->rayon = 10.0;
 	data->sp[1]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
 	// Sphere 2
@@ -125,16 +125,70 @@ int main()
 	// Sphere 3
 	data->sp[3] = malloc(sizeof(t_sphere));
 	data->garbage = gbg_add(data->garbage, data->sp[3]);
-	data->sp[3]->orgc = (Coor4f){25.0, -25.0, 50.0};
+	data->sp[3]->orgc = (Coor4f){25.0, -25.0, 100.0};
 	data->sp[3]->rayon = 10.0;
 	data->sp[3]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
 	// Sphere 4
 	data->sp[4] = malloc(sizeof(t_sphere));
 	data->garbage = gbg_add(data->garbage, data->sp[4]);
-	data->sp[4]->orgc = (Coor4f){0.0, 0.0, 50.0};
+	data->sp[4]->orgc = (Coor4f){0.0, 0.0, 100.0};
 	data->sp[4]->rayon = 10.0;
 	data->sp[4]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
-	data->sp[5] = NULL;
+	// Shpere 5
+	data->sp[5] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[5]);
+	data->sp[5]->orgc = (Coor4f){25.0, 50.0, 100.0};
+	data->sp[5]->rayon = 10.0;
+	data->sp[5]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Sphere 6
+	data->sp[6] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[6]);
+	data->sp[6]->orgc = (Coor4f){0.0, 50.0, 100.0};
+	data->sp[6]->rayon = 10.0;
+	data->sp[6]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Sphere 7
+	data->sp[7] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[7]);
+	data->sp[7]->orgc = (Coor4f){-25.0, 50.0, 50.0};
+	data->sp[7]->rayon = 10.0;
+	data->sp[7]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Sphere 8
+	data->sp[8] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[8]);
+	data->sp[8]->orgc = (Coor4f){0.0, -50.0, 50.0};
+	data->sp[8]->rayon = 10.0;
+	data->sp[8]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Sphere 9
+	data->sp[9] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[9]);
+	data->sp[9]->orgc = (Coor4f){50.0, 25.0, 50.0};
+	data->sp[9]->rayon = 10.0;
+	data->sp[9]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Sphere 3
+	data->sp[10] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[10]);
+	data->sp[10]->orgc = (Coor4f){25.0, 25.0, 50.0};
+	data->sp[10]->rayon = 10.0;
+	data->sp[10]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Sphere 4
+	data->sp[11] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[11]);
+	data->sp[11]->orgc = (Coor4f){-50.0, 0.0, 50.0};
+	data->sp[11]->rayon = 10.0;
+	data->sp[11]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Shpere 5
+	data->sp[12] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[12]);
+	data->sp[12]->orgc = (Coor4f){25.0, 0.0, 50.0};
+	data->sp[12]->rayon = 10.0;
+	data->sp[12]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	// Sphere 6
+	data->sp[13] = malloc(sizeof(t_sphere));
+	data->garbage = gbg_add(data->garbage, data->sp[13]);
+	data->sp[13]->orgc = (Coor4f){-25.0, -25.0, 50.0};
+	data->sp[13]->rayon = 10.0;
+	data->sp[13]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+	data->sp[14] = NULL;
 	minirt(data);
 	return (0);
 }

@@ -42,7 +42,6 @@ int	rt_sphere(t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l)
 {
 	Coor4f	p_intst = orgc + t * ray;
 	Vector4f normal = p_intst - sp->coor;
-	// normal.xyz /= sqrtf(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
     normalize(&normal);
 	Color4f color;
 	color.yzw = l[0]->color.x * (sp->color.yzw + l[0]->color.x * l[0]->color.yzw);
@@ -50,18 +49,15 @@ int	rt_sphere(t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l)
 	while (l[i])
 	{
 		Vector4f l_vec = l[i]->coor - p_intst;
-		// l_vec.xyz /= sqrtf(l_vec.x * l_vec.x + l_vec.y * l_vec.y + l_vec.z * l_vec.z);
         normalize(&l_vec);
 		float angle = normal.x * l_vec.x + normal.y * l_vec.y + normal.z * l_vec.z;
 		if (angle > 0.0 && angle <= M_PI / 2)
-		{
 			color.yzw += l[i]->color.x * l[i]->color.yzw * angle;
-		}
 		i++;
 	}
 	color.x = 1;
 	color.y = (color.y > 255.0) ? 255.0 : color.y;
 	color.z = (color.z > 255.0) ? 255.0 : color.z;
 	color.w = (color.w > 255.0) ? 255.0 : color.w;
-	return(trgb_color(color * color.x));
+	return(trgb_color(color));
 }
