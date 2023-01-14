@@ -60,7 +60,7 @@ int	main(void)
 	data->garbage = gbg_add(data->garbage, data->l);
 	data->l[0] = malloc(sizeof(t_light));
 	data->garbage = gbg_add(data->garbage, data->l[0]);
-	data->l[0]->color = (Color4f){0.1, 255.0, 255.0, 255.0};
+	data->l[0]->color = (Color4f){0.5, 255.0, 255.0, 255.0};
 	// Lumiere Verte
 	data->l[1] = malloc(sizeof(t_light));
 	data->garbage = gbg_add(data->garbage, data->l[1]);
@@ -81,6 +81,25 @@ int	main(void)
 	data->sp[0]->rayon = 25.0;
 	data->sp[0]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
 	data->sp[1] = NULL;
+	// plan 1
+	data->pl = malloc(sizeof(t_plane *) * 3);
+	data->garbage = gbg_add(data->garbage, data->pl[0]);
+	data->pl[0] = malloc(sizeof(t_plane));
+	data->garbage = gbg_add(data->garbage, data->pl[0]);
+	data->pl[0]->coor = (Coor4f){0.0, 0.0, 50.0};
+	data->pl[0]->vector = (Vector4f){0.0, 1.0, 0.0};
+	data->pl[0]->color = (Color4f){1, 255, 0, 255};
+	data->pl[1] = NULL;
+	// plan 2
+//	data->pl = malloc(sizeof(t_plane *) * 3);
+//	data->garbage = gbg_add(data->garbage, data->pl[1]);
+//	data->pl[1] = malloc(sizeof(t_plane));
+//	data->garbage = gbg_add(data->garbage, data->pl[1]);
+//	data->pl[1]->coor = (Coor4f){0.0, 0.0, 40.0};
+//	data->pl[1]->vector = (Vector4f){0.0, 1.0, 0.0};
+//	data->pl[1]->color = (Color4f){1, 0, 255, 255};
+//	data->pl[2] = NULL;
+
 	minirt(data);
 	// check all
 	// check ambiant light
