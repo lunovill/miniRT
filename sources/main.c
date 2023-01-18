@@ -41,7 +41,7 @@ int main()
 	data->garbage = gbg_add(data->garbage, data->l);
 	data->l[0] = malloc(sizeof(t_light));
 	data->garbage = gbg_add(data->garbage, data->l[0]);
-	data->l[0]->color = (Color4f){0.1, 255.0, 255.0, 255.0};
+	data->l[0]->color = (Color4f){0.5, 255.0, 255.0, 255.0};
 	// Lumiere Verte
 	data->l[1] = malloc(sizeof(t_light));
 	data->garbage = gbg_add(data->garbage, data->l[1]);
@@ -75,6 +75,7 @@ int main()
 	data->sp[0]->coor = (Coor4f){0.0, 0.0, 25.0, 1.0};
 	data->sp[0]->rayon = 10.0;
 	data->sp[0]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
+<<<<<<< HEAD
 	// Sphere 1
 	data->sp[1] = malloc(sizeof(t_sphere));
 	data->garbage = gbg_add(data->garbage, data->sp[1]);
@@ -154,6 +155,28 @@ int main()
 	// data->sp[13]->rayon = 10.0;
 	// data->sp[13]->color = (Color4f){1.0, 0.0, 0.0, 255.0};
 	data->sp[9] = NULL;
+=======
+	data->sp[1] = NULL;
+	// plan 1
+	data->pl = malloc(sizeof(t_plane *) * 3);
+	data->garbage = gbg_add(data->garbage, data->pl[0]);
+	data->pl[0] = malloc(sizeof(t_plane));
+	data->garbage = gbg_add(data->garbage, data->pl[0]);
+	data->pl[0]->coor = (Coor4f){0.0, 0.0, 50.0};
+	data->pl[0]->vector = (Vector4f){0.0, 1.0, 0.0};
+	data->pl[0]->color = (Color4f){1, 255, 0, 255};
+	data->pl[1] = NULL;
+	// plan 2
+//	data->pl = malloc(sizeof(t_plane *) * 3);
+//	data->garbage = gbg_add(data->garbage, data->pl[1]);
+//	data->pl[1] = malloc(sizeof(t_plane));
+//	data->garbage = gbg_add(data->garbage, data->pl[1]);
+//	data->pl[1]->coor = (Coor4f){0.0, 0.0, 40.0};
+//	data->pl[1]->vector = (Vector4f){0.0, 1.0, 0.0};
+//	data->pl[1]->color = (Color4f){1, 0, 255, 255};
+//	data->pl[2] = NULL;
+
+>>>>>>> 62de81980de1398cdec188f4872050f968d6517b
 	minirt(data);
 	return (0);
 }
