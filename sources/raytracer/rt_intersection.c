@@ -9,33 +9,12 @@ static float	rt_intersection_cy(t_cylinder **cy, int *object, Coor4f rorg, Vecto
 	(void)rorg;
 	(void)rdrt;
 }
-<<<<<<< HEAD
-=======
-/*
-static float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt)
-{
-	return (0.0);
-	object = 0;
-	(void)pl;
-	(void)rorg;
-	(void)rdrt;
-}*/
->>>>>>> 62de81980de1398cdec188f4872050f968d6517b
 
 int	rt_cylinder(t_cylinder *cy)
 {
 	return (0);
 	(void)cy;
 }
-<<<<<<< HEAD
-=======
-/*
-int	rt_plane(t_plane *pl)
-{
-	return (0);
-	(void)pl;
-}*/
->>>>>>> 62de81980de1398cdec188f4872050f968d6517b
 
 int	rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt)
 {
