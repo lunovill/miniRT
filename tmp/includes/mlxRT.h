@@ -17,11 +17,6 @@
 # include "libft.h"
 # include "mlx.h"
 # include "mlx_int.h"
-
-# define	NAME "miniRT"
-# define	W_SSCREEN 500.0
-# define	H_SSCREEN 500.0
-
 #define K_Home 65360
 #define K_End 65367
 
@@ -53,8 +48,8 @@ typedef struct s_mlx
 	void	*init;
 	void	*win;
 	t_data	*scene;
-	float		wrslt;
-	float		hrslt;
+	int		wrslt;
+	int		hrslt;
 	t_key	*key;
 	int		color;
 }				t_mlx;

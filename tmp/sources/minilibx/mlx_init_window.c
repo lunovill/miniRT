@@ -34,16 +34,12 @@ t_mlx	*ft_malloc_window(void)
 
 t_mlx	*mlx_init_window(char *window_name, int width, int height)
 {
-	int tmp_w;
-	int tmp_h;
 	t_mlx	*mlx;
 
 	mlx = ft_malloc_window();
-	mlx_get_screen_size(mlx->init, &tmp_w, &tmp_h);
-	mlx->wrslt = tmp_w;
-	mlx->hrslt = tmp_h;
+	mlx_get_screen_size(mlx->init, &mlx->wrslt, &mlx->hrslt);
 	if (!window_name)
-		window_name = NAME;
+		window_name = "miniRT";
 	if (0 < width && width <= mlx->wrslt && 0 < height && height <= mlx->hrslt)
 	{
 		mlx->wrslt = width;

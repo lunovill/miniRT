@@ -17,18 +17,34 @@
 SRCS_DIR = sources
 MLX_DIR = minilibx
 RTC_DIR = raytracer
+PSG_DIR = parsing
 SRCS_DIRS = $(MLX_DIR)\
 				$(RTC_DIR)\
+				$(PSG_DIR)\
 
 SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(MLX_DIR)/mlx_event\
 				$(MLX_DIR)/mlx_init_key\
 				$(MLX_DIR)/mlx_init_window\
 				$(MLX_DIR)/mlx_put_pixel\
+				$(RTC_DIR)/mt_init\
+				$(RTC_DIR)/mt_cross\
+				$(RTC_DIR)/raytracing\
 				$(RTC_DIR)/rt_free\
-				$(RTC_DIR)/rt_image\
+				$(RTC_DIR)/rt_intersection\
+				$(RTC_DIR)/rt_plane\
+				$(RTC_DIR)/rt_sphere\
+				$(RTC_DIR)/mt_rotate\
 				trgb_color\
+				main\
 				miniRT\
+				# $(PSG_DIR)/init\
+				# $(PSG_DIR)/error\
+				# $(PSG_DIR)/parsing\
+				# $(PSG_DIR)/fill_struct\
+				# $(PSG_DIR)/get_next_line\
+				# $(PSG_DIR)/fill_struct_utils\
+				# $(PSG_DIR)/get_next_line_utils\
 				
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
@@ -74,6 +90,7 @@ $(OBJS_DIR) :
 	mkdir $(OBJS_DIR)
 	mkdir $(OBJS_DIR)/$(MLX_DIR)
 	mkdir $(OBJS_DIR)/$(RTC_DIR)
+	mkdir $(OBJS_DIR)/$(PSG_DIR)
 
 $(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@

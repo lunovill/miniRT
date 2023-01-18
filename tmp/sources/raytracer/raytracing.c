@@ -50,21 +50,18 @@ int move(t_camera *c, t_key *key)
 
 static void rt_pixel_to_point(Vector4f *ray, t_miniRT *data, float x, float y)
 {
-	float i_x;
-	float i_y;
-	Coor4f	clip;
 
-	float size = tanf(data->c->fov / 2.0);
-	clip = data->c->coor + (Vector4f)data->c->view.s89ab + (Vector4f)data->c->view.s4567 * size - (Vector4f)data->c->view.s0123 * size;
-	i_x = 2.0 * size / data->mlx->wrslt;
-	i_y = 2.0 * size / data->mlx->hrslt;
-	// if ((x == 0.0 && y == 0.0) || (x == 0.0 && y == 250.0))
-	// {
-	// 	printf("size = %f\n clip (0.0, 0.0, 1.0) = (%f, %f, %f)\n i_xy = %f %f\n\n", size, clip.x, clip.y, clip.z, i_x, i_y);
-	// 	printf("Right = %f %f %f\nUp =     %f %f %f\nDown =  %f %f %f", data->c->view.s0, data->c->view.s1,  data->c->view.s2, data->c->view.s4, data->c->view.s5, data->c->view.s6, data->c->view.s8, data->c->view.s9, data->c->view.sa);
-	// }
-	(*ray) = clip + (Vector4f)data->c->view.s0123 * i_x * x - (Vector4f)data->c->view.s4567 * i_y * y;
-	// (*ray) *= 1 / size;
+	// float a = tanf(data->c->fov / 2.0);
+	float theta = -(data->c->fov / 2.0) + data->c->fov / data->mlx->wrslt * x;
+	// // float c = tanf(data->c->fov / 2.0);
+	float phi = -(data->c->fov / 2.0) + data->c->fov / data->mlx->hrslt * y;
+
+	// float z = cosf(theta);
+	(*ray) = tanf(theta) * (Vector4f)data->c->view.s0123 - tanf(phi) * (Vector4f)data->c->view.s4567 + (Vector4f)data->c->view.s89ab;
+	// float f = 1.0 / tanf(data->c->fov / 2.0);
+	// (*ray) = (Vector4f){(-250 + x) * f, (250 -  y) * f, -f + 100.0, 0.0};
+	(*ray) += data->c->coor;
+	// (*ray) += (Vector4f)data->c->view.s89ab;
 	normalize(&*ray);
 }
 

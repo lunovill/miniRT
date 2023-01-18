@@ -3,6 +3,8 @@
 static float	ray_to_sphere(Coor4f rorg, Vector4f rdrt, Coor4f sp, float r)
 {
 	float	a = rdrt.x * rdrt.x + rdrt.y * rdrt.y + rdrt.z * rdrt.z;
+	// float	a = fabs(rdrt.x) + fabs(rdrt.y) + fabs(rdrt.z);
+	// float	a = 1;
 	float	b = 2.0 * (rdrt.x * (rorg.x - sp.x) + rdrt.y * (rorg.y - sp.y) + rdrt.z * (rorg.z - sp.z));
 	float	c = (rorg.x - sp.x) * (rorg.x - sp.x) + (rorg.y - sp.y) * (rorg.y - sp.y) + (rorg.z - sp.z) * (rorg.z - sp.z) - r * r;
 	float	d = b * b - 4.0 * a * c;
