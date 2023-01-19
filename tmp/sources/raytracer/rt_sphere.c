@@ -42,7 +42,7 @@ float	rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt)
 	return (d_min);
 }
 
-int	rt_sphere(t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l)
+int	rt_sphere(t_miniRT *data, t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l)
 {
 	Coor4f	p_intst = orgc + t * ray;
 	Vector4f normal = p_intst - sp->coor;
@@ -55,8 +55,14 @@ int	rt_sphere(t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l)
 		Vector4f l_vec = l[i]->coor - p_intst;
         normalize(&l_vec);
 		float angle = normal.x * l_vec.x + normal.y * l_vec.y + normal.z * l_vec.z;
-		if (angle > 0.0 && angle <= M_PI / 2)
-			color.yzw += l[i]->color.x * l[i]->color.yzw * angle;
+		// if (angle > 0.0 && angle <= M_PI / 2)
+		// {
+		// 	float	shade = rt_shade(data, l[i]->coor, -l_vec);
+		// 	if (shade && shade < t)
+		// 		color.yzw -= -50.0;
+		// 	else
+				color.yzw += l[i]->color.x * l[i]->color.yzw * angle + (sp->color.yzw * l[i]->color.x * angle);
+		}
 		i++;
 	}
 	color.x = 1;

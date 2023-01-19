@@ -41,7 +41,7 @@ int	rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt)
 	if (d[2] && (!d_min || d[2] < d_min))
 		d_min = d[2];
 	if (d_min && d_min == d[0])
-		color = rt_sphere(data->sp[object[0]], rorg, rdrt, d_min, data->l);
+		color = rt_sphere(data, data->sp[object[0]], rorg, rdrt, d_min, data->l);
 	else if (d_min && d_min == d[1])
 		color = rt_cylinder(data->cy[object[1]]);
 	else if (d_min && d_min == d[2])

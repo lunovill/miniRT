@@ -47,7 +47,7 @@ int	rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l)
 		normalize(&l_vec);
 		float angle = pl->vector.x * l_vec.x + pl->vector.y * l_vec.y + pl->vector.z * l_vec.z;
 		if (angle > 0.0 && angle <= M_PI / 2)
-			color.yzw += l[i]->color.x * l[i]->color.yzw * angle;
+			color.yzw += l[i]->color.x * l[i]->color.yzw * angle + (pl->color.yzw * l[i]->color.x * angle);
 		i++;
 	}
 	color.x = 1;

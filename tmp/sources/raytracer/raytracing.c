@@ -26,17 +26,17 @@ int move(t_camera *c, t_key *key)
 {
 	int ret = 0;
 	if (key->up == 1)
-		c->coor += (Coor4f)c->view.s4567, ret = 1;
+		c->coor += (Coor4f)c->view.s4567 * 5.0, ret = 1;
 	if (key->down == 1)
-		c->coor -= (Coor4f)c->view.s4567, ret = 1;
+		c->coor -= (Coor4f)c->view.s4567 * 5.0, ret = 1;
 	if (key->right == 1)
-		c->coor += (Coor4f)c->view.s0123, ret = 1;
+		c->coor += (Coor4f)c->view.s0123 * 5.0, ret = 1;
 	if (key->left == 1)
-		c->coor -= (Coor4f)c->view.s0123, ret = 1;
+		c->coor -= (Coor4f)c->view.s0123 * 5.0, ret = 1;
 	if (key->befor == 1)
-		c->coor += (Coor4f)c->view.s89ab *0.1, ret = 1;
+		c->coor += (Coor4f)c->view.s89ab * 5.0, ret = 1;
 	if (key->behind == 1)
-		c->coor -= (Coor4f)c->view.s89ab * 0.1, ret = 1;
+		c->coor -= (Coor4f)c->view.s89ab * 5.0, ret = 1;
 	if (key->rot_up == 1)
 		mt_rotate_x(&c->view, -0.1), ret = 2;
 	if (key->rot_down == 1)
@@ -48,43 +48,47 @@ int move(t_camera *c, t_key *key)
 	return ret;
 }
 
+// static void rt_pixel_to_point(Vector4f *ray, t_miniRT *data, float x, float y)
+// {
+
+// 	// float a = tanf(data->c->fov / 2.0);
+// 	// float theta = -(data->c->fov / 2.0) + data->c->fov / data->mlx->wrslt * x;
+// 	// // float c = tanf(data->c->fov / 2.0);
+// 	// float phi = -(data->c->fov / 2.0) + data->c->fov / data->mlx->hrslt * y;
+
+// 	// float z = cosf(theta);
+// 	// (*ray) = tanf(theta) * (Vector4f)data->c->view.s0123  - tanf(phi) * (Vector4f)data->c->view.s4567 + (Vector4f)data->c->view.s89ab;
+// 	// (*ray) += data->c->coor;
+// 	// (*ray) += (Vector4f)data->c->view.s89ab;
+// 	normalize(&*ray);
+// 	(void)data;
+// }
+
 static void rt_pixel_to_point(Vector4f *ray, t_miniRT *data, float x, float y)
 {
+	/* Version 1*/
+	float	xRel = (2.0 * (x / data->mlx->wrslt) - 1.0) * tanf(data->c->fov / 2.0) * data->mlx->wrslt / data->mlx->hrslt;
+	float	yRel = (1.0 - 2.0 * (y / data->mlx->hrslt)) * tanf(data->c->fov / 2.0);
+	float	zRel = (1.0 - 2.0 * (1.0 / data->mlx->wrslt)) * tanf(data->c->fov / 2.0) * 2.0;
+	float f = 1.0 / tanf(data->c->fov / 2.0);
+	(*ray) = xRel * (Vector4f)data->c->view.s0123 * f + yRel * (Vector4f)data->c->view.s4567 * f + zRel * (Vector4f)data->c->view.s89ab * f;
 
-	// float a = tanf(data->c->fov / 2.0);
-	float theta = -(data->c->fov / 2.0) + data->c->fov / data->mlx->wrslt * x;
-	// // float c = tanf(data->c->fov / 2.0);
-	float phi = -(data->c->fov / 2.0) + data->c->fov / data->mlx->hrslt * y;
-
-	// float z = cosf(theta);
-	(*ray) = tanf(theta) * (Vector4f)data->c->view.s0123 - tanf(phi) * (Vector4f)data->c->view.s4567 + (Vector4f)data->c->view.s89ab;
-	// float f = 1.0 / tanf(data->c->fov / 2.0);
-	// (*ray) = (Vector4f){(-250 + x) * f, (250 -  y) * f, -f + 100.0, 0.0};
-	(*ray) += data->c->coor;
-	// (*ray) += (Vector4f)data->c->view.s89ab;
-	normalize(&*ray);
+	/* Version 2*/
+	// cr_cross_mt(&*org, (Coor4f){0.0, 0.0, 0.0, 1.0}, &data->c->view);
+	// float	fov_coeff = tanf(data->c->fov / 2.0 * M_PI / 180.0);
+	// float	xRel = (2.0 * (x + 0.5) / data->mlx->wrslt - 1.0) * fov_coeff * data->mlx->wrslt / data->mlx->hrslt;
+	// float	yRel = (1.0 - 2.0 * (y + 0.5) / data->mlx->hrslt) * fov_coeff;
+	// Vector4f ray = (Vector4f){xRel, yRel, 1.0, 0.0};
+	// cr_cross_mt(&*drt, ray, &data->c->view);
+	// *drt -= *org;
+	// normalize(&*drt);
 }
-
-// void rt_pixel_to_point(Vector4f *ray, t_miniRT *data, float x, float y)
-// {
-// 	float f = 1.0 / tanf(data->c->fov / 2.0);
-// 	// printf("fov = %f\n\n", f);
-// 	float px = (2.0 * x / data->mlx->wrslt - 1.0) * tanf(data->c->fov / 2.0) * data->mlx->wrslt / data->mlx->hrslt;
-// 	float py = (1.0 - 2.0 * y / data->mlx->hrslt) * tanf(data->c->fov / 2.0);
-// 	(*ray) = (Vector4f){px * f, py * f, -f, 1.0};
-// 	// (*ray) = (Vector4f){px, py, -1, 1.0};
-// 	// (*ray) /= sqrtf(px * px + py * py + 1.0);
-// 	// if ((x == 0.0 && y == 0.0) || (x == 0.0 && y == 499.0) || (x == 499.0 && y == 0.0) || (x == 499.0 && y == 499.0))
-// 		// printf("%f %f %f %f\n", px, py, -1.0, 1.0);
-// 	(*ray).xyz += data->c->coor.xyz;
-// 	(*ray).xyz += data->c->vector.xyz;
-// 	(*ray).xyz /= sqrtf((*ray).x * (*ray).x + (*ray).y * (*ray).y + (*ray).z * (*ray).z);
-// }
 
 int	raytracing(t_miniRT *data)
 {
 	int	x;
 	int	y;
+	// Coor4f		org;
 	Vector4f	ray;
 
 	y = 0;
@@ -107,19 +111,7 @@ int	raytracing(t_miniRT *data)
 	}
 	// exit (42);
 	mlx_put_image_to_window(data->mlx->init, data->mlx->win, data->mlx->scene->img, 0, 0);
-	int ret = move(data->c, data->mlx->key);
-	if (ret == 1)
-	{
-		mt_view(&data->c->view, data->c->coor, data->c->vector);
-		ft_print_cam(data->c);
-		// printf("%f %f %f %f\n", data->c->coor.x, data->c->coor.y, data->c->coor.z, data->c->coor.w);
-	}
-	else if (ret == 2)
-	{
-		data->c->vector = (Vector4f)data->c->view.s89ab;
-		ft_print_cam(data->c);
-		// printf("%f %f %f %f\n", data->c->vector.x, data->c->vector.y, data->c->vector.z, data->c->vector.w);
-	}
+	move(data->c, data->mlx->key);
 	// usleep(20000);
 	return (0);
 }
