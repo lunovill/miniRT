@@ -72,18 +72,17 @@ int	fill_ambiant(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
-			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
-	tmp->camc = (Coor4f){0, 0, 0, 1};
-	tmp->orgc = (Coor4f){0, 0, 0, 2};
+//	printf("%d %d %d\n", ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
+	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
+//	printf("%f %f %f %f\n", tmp->color.s0, tmp->color.s1, tmp->color.s2, tmp->color.s3);
+	tmp->coor = (Coor4f){0, 0, 0, 2};
 	data->l[0] = tmp;
 	return (0);
 }
 
 int	fill_camera(t_miniRT *data, char **tab)
 {
-char			**tab_coor;
-	char		**tab_vect;
+	char		**tab_nb;
 	t_camera	*tmp;
 	int			i;
 
@@ -96,10 +95,12 @@ char			**tab_coor;
 		i++;
 	if (i != 4)
 		gestion_error(data);
-	tab_coor = ft_split(tab[1], ',');
-	tmp->coor = (Coor4f){cara_to_float(tab_coor[0]), cara_to_float(tab_coor[1]), cara_to_float(tab_coor[2]), 1};
-	tab_vect = ft_split(tab[2], ',');
-	tmp->vector = (Vector4f){cara_to_float(tab_vect[0]), cara_to_float(tab_vect[1]), cara_to_float(tab_vect[2]), 0};
+	tab_nb = ft_split(tab[1], ',');
+	check_tab(data, tab_nb);
+	tmp->coor = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
+	tab_nb = ft_split(tab[2], ',');
+	check_tab(data, tab_nb);
+	tmp->vector = (Vector4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
 	if ((tmp->vector.s0 < -1.0 || tmp->vector.s0 > 1.0) ||
 			(tmp->vector.s1 < -1.0 || tmp->vector.s1 > 1.0) ||
 			(tmp->vector.s2 < -1.0 || tmp->vector.s2 > 1.0))

@@ -2,13 +2,12 @@
 
 t_miniRT	*init_minirt(void)
 {
+	t_check_file	*tmp;
 	t_miniRT		*data;
-	t_check_file		*tmp;
 
 	data = malloc(sizeof(*data));
 	if (!data)
 		return (NULL);
-	data->mlx = NULL;
 	data->garbage = NULL;
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)

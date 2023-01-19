@@ -20,16 +20,14 @@ int	fill_light(t_miniRT *data, char **tab)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
-	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
+	tmp->coor = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tab_nb = ft_split(tab[3], ',');
 	check_tab(data, tab_nb);
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
-			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
-	tmp->camc = (Coor4f){0, 0, 0, 2};
+	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
 	data->l[1] = tmp;
 	data->l[2] = NULL;
 	return (0);
@@ -52,7 +50,7 @@ int	fill_plane(t_miniRT *data, char **tab)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
-	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
+	tmp->coor = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tab_nb = ft_split(tab[2], ',');
 	check_tab(data, tab_nb);
 	tmp->vector = (Vector4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
@@ -62,9 +60,7 @@ int	fill_plane(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
-			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
-	tmp->camc = (Coor4f){0, 0, 0, 2};
+	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
 	data->pl[data->check->nb_pl] = tmp;
 	data->pl[data->check->nb_pl + 1] = NULL;
 	data->check->nb_pl++;
@@ -88,7 +84,7 @@ int	fill_sphere(t_miniRT *data, char **tab)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
-	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
+	tmp->coor = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tmp->rayon = cara_to_float(tab[2]) / 2;
 	tab_nb = ft_split(tab[3], ',');
 	check_tab(data, tab_nb);
@@ -96,9 +92,7 @@ int	fill_sphere(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
-			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
-	tmp->camc = (Coor4f){0, 0, 0, 2};
+	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
 	data->sp[data->check->nb_sp] = tmp;
 	data->sp[data->check->nb_sp + 1] = NULL;
 	data->check->nb_sp++;
@@ -122,7 +116,7 @@ int	fill_cylinder(t_miniRT *data, char **tab)
 		gestion_error(data);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
-	tmp->orgc = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
+	tmp->coor = (Coor4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tab_nb = ft_split(tab[2], ',');
 	check_tab(data, tab_nb);
 	tmp->vector = (Vector4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
@@ -134,9 +128,7 @@ int	fill_cylinder(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = rgb_color(ft_atoi(tab_nb[0]), 
-			ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
-	tmp->camc = (Coor4f){0, 0, 0, 2};
+	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
 	data->cy[data->check->nb_cy] = tmp;
 	data->cy[data->check->nb_cy + 1] = NULL;
 	data->check->nb_cy++;
