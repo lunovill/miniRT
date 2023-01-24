@@ -55,19 +55,20 @@ int	rt_sphere(t_miniRT *data, t_sphere *sp, Coor4f orgc, Vector4f ray, float t, 
 		Vector4f l_vec = l[i]->coor - p_intst;
         normalize(&l_vec);
 		float angle = normal.x * l_vec.x + normal.y * l_vec.y + normal.z * l_vec.z;
-		// if (angle > 0.0 && angle <= M_PI / 2)
-		// {
-		// 	float	shade = rt_shade(data, l[i]->coor, -l_vec);
-		// 	if (shade && shade < t)
-		// 		color.yzw -= -50.0;
-		// 	else
+		if (angle > 0.0 && angle <= M_PI / 2)
+		{
+			// float	shade = rt_shade(data, l[i]->coor, -l_vec);
+			// if (shade && shade < t)
+			// 	color.yzw = 0.0;
+			// else
 				color.yzw += l[i]->color.x * l[i]->color.yzw * angle + (sp->color.yzw * l[i]->color.x * angle);
 		}
 		i++;
 	}
-	color.x = 1;
+	color.x = 1.0;
 	color.y = (color.y > 255.0) ? 255.0 : color.y;
 	color.z = (color.z > 255.0) ? 255.0 : color.z;
 	color.w = (color.w > 255.0) ? 255.0 : color.w;
 	return(trgb_color(color));
+	(void)data;
 }

@@ -45,7 +45,7 @@ int	rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt)
 	else if (d_min && d_min == d[1])
 		color = rt_cylinder(data->cy[object[1]]);
 	else if (d_min && d_min == d[2])
-		color = rt_plane(data->pl[object[2]], rorg, rdrt, d_min, data->l);
+		color = rt_plane(data, data->pl[object[2]], rorg, rdrt, d_min, data->l);
 	else
 		color = trgb_color(data->l[0]->color * data->l[0]->color.x);
 	return (color);

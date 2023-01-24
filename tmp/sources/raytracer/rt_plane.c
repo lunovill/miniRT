@@ -34,7 +34,12 @@ float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt)
 	return (d_min);
 }
 
-int	rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l)
+static float distance(Coor4f p1, Coor4f p2)
+{
+	return (sqrtf((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y) + (p2.z - p1.z) * (p2.z - p1.z)));
+}
+
+int	rt_plane(t_miniRT *data, t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l)
 {
 	Coor4f	p_intst = orgc + t * ray;
 	Coor4f	color;
@@ -47,12 +52,19 @@ int	rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l)
 		normalize(&l_vec);
 		float angle = pl->vector.x * l_vec.x + pl->vector.y * l_vec.y + pl->vector.z * l_vec.z;
 		if (angle > 0.0 && angle <= M_PI / 2)
-			color.yzw += l[i]->color.x * l[i]->color.yzw * angle + (pl->color.yzw * l[i]->color.x * angle);
+		{
+			float	shade = rt_shade(data, p_intst, l_vec);
+			if (shade && shade < distance(p_intst, l[i]->coor))
+				color.yzw -= color.yzw * l[i]->color.x * angle;
+			else
+				color.yzw += l[i]->color.x * l[i]->color.yzw * angle + (pl->color.yzw * l[i]->color.x * angle);
+		}
 		i++;
 	}
-	color.x = 1;
+	color.x = 1.0;
 	color.y = (color.y > 255.0) ? 255.0 : color.y;
 	color.z = (color.z > 255.0) ? 255.0 : color.z;
 	color.w = (color.w > 255.0) ? 255.0 : color.w;
 	return (trgb_color(color));
+	(void)data;
 }
