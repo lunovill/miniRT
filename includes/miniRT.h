@@ -101,39 +101,43 @@ typedef struct s_miniRT
 
 int		mlx_key_press(int keycode, t_miniRT *main);
 
-void    mt_rotate_x(Matrix4f *dst, float theta);
-void    mt_rotate_y(Matrix4f *dst, float theta);
-void    mt_rotate_z(Matrix4f *dst, float theta);
-void 	cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx);
-void	mt_cross_cr(Coor4f *result, Matrix4f *mtx, Coor4f coor);
-void	mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2);
-void	cross_product(Vector4f *result, Vector4f u, Vector4f v);
-void	normalize(Vector4f *result);
-void	mt_view(Matrix4f *view, Coor4f coor, Vector4f vector);
-void	mt_projection(Matrix4f *prjt, t_camera *c, float window);
-float	rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt);
-float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt);
-int	rt_sphere(t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l);
-int	rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l);
-int		rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt);
-int		raytracing(t_miniRT *main);
-int		rt_free(t_miniRT *main, int code_error);
-int		trgb_color(Color4f color);
-int		minirt(t_miniRT *data);
+void    	mt_rotate_x(Matrix4f *dst, float theta);
+void    	mt_rotate_y(Matrix4f *dst, float theta);
+void    	mt_rotate_z(Matrix4f *dst, float theta);
+void 		cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx);
+void		mt_cross_cr(Coor4f *result, Matrix4f *mtx, Coor4f coor);
+void		mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2);
+void		cross_product(Vector4f *result, Vector4f u, Vector4f v);
+void		normalize(Vector4f *result);
+void		mt_view(Matrix4f *view, Coor4f coor, Vector4f vector);
+void		mt_projection(Matrix4f *prjt, t_camera *c, float window);
+float		rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt);
+float		rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt);
+int			rt_sphere(t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l);
+int			rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l);
+int			rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt);
+int			raytracing(t_miniRT *main);
+int			rt_free(t_miniRT *main, int code_error);
+int			trgb_color(Color4f color);
+int			minirt(t_miniRT *data);
 
-float	rt_intersection_pl(t_plane **pl, int *object, Coor4f c_coor, Vector4f r_dir);
-int	rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l);
+float		rt_intersection_pl(t_plane **pl, int *object, Coor4f c_coor, Vector4f r_dir);
+int			rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l);
+
+float		rt_intersection_cy(t_cylinder **cy, int *object, Coor4f c_coor, Vector4f r_dir);
+int			rt_cylinder(t_cylinder *cy, Coor4f orgc, Vector4f ray, float t, t_light **l);
+
 
 /*      fonction parsing     */
 
- t_miniRT    *init_minirt(void);
- int     	parsing(t_miniRT *data, char *file);
- int     	fill_struct(t_miniRT *data, char *file);
- int			rgb_color(int r, int g, int b);
- int			check_tab(t_miniRT *data, char **tab);
+ t_miniRT	*init_minirt(void);
+ int		parsing(t_miniRT *data, char *file);
+ int		fill_struct(t_miniRT *data, char *file);
+ int		rgb_color(int r, int g, int b);
+ int		check_tab(t_miniRT *data, char **tab);
  float		cara_to_float(char *str);
- int			fill_ambiant(t_miniRT *data, char **tab);
- int			fill_camera(t_miniRT *data, char **tab);
+ int		fill_ambiant(t_miniRT *data, char **tab);
+ int		fill_camera(t_miniRT *data, char **tab);
 
 /*					mon_get_next_line					*/
 

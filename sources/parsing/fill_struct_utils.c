@@ -72,9 +72,7 @@ int	fill_ambiant(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-//	printf("%d %d %d\n", ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]));
-	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
-//	printf("%f %f %f %f\n", tmp->color.s0, tmp->color.s1, tmp->color.s2, tmp->color.s3);
+	tmp->color = (Color4f){tmp->brightness, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	tmp->coor = (Coor4f){0, 0, 0, 2};
 	data->l[0] = tmp;
 	return (0);
@@ -86,7 +84,7 @@ int	fill_camera(t_miniRT *data, char **tab)
 	t_camera	*tmp;
 	int			i;
 
-	i = 0;
+	i = 0;	
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
 		return (0);

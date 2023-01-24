@@ -27,7 +27,7 @@ int	fill_light(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
+	tmp->color = (Color4f){tmp->brightness, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->l[1] = tmp;
 	data->l[2] = NULL;
 	return (0);
@@ -60,7 +60,7 @@ int	fill_plane(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
+	tmp->color = (Color4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->pl[data->check->nb_pl] = tmp;
 	data->pl[data->check->nb_pl + 1] = NULL;
 	data->check->nb_pl++;
@@ -92,7 +92,7 @@ int	fill_sphere(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
+	tmp->color = (Color4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->sp[data->check->nb_sp] = tmp;
 	data->sp[data->check->nb_sp + 1] = NULL;
 	data->check->nb_sp++;
@@ -128,7 +128,7 @@ int	fill_cylinder(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
-	tmp->color = (Color4f){ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2]), 0};
+	tmp->color = (Color4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->cy[data->check->nb_cy] = tmp;
 	data->cy[data->check->nb_cy + 1] = NULL;
 	data->check->nb_cy++;
@@ -186,7 +186,7 @@ int	fill_struct(t_miniRT *data, char *file)
 	while (ret != 0)
 	{
 		ret = my_gnl(fd, &line);
-		if (ret == 0)
+		if (ret == 0 && line[0] == '\r')
 			break;
 		if (line[0] == '\r')
 			continue;

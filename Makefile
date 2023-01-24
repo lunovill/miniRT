@@ -34,6 +34,7 @@ SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(RTC_DIR)/rt_intersection\
 				$(RTC_DIR)/rt_plane\
 				$(RTC_DIR)/rt_sphere\
+				$(RTC_DIR)/rt_cylinder\
 				$(RTC_DIR)/mt_rotate\
 				trgb_color\
 				main\

@@ -1,17 +1,32 @@
 #include "miniRT.h"
 
-static float	ray_to_plane(Coor4f rorg, Vector4f rdrt, Coor4f pl, Vector4f normal)
+
+static float	ray_to_plane(Coor4f c_coor, Vector4f r_dir, t_plane *pl, Vector4f normal)
 {
-	float x = rorg.x - pl.x; 
-	float y = rorg.y - pl.y; 
-	float z = rorg.z - pl.z; 
-	float t = -((normal.x * x + normal.y * y + normal.z * z) / (normal.x * rdrt.x + normal.y * rdrt.y + normal.z * rdrt.z));
-	if (t > 0.0)
-		return (t);
-	return (0.0);
+	float	res;
+	float	a;
+	float	b;
+	float	c;
+
+	if (r_dir.s0 == 0 || normal.s0 == 0)
+		a = 0;
+	else
+		a = (c_coor.s0 - pl->coor.s0 * normal.s0) / (r_dir.s0 * normal.s0);
+	if (r_dir.s1 == 0 || normal.s1 == 0)
+		b = 0;
+	else
+		b = (c_coor.s1 - pl->coor.s1 * normal.s1) / (r_dir.s1 * normal.s1);
+	if (r_dir.s2 == 0 || normal.s2 == 0)
+		c = 0;
+	else
+		c = (c_coor.s2 - pl->coor.s2 * normal.s2) / (r_dir.s2 * normal.s2);
+	res = (a + b + c) * -1;
+	if (res > 0)
+		return (res);
+	return (0);
 }
 
-float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt)
+float	rt_intersection_pl(t_plane **pl, int *object, Coor4f c_coor, Vector4f r_dir)
 {
 	float	d;
 	float	d_min;
@@ -23,7 +38,7 @@ float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt)
 	if (pl)
 		while (pl[i])
 		{
-			d = ray_to_plane(rorg, rdrt, pl[i]->coor, pl[i]->vector);
+			d = ray_to_plane(c_coor, r_dir, pl[i], pl[i]->vector);
 			if (d > 0 && (!d_min || d < d_min))
 			{
 				d_min = d;
