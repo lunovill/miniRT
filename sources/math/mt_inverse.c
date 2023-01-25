@@ -1,5 +1,4 @@
 #include "libmt.h"
-#include <stdio.h>
 
 static float minor(float m[3][3], int row, int colum)
 {
@@ -114,7 +113,6 @@ static void	inverse(Matrix4f *ivs, float mtx[4][4], float d)
 		(*ivs).se = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 3, 3);
 		(*ivs).sf = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
-		printf("%f\n", (*ivs).sf);
 	}
 }
 

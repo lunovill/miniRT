@@ -16,36 +16,39 @@
 
 SRCS_DIR = sources
 MLX_DIR = minilibx
-RTC_DIR = raytracer
 PSG_DIR = parsing
+MTH_DIR = math
+RTC_DIR = raytracer
+UTL_DIR = utils
 SRCS_DIRS = $(MLX_DIR)\
-				$(RTC_DIR)\
 				$(PSG_DIR)\
+				$(MTH_DIR)\
+				$(RTC_DIR)\
+				$(UTL_DIR)\
 
-SRC_FILES =	$(MLX_DIR)/mlx_close\
-				$(MLX_DIR)/mlx_event\
-				$(MLX_DIR)/mlx_init_key\
-				$(MLX_DIR)/mlx_init_window\
-				$(MLX_DIR)/mlx_put_pixel\
-				$(RTC_DIR)/mt_init\
-				$(RTC_DIR)/mt_cross\
-				$(RTC_DIR)/raytracing\
-				$(RTC_DIR)/rt_free\
-				$(RTC_DIR)/rt_intersection\
-				$(RTC_DIR)/rt_plane\
-				$(RTC_DIR)/rt_sphere\
-				$(RTC_DIR)/rt_cylinder\
-				$(RTC_DIR)/mt_rotate\
-				trgb_color\
-				main\
-				miniRT\
-				$(PSG_DIR)/init\
-				$(PSG_DIR)/error\
-				$(PSG_DIR)/parsing\
-				$(PSG_DIR)/fill_struct\
-				$(PSG_DIR)/get_next_line\
-				$(PSG_DIR)/fill_struct_utils\
-				$(PSG_DIR)/get_next_line_utils\
+SRC_FILES =	main\
+			$(addprefix $(MLX_DIR)/, mlx_close\
+									mlx_event\
+									mlx_init_key\
+									mlx_init_window\
+									mlx_put_pixel)\
+			$(addprefix $(PSG_DIR)/, init\
+									error\
+									parsing\
+									fill_struct\
+									get_next_line\
+									fill_struct_utils\
+									get_next_line_utils)\
+			$(addprefix $(MTH_DIR)/, mt_calculate\
+									mt_inverse\
+									mt_rotate\
+									mt_transform\
+									vt_calculate)\
+			$(addprefix $(RTC_DIR)/, cm_init\
+									miniRT\
+									raytracer\
+									rt_free)\
+			$(addprefix $(UTL_DIR)/, trgb_color)\
 				
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
@@ -62,7 +65,10 @@ DEPS = $(SRCS:%.c=$(OBJS_DIR)/%.d)
 #									LIBRARY										#
  #=============================================================================#
 
-LIB_DIR = libft
+LFT_LIB = libft
+LFT_FLAGS = -L$(LFT_LIB) -lft
+MLX_LIB = minilibx
+MLX_FLAGS = -L$(MLX_LIB) -lmlx -lXext -lX11 -lm -lz
 
  #=============================================================================#
 #									COMPILATION									#
@@ -71,8 +77,8 @@ LIB_DIR = libft
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 CDFLAGS = -MMD -MP
-CIFLAGS = -Iincludes -I$(LIB_DIR)/includes -I$(MLX_DIR)
-CLFLAGS = -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+CIFLAGS = -Iincludes -I$(LFT_LIB)/includes -I$(MLX_LIB)
+CLFLAGS =  $(LFT_FLAGS) $(MLX_FLAGS)
 
  #=============================================================================#
 #									MAKEFILE									#
@@ -86,23 +92,25 @@ $(NAME) : $(OBJS_DIR) $(OBJS)
 	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(CLFLAGS) -o $(NAME)
 
 $(OBJS_DIR) :
-	$(MAKE) -C $(LIB_DIR)
-	$(MAKE) -C $(MLX_DIR)
+	$(MAKE) -C $(LFT_LIB)
+	$(MAKE) -C $(MLX_LIB)
 	mkdir $(OBJS_DIR)
-	mkdir $(OBJS_DIR)/$(MLX_DIR)
-	mkdir $(OBJS_DIR)/$(RTC_DIR)
-	mkdir $(OBJS_DIR)/$(PSG_DIR)
+	mkdir $(addprefix $(OBJS_DIR)/, $(MLX_DIR)\
+									$(PSG_DIR)\
+									$(MTH_DIR)\
+									$(RTC_DIR)\
+									$(UTL_DIR))
 
 $(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
 
 clean :
-	$(MAKE) clean -C $(LIB_DIR)
-	$(MAKE) clean -C $(MLX_DIR)
+	$(MAKE) clean -C $(LFT_LIB)
+	$(MAKE) clean -C $(MLX_LIB)
 	rm -rf $(OBJS_DIR)
 
 fclean: clean
-	$(MAKE) fclean -C $(LIB_DIR)
+	$(MAKE) fclean -C $(LFT_LIB)
 	rm -rf $(NAME)
 
 re : fclean all

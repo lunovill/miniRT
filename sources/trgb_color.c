@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-int trgb_color(Color4f color)
+int trgb_color(Tuple4f color)
 {
     int t = color.x;
     int r = color.y;

@@ -1,7 +1,7 @@
 #include "miniRT.h"
 
 
-static float	ray_to_plane(Coor4f c_coor, Vector4f r_dir, t_plane *pl, Vector4f normal)
+static float	ray_to_plane(Tuple4f c_coor, Tuple4f r_dir, t_plane *pl, Tuple4f normal)
 {
 	float	res;
 	float	a;
@@ -26,7 +26,7 @@ static float	ray_to_plane(Coor4f c_coor, Vector4f r_dir, t_plane *pl, Vector4f n
 	return (0);
 }
 
-float	rt_intersection_pl(t_plane **pl, int *object, Coor4f c_coor, Vector4f r_dir)
+float	rt_intersection_pl(t_plane **pl, int *object, Tuple4f c_coor, Tuple4f r_dir)
 {
 	float	d;
 	float	d_min;
@@ -49,16 +49,16 @@ float	rt_intersection_pl(t_plane **pl, int *object, Coor4f c_coor, Vector4f r_di
 	return (d_min);
 }
 
-int	rt_plane(t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l)
+int	rt_plane(t_plane *pl, Tuple4f orgc, Tuple4f ray, float t, t_light **l)
 {
-	Coor4f	p_intst = orgc + t * ray;
-	Coor4f	color;
+	Tuple4f	p_intst = orgc + t * ray;
+	Tuple4f	color;
 	color.yzw = l[0]->color.x * (pl->color.ywz + l[0]->color.x * 
 	l[0]->color.yzw);
 	int i = 1;
 	while (l[i])
 	{
-		Vector4f l_vec = l[i]->coor - p_intst;
+		Tuple4f l_vec = l[i]->coor - p_intst;
 		normalize(&l_vec);
 		float angle = pl->vector.x * l_vec.x + pl->vector.y * l_vec.y + pl->vector.z * l_vec.z;
 		if (angle > 0.0 && angle <= M_PI / 2)

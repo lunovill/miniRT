@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void	rt_draw_pixel(t_mlx *mlx, Coor4f coor, int color)
+void	rt_draw_pixel(t_mlx *mlx, Tuple4f coor, int color)
 {
     float x;
     float y;

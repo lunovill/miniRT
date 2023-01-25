@@ -1,23 +1,23 @@
 #include "miniRT.h"
 
-static float	ray_to_sphere(Coor4f rorg, Vector4f rdrt, Coor4f sp, float r)
+static float	ray_to_sphere(t_rayon r, t_sphere *sp)
 {
-	float	a = rdrt.x * rdrt.x + rdrt.y * rdrt.y + rdrt.z * rdrt.z;
-	float	b = 2.0 * (rdrt.x * (rorg.x - sp.x) + rdrt.y * (rorg.y - sp.y) + rdrt.z * (rorg.z - sp.z));
-	float	c = (rorg.x - sp.x) * (rorg.x - sp.x) + (rorg.y - sp.y) * (rorg.y - sp.y) + (rorg.z - sp.z) * (rorg.z - sp.z) - r * r;
-	float	d = b * b - 4.0 * a * c;
-	if (d < 0.0)
-		return (0.0);
-	float	t1 = (-b - sqrtf(d)) / (2.0 * a);
-	float	t2 = (-b + sqrtf(d)) / (2.0 * a);
-	if (t1 > 0.0)
-		return (t1);
-	if (t2 > 0.0)
-		return (t2);
-	return (0.0);
+	float	a = vt_dot(r.vector, r.vector);
+	float	b = 2. * vt_dot(r.vector, (r.origin - sp->coor));
+	float	c = vt_dot((r.origin - sp->coor), (r->origin - sp->coor)) - sp->rayon * sp->rayon;
+	float	d = b * b - 4. * a * c;
+	if (d < 0.)
+		return (0.);
+	float	sp->t1 = (-b - sqrtf(d)) / (2. * a);
+	float	sp->t2 = (-b + sqrtf(d)) / (2. * a);
+	if (sp->t1 > 0.)
+		return (sp->t1);
+	if (sp->t2 > 0.)
+		return (sp->t2);
+	return (0.);
 }
 
-float	rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt)
+float	rt_intersection_sp(t_rayon r ,t_sphere **sp, int *object)
 {
 	float			d;
 	float			d_min;
@@ -29,7 +29,7 @@ float	rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt)
 	if (sp)
 		while (sp[i])
 		{
-			d = ray_to_sphere(rorg, rdrt, sp[i]->coor, sp[i]->rayon);
+			d = ray_to_sphere(r, sp[i]);
 			if (d > 0 && (!d_min || d < d_min))
 			{
 				d_min = d;
@@ -40,17 +40,19 @@ float	rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt)
 	return (d_min);
 }
 
-int	rt_sphere(t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l)
+int	rt_sphere(t_sphere *sp, Tuple4f orgc, Tuple4f ray, float t, t_light **l)
 {
-	Coor4f	p_intst = orgc + t * ray;
-	Vector4f normal = p_intst - sp->coor;
+	Tuple4f	p_intst = orgc + t * ray;
+	Tuple4f normal = p_intst - sp->coor;
     normalize(&normal);
-	Color4f color;
+	if (t < sp.rayon)
+		normal = -normal;
+	Tuple4f color;
 	color.yzw = l[0]->color.x * (sp->color.yzw + l[0]->color.x * l[0]->color.yzw);
 	int i = 1;
 	while (l[i])
 	{
-		Vector4f l_vec = l[i]->coor - p_intst;
+		Tuple4f l_vec = l[i]->coor - p_intst;
         normalize(&l_vec);
 		float angle = normal.x * l_vec.x + normal.y * l_vec.y + normal.z * l_vec.z;
 		if (angle > 0.0 && angle <= M_PI / 2)
