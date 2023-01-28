@@ -14,11 +14,10 @@
 
 int	minirt(t_miniRT *data)
 {
-	data->mlx = mlx_init_window(NULL, 500, 500);
+	data->mlx = mlx_init_window(NULL, 1001., 1001.);
 	if (!data->mlx)
 		return (rt_free(data, ERROR_MLX));
 	cm_view(&data->c->view, data->c->coor, data->c->vector);
-	data->mlx->key = mlx_init_key();
 	mlx_loop_hook(data->mlx->init, raytracer, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, mlx_key_press, data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, mlx_key_release,

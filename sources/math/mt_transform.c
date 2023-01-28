@@ -2,7 +2,7 @@
 
 void	mt_translate(Matrix4f *trslt, float x, float y, float z)
 {
-	(*trslt) = (Matrix4f){0., 0., 0., x, 0., 0., 0., y, 0., 0., 0., z, 0., 0., 0., 1.};
+	(*trslt) = (Matrix4f){1., 0., 0., x, 0., 1., 0., y, 0., 0., 1., z, 0., 0., 0., 1.};
 }
 
 void	mt_scale(Matrix4f *scale, float x, float y, float z)

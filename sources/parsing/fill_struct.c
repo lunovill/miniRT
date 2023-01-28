@@ -172,6 +172,7 @@ void		init_struct(t_miniRT *data)
 	data->c = camera;
 }
 
+
 int	fill_struct(t_miniRT *data, char *file)
 {
 	char		**tab;
@@ -186,7 +187,7 @@ int	fill_struct(t_miniRT *data, char *file)
 	while (ret != 0)
 	{
 		ret = my_gnl(fd, &line);
-		if (ret == 0 && line[0] == '\r')
+		if ((ret == 0 && line[0] == '\r') || (ret == 0 && line[0] == '\0'))
 			break;
 		if (line[0] == '\r')
 			continue;

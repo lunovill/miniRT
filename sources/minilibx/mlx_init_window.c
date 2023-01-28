@@ -53,5 +53,6 @@ t_mlx	*mlx_init_window(char *window_name, int width, int height)
 		return (mlx_close(mlx), NULL);
 	mlx->scene->addr = mlx_get_data_addr(mlx->scene->img, &mlx->scene->bpp,
 			&mlx->scene->sline, &mlx->scene->endian);
+	mlx->key = mlx_init_key();
 	return (mlx);
 }

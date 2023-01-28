@@ -6,8 +6,8 @@ void	cm_view(Matrix4f *view, Tuple4f coor, Tuple4f vector)
 	(*view).s0123 = vt_cross(vector, (Tuple4f){0., 1., 0., 0.});
 	(*view).s4567 = vt_cross((Tuple4f)(*view).s0123, vector);
 	(*view).s89ab = -vector;
+	(*view).s37bf = -coor;
 	(*view).scdef = (Tuple4f){0., 0., 0., 1.};
-(void)coor;
 }
 
 // void	mt_perspective(Matrix4f *prspct, t_camera *c, float window)

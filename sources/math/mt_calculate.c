@@ -5,13 +5,23 @@ Tuple4f	mt_cross_tp(Matrix4f *m, Tuple4f t)
 	Tuple4f	result;
 
 	result.x = vt_dot((Tuple4f)(*m).s0123, t);
-	result.x = vt_dot((Tuple4f)(*m).s4567, t);
-	result.x = vt_dot((Tuple4f)(*m).s89ab, t);
-	result.x = vt_dot((Tuple4f)(*m).scdef, t);
+	result.y = vt_dot((Tuple4f)(*m).s4567, t);
+	result.z = vt_dot((Tuple4f)(*m).s89ab, t);
+	result.w = vt_dot((Tuple4f)(*m).scdef, t);
 	return (result);
 }
 
-void	mt_croos_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2)
+// Tuple4f	mt_cross_tp(Matrix4f *m, Tuple4f t)
+// {
+// 	Tuple4f	result;
+
+// 	result.x = vt_dot((Tuple4f)(*m).s048c, t);
+// 	result.y = vt_dot((Tuple4f)(*m).s159d, t);
+// 	result.z = vt_dot((Tuple4f)(*m).s26ae, t);
+// 	result.w = vt_dot((Tuple4f)(*m).s37bf, t);
+// 	return (result);
+// }
+void	mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2)
 {
 	(*result).s0 = vt_dot((Tuple4f)(*m1).s0123, (Tuple4f)(*m2).s048c);
 	(*result).s1 = vt_dot((Tuple4f)(*m1).s0123, (Tuple4f)(*m2).s159d);

@@ -109,10 +109,10 @@ int	parsing(t_miniRT *data, char *file)
 		return (-1);
 	if (parsing_utils(data, fd) == -1)
 		return (-1);
-	if (data->check->camera != 1 || data->check->light != 3)
+	if (data->check->camera != 1)
 		return (-1);
-	if (data->check->line - (data->check->sphere + data->check->cylinder + \
-		data->check->plane + 3) != 0)
+	if (data->check->line - (data->check->sphere + data->check->cylinder
+	+ data->check->plane + data->check->light) != 0)
 		return (-1);
 	return (0);
 }

@@ -7,5 +7,5 @@ int trgb_color(Tuple4f color)
     int g = color.z;
     int b = color.w;
 
-    return (t << 24 | r << 16 | g << 8 | b);
+    return (t * (r << 16 | g << 8 | b));
 }

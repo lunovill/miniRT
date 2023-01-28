@@ -77,8 +77,8 @@ static void	inverse(Matrix4f *ivs, float mtx[4][4], float d)
 {
 	float	m[3][3];
 
-	if (d == 0.0)
-		(*ivs) = (Matrix4f){0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	if (d == 0.)
+		(*ivs) = (Matrix4f){0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.};
 	else
 	{
 		submatrix(mtx, &m, 0, 0);
@@ -90,13 +90,13 @@ static void	inverse(Matrix4f *ivs, float mtx[4][4], float d)
 		submatrix(mtx, &m, 0, 3);
 		(*ivs).s3 = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 1, 0);
-		(*ivs).s4 = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).s4 = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 1, 1);
-		(*ivs).s5 = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).s5 = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 1, 2);
-		(*ivs).s6 = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).s6 = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 1, 3);
-		(*ivs).s7 = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).s7 = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 2, 0);
 		(*ivs).s8 = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 2, 1);
@@ -106,13 +106,13 @@ static void	inverse(Matrix4f *ivs, float mtx[4][4], float d)
 		submatrix(mtx, &m, 2, 3);
 		(*ivs).sb = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 3, 0);
-		(*ivs).sc = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).sc = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 3, 1);
-		(*ivs).sd = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).sd = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 3, 2);
-		(*ivs).se = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).se = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 		submatrix(mtx, &m, 3, 3);
-		(*ivs).sf = -(minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
+		(*ivs).sf = (minor(m, 0, 0) * m[0][0] - minor(m, 0, 1) * m[1][0] + minor(m, 0, 2) * m[2][0]) / d;
 	}
 }
 

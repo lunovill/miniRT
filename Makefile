@@ -47,7 +47,9 @@ SRC_FILES =	main\
 			$(addprefix $(RTC_DIR)/, cm_init\
 									miniRT\
 									raytracer\
-									rt_free)\
+									rt_free\
+									rt_intersection\
+									rt_sphere)\
 			$(addprefix $(UTL_DIR)/, trgb_color)\
 				
 

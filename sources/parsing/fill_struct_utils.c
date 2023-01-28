@@ -73,7 +73,7 @@ int	fill_ambiant(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
 	tmp->color = (Tuple4f){tmp->brightness, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
-	tmp->coor = (Tuple4f){0, 0, 0, 2};
+	tmp->coor = (Tuple4f){0., 0., 0., 1.};
 	data->l[0] = tmp;
 	return (0);
 }
@@ -104,8 +104,6 @@ int	fill_camera(t_miniRT *data, char **tab)
 			(tmp->vector.s2 < -1.0 || tmp->vector.s2 > 1.0))
 		gestion_error(data);
 	tmp->fov = cara_to_float(tab[3]) * M_PI / 180.0;
-	tmp->near = 0.1;
-	tmp->far = 100.0;
 	data->c = tmp;
 	return (0);
 }
