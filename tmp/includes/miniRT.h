@@ -122,6 +122,8 @@ int		raytracing(t_miniRT *main);
 int		rt_free(t_miniRT *main, int code_error);
 int		trgb_color(Color4f color);
 int		minirt(t_miniRT *main);
+float	rt_intersection_cy(t_cylinder **cy, int *object, Tuple4f c_coor, Tuple4f r_dir);
+int		rt_cylinder(t_miniRT *data, t_cylinder *cy, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
 
 /*      fonction        */
 
