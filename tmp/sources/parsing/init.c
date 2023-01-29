@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_miniRT	*init_minirt(void)
 {
@@ -13,6 +13,7 @@ t_miniRT	*init_minirt(void)
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
 		return (NULL);
+	data->garbage = gbg_add(data->garbage, tmp);
 	tmp->camera = 0;
 	tmp->light = 0;
 	tmp->sphere = 0;
@@ -23,6 +24,5 @@ t_miniRT	*init_minirt(void)
 	tmp->nb_sp = 0;
 	tmp->nb_pl = 0;
 	data->check = tmp;
-	data->garbage = gbg_add(data->garbage, data->check);
 	return (data);
 }

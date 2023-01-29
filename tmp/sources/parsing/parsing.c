@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "../../includes/miniRT.h"
 
 int	check_begin(t_miniRT *data, char **tab)
 {
@@ -81,8 +81,10 @@ int	parsing_utils(t_miniRT *data, int fd)
 	line = NULL;
 	while (ret != 0)
 	{
-		ret = get_next_line(fd, &line, 1);
-		if (line[0] == '\r' || line[0] == '\0')
+		ret = my_gnl(fd, &line);
+		if (ret == 0)
+			break;
+		if (line[0] == '\r')
 			continue ;
 		tab = ft_split(line, ' ');
 		data->check->line++;
@@ -94,23 +96,23 @@ int	parsing_utils(t_miniRT *data, int fd)
 		}
 		free(line);
 	}
-	get_next_line(fd, &line, 0);
 	close(fd);
 	return (0);
 }
 
-void	parsing(t_miniRT *data, char *file)
+int	parsing(t_miniRT *data, char *file)
 {
 	int		fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		gestion_error(data, 1);
+		return (-1);
 	if (parsing_utils(data, fd) == -1)
-		gestion_error(data, 1);
+		return (-1);
 	if (data->check->camera != 1 || data->check->light != 3)
-		gestion_error(data, 1);
+		return (-1);
 	if (data->check->line - (data->check->sphere + data->check->cylinder + \
 		data->check->plane + 3) != 0)
-		gestion_error(data, 1);
+		return (-1);
+	return (0);
 }

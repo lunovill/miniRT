@@ -1,4 +1,4 @@
- #include "miniRT.h"
+#include "miniRT.h"
 
 static float	ray_to_plane(Coor4f rorg, Vector4f rdrt, Coor4f pl, Vector4f normal)
 {

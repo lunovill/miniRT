@@ -27,7 +27,6 @@
 
 # include "mlxRT.h"
 
-typedef float Tuple4f __attribute__((ext_vector_type(4)));
 typedef float Matrix4f __attribute__((ext_vector_type(4*4)));
 typedef float Vector4f __attribute__((ext_vector_type(4)));
 typedef float Coor4f __attribute__((ext_vector_type(4)));
@@ -122,27 +121,26 @@ int		raytracing(t_miniRT *main);
 int		rt_free(t_miniRT *main, int code_error);
 int		trgb_color(Color4f color);
 int		minirt(t_miniRT *main);
-float	rt_intersection_cy(t_cylinder **cy, int *object, Tuple4f c_coor, Tuple4f r_dir);
-int		rt_cylinder(t_miniRT *data, t_cylinder *cy, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
 
-/*      fonction        */
+// /*      fonction        */
 
-t_miniRT    *init_minirt(void);
-void		parsing(t_miniRT *data, char *file);
-void     	fill_struct(t_miniRT *data, char *file);
-int			check_tab(t_miniRT *data, char **tab);
-float		cara_to_float(char *str);
-void		fill_ambiant(t_miniRT *data, char **tab);
-void		fill_camera(t_miniRT *data, char **tab);
+// t_miniRT    *init_minirt(void);
+// int     	parsing(t_miniRT *data, char *file);
+// int     	fill_struct(t_miniRT *data, char *file);
+// int			rgb_color(int r, int g, int b);
+// int			check_tab(t_miniRT *data, char **tab);
+// float		cara_to_float(char *str);
+// int			fill_ambiant(t_miniRT *data, char **tab);
+// int			fill_camera(t_miniRT *data, char **tab);
 
-/*					mon_get_next_line					*/
+// /*					mon_get_next_line					*/
 
-int			my_gnl(int fd, char **line);
-char		*ft_strdup(char const *s1);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
+// int			my_gnl(int fd, char **line);
+// char		*ft_strdup(char const *s1);
+// char		*ft_substr(char const *s, unsigned int start, size_t len);
 
-/*					Error				*/
+// /*					Error				*/
 
-void		gestion_error(t_miniRT *data, int i);
+// void		gestion_error(t_miniRT *data);
 
 #endif
