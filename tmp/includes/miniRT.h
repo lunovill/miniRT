@@ -27,6 +27,7 @@
 
 # include "mlxRT.h"
 
+typedef float Tuple4f __attribute__((ext_vector_type(4)));
 typedef float Matrix4f __attribute__((ext_vector_type(4*4)));
 typedef float Vector4f __attribute__((ext_vector_type(4)));
 typedef float Coor4f __attribute__((ext_vector_type(4)));
@@ -113,8 +114,10 @@ void	mt_view(Matrix4f *view, Coor4f coor, Vector4f vector);
 void	mt_projection(Matrix4f *prjt, t_camera *c, float window);
 float	rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt);
 float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt);
+float	rt_intersection_cy(t_cylinder **cy, int *object, Tuple4f c_coor, Tuple4f r_dir);
 int		rt_sphere(t_miniRT *data, t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l);
 int		rt_plane(t_miniRT *data, t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l);
+int	rt_cylinder(t_miniRT *data, t_cylinder *cy, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
 int		rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt);
 float	rt_shade(t_miniRT *data, Coor4f rorg, Vector4f rdrt);
 int		raytracing(t_miniRT *main);
@@ -136,6 +139,6 @@ void			fill_camera(t_miniRT *data, char **tab);
 
 /*					Error				*/
 
-void		gestion_error(t_miniRT *data);
+void		gestion_error(t_miniRT *data, int i);
 
 #endif

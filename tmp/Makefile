@@ -35,17 +35,16 @@ SRC_FILES =	$(MLX_DIR)/mlx_close\
 				$(RTC_DIR)/rt_plane\
 				$(RTC_DIR)/rt_shade\
 				$(RTC_DIR)/rt_sphere\
+				$(RTC_DIR)/rt_cylinder\
 				$(RTC_DIR)/mt_rotate\
 				trgb_color\
 				main\
 				miniRT\
-				# $(PSG_DIR)/init\
-				# $(PSG_DIR)/error\
-				# $(PSG_DIR)/parsing\
-				# $(PSG_DIR)/fill_struct\
-				# $(PSG_DIR)/get_next_line\
-				# $(PSG_DIR)/fill_struct_utils\
-				# $(PSG_DIR)/get_next_line_utils\
+				$(PSG_DIR)/init\
+				$(PSG_DIR)/error\
+				$(PSG_DIR)/parsing\
+				$(PSG_DIR)/fill_struct\
+				$(PSG_DIR)/fill_struct_utils\
 				
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
