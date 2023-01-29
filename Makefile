@@ -43,12 +43,14 @@ SRC_FILES =	main\
 									mt_inverse\
 									mt_rotate\
 									mt_transform\
+									tp_rayon\
 									vt_calculate)\
 			$(addprefix $(RTC_DIR)/, cm_init\
 									miniRT\
 									raytracer\
 									rt_free\
 									rt_intersection\
+									rt_light\
 									rt_sphere)\
 			$(addprefix $(UTL_DIR)/, trgb_color)\
 				

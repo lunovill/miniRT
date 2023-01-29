@@ -28,8 +28,9 @@ int	fill_light(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data);
 	tmp->color = (Tuple4f){tmp->brightness, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
-	data->l[1] = tmp;
-	data->l[2] = NULL;
+	data->l[data->check->nb_l] = tmp;
+	data->l[data->check->nb_l + 1] = NULL;
+	data->check->nb_l++;
 	return (0);
 }
 

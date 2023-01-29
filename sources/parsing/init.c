@@ -22,6 +22,7 @@ t_miniRT	*init_minirt(void)
 	tmp->nb_cy = 0;
 	tmp->nb_sp = 0;
 	tmp->nb_pl = 0;
+	tmp->nb_l = 0;
 	data->check = tmp;
 	return (data);
 }

@@ -38,6 +38,7 @@ typedef struct	s_check_file
 	int			nb_sp;
 	int			nb_pl;
 	int			nb_cy;
+	int			nb_l;
 }				t_check_file;
 
 typedef struct s_camera
@@ -99,9 +100,12 @@ int		mlx_key_press(int keycode, t_miniRT *main);
 void	cm_view(Matrix4f *view, Tuple4f coor, Tuple4f vector);
 
 /*			RAYTRACING			*/
-float		rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
+Tuple4f	rt_ambient(Tuple4f color, t_light *l);
+Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l);
+Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l);
 int		rt_intersection(t_miniRT *data, t_rayon r);
-int		rt_sphere(t_sphere *sp, t_rayon r, float t, t_light **l);
+float	rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
+int		rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t);
 int		raytracer(t_miniRT *main);
 int		minirt(t_miniRT *data);
 

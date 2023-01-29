@@ -23,6 +23,8 @@ bool	equalf(float a, float b);
 bool	equalt(Tuple4f a, Tuple4f b);
 bool	equalm(Matrix4f m1, Matrix4f m2);
 
+Tuple4f	tp_rayon(t_rayon r, float t);
+
 float	vt_magnitude(Tuple4f vector);
 Tuple4f	vt_normalize(Tuple4f vector);
 float	vt_dot(Tuple4f u, Tuple4f v);

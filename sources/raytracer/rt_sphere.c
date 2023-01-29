@@ -1,7 +1,4 @@
 #include "miniRT.h"
-# define DIFFUSE 0.9 // Entre 0 et 1
-# define SPECULAR 0.9 // Entre 0 et 1
-# define SHININESS 200.0 // Entre 10 et 200
 
 
 static float	ray_to_sphere(t_rayon r, t_sphere *sp)
@@ -88,29 +85,29 @@ float	rt_intersection_sp(t_rayon r ,t_sphere **sp, int *object)
 // 	return (trgb_color(ambient) + trgb_color(diffuse));
 // }
 
-int	rt_sphere(t_sphere *sp, t_rayon r, float t, t_light **l)
+int	rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t)
 {
-	Tuple4f	p_intst = r.origin + t * r.vector;
-	Tuple4f normal = p_intst - sp->coor;
-    normal = vt_normalize(normal);
-	if (t < sp->rayon)
-		normal = -normal;
 	Tuple4f color;
-	color.yzw = (sp->color.yzw / 255.0) * (l[0]->color.yzw / 255.0) * l[0]->color.x;
-	color *= 255.0;
+	Tuple4f	diffuse;
+	Tuple4f n_vec;
+	Tuple4f l_vec;
+
+	n_vec = vt_normalize(point - sp->coor);
+	if (t < sp->rayon)
+		n_vec = -n_vec;
+	color = rt_ambient(sp->color, data->l[0]);
+	// printf("%f %f %f %f\n", color.x, color.y, color.z, color.w);
 	int i = 1;
-	while (l[i])
+	while (data->l[i])
 	{
-		Tuple4f l_vec = l[i]->coor - p_intst;
-        l_vec = vt_normalize(l_vec);
-		float angle = vt_dot(l_vec, normal);
-		if (angle > 0. && angle <= M_PI / 2.)
-			color.yzw += l[i]->color.x * l[i]->color.yzw * angle;
+		l_vec = vt_normalize(data->l[i]->coor - point);
+		diffuse = rt_diffuse(sp->color, n_vec, l_vec, data->l[i]);
+		if (diffuse.x)
+			color += diffuse + rt_specular(n_vec, l_vec, data->c->vector, data->l[i]);
 		i++;
 	}
 	color.x = 1.;
-	color.y = (color.y > 255.0) ? 255.0 : color.y;
-	color.z = (color.z > 255.0) ? 255.0 : color.z;
-	color.w = (color.w > 255.0) ? 255.0 : color.w;
+	// printf("%f %f %f %f\n", color.x, color.y, color.z, color.w);
+	// exit (42);
 	return(trgb_color(color));
 }
