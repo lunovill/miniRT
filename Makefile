@@ -36,9 +36,7 @@ SRC_FILES =	main\
 									error\
 									parsing\
 									fill_struct\
-									get_next_line\
-									fill_struct_utils\
-									get_next_line_utils)\
+									fill_struct_utils)\
 			$(addprefix $(MTH_DIR)/, mt_calculate\
 									mt_inverse\
 									mt_rotate\
@@ -51,6 +49,7 @@ SRC_FILES =	main\
 									rt_free\
 									rt_intersection\
 									rt_light\
+									rt_plane\
 									rt_sphere)\
 			$(addprefix $(UTL_DIR)/, trgb_color)\
 				

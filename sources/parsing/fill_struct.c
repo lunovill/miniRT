@@ -1,6 +1,6 @@
-#include "../../includes/miniRT.h"
+#include "miniRT.h"
 
-int	fill_light(t_miniRT *data, char **tab)
+void	fill_light(t_miniRT *data, char **tab)
 {
 	char		**tab_nb;
 	t_light		*tmp;
@@ -9,15 +9,14 @@ int	fill_light(t_miniRT *data, char **tab)
 	i = 0;
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
-		gestion_error(data);
-	data->garbage = gbg_add(data->garbage, tmp);
+		gestion_error(data, 2);
 	while (tab[i])
 		i++;
 	if (i != 4)
-		gestion_error(data);
+		gestion_error(data, 2);
 	tmp->brightness = cara_to_float(tab[2]);
 	if (tmp->brightness < 0.0 || tmp->brightness > 1.0)
-		gestion_error(data);
+		gestion_error(data, 2);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
 	tmp->coor = (Tuple4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
@@ -26,15 +25,15 @@ int	fill_light(t_miniRT *data, char **tab)
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
-		gestion_error(data);
+		gestion_error(data, 2);
 	tmp->color = (Tuple4f){tmp->brightness, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->l[data->check->nb_l] = tmp;
+	data->garbage = gbg_add(data->garbage, data->l[data->check->nb_l]);
 	data->l[data->check->nb_l + 1] = NULL;
 	data->check->nb_l++;
-	return (0);
 }
 
-int	fill_plane(t_miniRT *data, char **tab)
+void	fill_plane(t_miniRT *data, char **tab)
 {
 	char		**tab_nb;
 	t_plane		*tmp;
@@ -43,12 +42,11 @@ int	fill_plane(t_miniRT *data, char **tab)
 	i = 0;
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
-		gestion_error(data);
-	data->garbage = gbg_add(data->garbage, tmp);
+		gestion_error(data, 2);
 	while (tab[i])
 		i++;
 	if (i != 4)
-		gestion_error(data);
+		gestion_error(data, 2);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
 	tmp->coor = (Tuple4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
@@ -60,15 +58,15 @@ int	fill_plane(t_miniRT *data, char **tab)
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
-		gestion_error(data);
+		gestion_error(data, 2);
 	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->pl[data->check->nb_pl] = tmp;
+	data->garbage = gbg_add(data->garbage, data->pl[data->check->nb_pl]);
 	data->pl[data->check->nb_pl + 1] = NULL;
 	data->check->nb_pl++;
-	return (0);
 }
 
-int	fill_sphere(t_miniRT *data, char **tab)
+void	fill_sphere(t_miniRT *data, char **tab)
 {
 	char		**tab_nb;
 	t_sphere	*tmp;
@@ -77,12 +75,11 @@ int	fill_sphere(t_miniRT *data, char **tab)
 	i = 0;
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
-		gestion_error(data);
-	data->garbage = gbg_add(data->garbage, tmp);
+		gestion_error(data, 2);
 	while (tab[i])
 		i++;
 	if (i != 4)
-		gestion_error(data);
+		gestion_error(data, 2);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
 	tmp->coor = (Tuple4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
@@ -92,15 +89,15 @@ int	fill_sphere(t_miniRT *data, char **tab)
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
-		gestion_error(data);
+		gestion_error(data, 2);
 	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->sp[data->check->nb_sp] = tmp;
+	data->garbage = gbg_add(data->garbage, data->sp[data->check->nb_sp]);
 	data->sp[data->check->nb_sp + 1] = NULL;
 	data->check->nb_sp++;
-	return (0);
 }
 
-int	fill_cylinder(t_miniRT *data, char **tab)
+void	fill_cylinder(t_miniRT *data, char **tab)
 {
 	char		**tab_nb;
 	t_cylinder	*tmp;
@@ -109,12 +106,11 @@ int	fill_cylinder(t_miniRT *data, char **tab)
 	i = 0;
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
-		gestion_error(data);
-	data->garbage = gbg_add(data->garbage, tmp);
+		gestion_error(data, 2);
 	while (tab[i])
 		i++;
 	if (i != 6)
-		gestion_error(data);
+		gestion_error(data, 2);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
 	tmp->coor = (Tuple4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
@@ -128,15 +124,13 @@ int	fill_cylinder(t_miniRT *data, char **tab)
 	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
-		gestion_error(data);
+		gestion_error(data, 2);
 	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
 	data->cy[data->check->nb_cy] = tmp;
+	data->garbage = gbg_add(data->garbage, data->cy[data->check->nb_cy]);
 	data->cy[data->check->nb_cy + 1] = NULL;
 	data->check->nb_cy++;
-	return (0);
 }
-
-// si on nous envoye un nb au lieu de trois
 
 void		init_struct(t_miniRT *data)
 {
@@ -146,51 +140,48 @@ void		init_struct(t_miniRT *data)
 	t_cylinder	**cylinder;
 	t_camera	*camera;
 
-	light = malloc(sizeof(*light) * (3));
+	light = malloc(sizeof(*light) * (data->check->light + 1));
 	if (!light)
 		return ;
-	data->garbage = gbg_add(data->garbage, light);
 	sphere = malloc(sizeof(*sphere) * (data->check->sphere + 1));
 	if (!sphere)
 		return ;
-	data->garbage = gbg_add(data->garbage, sphere);
 	plane = malloc(sizeof(*plane) * (data->check->plane + 1));
 	if (!plane)
 		return ;
-	data->garbage = gbg_add(data->garbage, plane);
 	cylinder = malloc(sizeof(*cylinder) * (data->check->cylinder + 1));
 	if (!cylinder)
 		return ;
-	data->garbage = gbg_add(data->garbage, cylinder);
 	camera = malloc(sizeof(camera));
 	if (!camera)
-		return ;
-	data->garbage = gbg_add(data->garbage, camera);
+		return ;	
 	data->cy = cylinder;
 	data->l = light;
 	data->sp = sphere;
 	data->pl = plane;
 	data->c = camera;
+	data->garbage = gbg_add(data->garbage, data->l);
+	data->garbage = gbg_add(data->garbage, data->sp);
+	data->garbage = gbg_add(data->garbage, data->pl);
+	data->garbage = gbg_add(data->garbage, data->cy);
+	data->garbage = gbg_add(data->garbage, data->c);
 }
 
-
-int	fill_struct(t_miniRT *data, char *file)
+void	fill_struct(t_miniRT *data, char *file)
 {
 	char		**tab;
 	char		*line;
-	int		fd;
-	int		ret;
+	int			fd;
+	int			ret;
 
 	ret = 1;
 	if ((fd = open(file, O_RDONLY)) < 0)
-		return (-1);
+		gestion_error(data, 2);
 	init_struct(data);
 	while (ret != 0)
 	{
-		ret = my_gnl(fd, &line);
-		if ((ret == 0 && line[0] == '\r') || (ret == 0 && line[0] == '\0'))
-			break;
-		if (line[0] == '\r')
+		ret = get_next_line(fd, &line, 1);
+		if (line[0] == '\r' || line[0] == '\0')
 			continue;
 		tab = ft_split(line, ' ');
 		if (ft_strncmp(tab[0], "A", 2) == 0)
@@ -207,13 +198,12 @@ int	fill_struct(t_miniRT *data, char *file)
 			fill_cylinder(data, tab);
 		else
 		{
-			printf("Error fill\n");
 			free(line);
 			close(fd);
-			return (-1);
+			gestion_error(data, 2);
 		}
 		free(line);
 	}
+	get_next_line(fd, &line, 0);
 	close(fd);
-	return (0);
 }

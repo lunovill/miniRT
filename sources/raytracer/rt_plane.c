@@ -1,32 +1,17 @@
 #include "miniRT.h"
 
-
-static float	ray_to_plane(Tuple4f c_coor, Tuple4f r_dir, t_plane *pl, Tuple4f normal)
+static float	ray_to_plane(t_rayon r, t_plane *pl)
 {
-	float	res;
-	float	a;
-	float	b;
-	float	c;
-
-	if (r_dir.s0 == 0 || normal.s0 == 0)
-		a = 0;
-	else
-		a = (c_coor.s0 - pl->coor.s0 * normal.s0) / (r_dir.s0 * normal.s0);
-	if (r_dir.s1 == 0 || normal.s1 == 0)
-		b = 0;
-	else
-		b = (c_coor.s1 - pl->coor.s1 * normal.s1) / (r_dir.s1 * normal.s1);
-	if (r_dir.s2 == 0 || normal.s2 == 0)
-		c = 0;
-	else
-		c = (c_coor.s2 - pl->coor.s2 * normal.s2) / (r_dir.s2 * normal.s2);
-	res = (a + b + c) * -1;
-	if (res > 0)
-		return (res);
-	return (0);
+	float x = r.origin.x - pl->coor.x; 
+	float y = r.origin.y - pl->coor.y; 
+	float z = r.origin.z - pl->coor.z; 
+	float t = -((pl->vector.x * x + pl->vector.y * y + pl->vector.z * z) / (pl->vector.x * r.vector.x + pl->vector.y * r.vector.y + pl->vector.z * r.vector.z));
+	if (t > 0.)
+		return (t);
+	return (0.);
 }
 
-float	rt_intersection_pl(t_plane **pl, int *object, Tuple4f c_coor, Tuple4f r_dir)
+float	rt_intersection_pl(t_rayon r, t_plane **pl, int *object)
 {
 	float	d;
 	float	d_min;
@@ -38,7 +23,7 @@ float	rt_intersection_pl(t_plane **pl, int *object, Tuple4f c_coor, Tuple4f r_di
 	if (pl)
 		while (pl[i])
 		{
-			d = ray_to_plane(c_coor, r_dir, pl[i], pl[i]->vector);
+			d = ray_to_plane(r, pl[i]);
 			if (d > 0 && (!d_min || d < d_min))
 			{
 				d_min = d;
@@ -49,25 +34,22 @@ float	rt_intersection_pl(t_plane **pl, int *object, Tuple4f c_coor, Tuple4f r_di
 	return (d_min);
 }
 
-int	rt_plane(t_plane *pl, Tuple4f orgc, Tuple4f ray, float t, t_light **l)
+int	rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point)
 {
-	Tuple4f	p_intst = orgc + t * ray;
 	Tuple4f	color;
-	color.yzw = l[0]->color.x * (pl->color.ywz + l[0]->color.x * 
-	l[0]->color.yzw);
+	Tuple4f	diffuse;
+	Tuple4f l_vec;
+
+	color = rt_ambient(pl->color, data->l[0]);
 	int i = 1;
-	while (l[i])
+	while (data->l[i])
 	{
-		Tuple4f l_vec = l[i]->coor - p_intst;
-		normalize(&l_vec);
-		float angle = pl->vector.x * l_vec.x + pl->vector.y * l_vec.y + pl->vector.z * l_vec.z;
-		if (angle > 0.0 && angle <= M_PI / 2)
-			color.yzw += l[i]->color.x * l[i]->color.yzw * angle;
+		l_vec = vt_normalize(data->l[i]->coor - point);
+		diffuse = rt_diffuse(pl->color, pl->vector, l_vec, data->l[i]);
+		if (diffuse.x)
+			color += diffuse + rt_specular(pl->vector, l_vec, data->c->vector, data->l[i]);
 		i++;
 	}
-	color.x = 1;
-	color.y = (color.y > 255.0) ? 255.0 : color.y;
-	color.z = (color.z > 255.0) ? 255.0 : color.z;
-	color.w = (color.w > 255.0) ? 255.0 : color.w;
+	color.x = 1.;
 	return (trgb_color(color));
 }

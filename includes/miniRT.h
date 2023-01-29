@@ -105,7 +105,9 @@ Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l);
 Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l);
 int		rt_intersection(t_miniRT *data, t_rayon r);
 float	rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
+float	rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
 int		rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t);
+int		rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point);
 int		raytracer(t_miniRT *main);
 int		minirt(t_miniRT *data);
 
@@ -126,20 +128,15 @@ int		rt_free(t_miniRT *main, int code_error);
 
 /*      	PARSING			*/
  t_miniRT	*init_minirt(void);
- int		parsing(t_miniRT *data, char *file);
- int		fill_struct(t_miniRT *data, char *file);
+ void		parsing(t_miniRT *data, char *file);
+ void		fill_struct(t_miniRT *data, char *file);
  int		rgb_color(int r, int g, int b);
  int		check_tab(t_miniRT *data, char **tab);
  float		cara_to_float(char *str);
- int		fill_ambiant(t_miniRT *data, char **tab);
- int		fill_camera(t_miniRT *data, char **tab);
-
-/*					mon_get_next_line					*/
-int			my_gnl(int fd, char **line);
-char		*ft_strdup(char const *s1);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
+ void		fill_ambiant(t_miniRT *data, char **tab);
+ void		fill_camera(t_miniRT *data, char **tab);
 
 /*					ERROR				*/
- void		gestion_error(t_miniRT *data);
+ void		gestion_error(t_miniRT *data, int i);
 
 #endif
