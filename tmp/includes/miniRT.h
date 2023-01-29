@@ -122,25 +122,20 @@ int		rt_free(t_miniRT *main, int code_error);
 int		trgb_color(Color4f color);
 int		minirt(t_miniRT *main);
 
-// /*      fonction        */
+/*      fonction        */
 
-// t_miniRT    *init_minirt(void);
-// int     	parsing(t_miniRT *data, char *file);
-// int     	fill_struct(t_miniRT *data, char *file);
-// int			rgb_color(int r, int g, int b);
-// int			check_tab(t_miniRT *data, char **tab);
-// float		cara_to_float(char *str);
-// int			fill_ambiant(t_miniRT *data, char **tab);
-// int			fill_camera(t_miniRT *data, char **tab);
+t_miniRT    *init_minirt(void);
+void     	parsing(t_miniRT *data, char *file);
+void     	fill_struct(t_miniRT *data, char *file);
+int			rgb_color(int r, int g, int b);
+int			check_tab(t_miniRT *data, char **tab);
+float		cara_to_float(char *str);
+void			fill_ambiant(t_miniRT *data, char **tab);
+void			fill_camera(t_miniRT *data, char **tab);
 
-// /*					mon_get_next_line					*/
 
-// int			my_gnl(int fd, char **line);
-// char		*ft_strdup(char const *s1);
-// char		*ft_substr(char const *s, unsigned int start, size_t len);
+/*					Error				*/
 
-// /*					Error				*/
-
-// void		gestion_error(t_miniRT *data);
+void		gestion_error(t_miniRT *data);
 
 #endif
