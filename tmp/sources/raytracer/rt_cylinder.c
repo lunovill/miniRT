@@ -4,6 +4,9 @@ static float	ray_to_cylinder(Tuple4f c_coor, Tuple4f r_dir, t_cylinder *cy, Tupl
 {
 	float	res0;
 	float	res1;
+//	float	check_cap0;
+//	float	check_cap1;
+//	float	swap;
 	float	disc;
 	float	a;
 	float	b;
@@ -22,6 +25,18 @@ static float	ray_to_cylinder(Tuple4f c_coor, Tuple4f r_dir, t_cylinder *cy, Tupl
 		return (0);
 	res0 = ((b * -1) - sqrtf(disc)) / (2 * a);
 	res1 = ((b * -1) + sqrtf(disc)) / (2 * a);
+//	if (res0 > res1)
+//	{
+//		swap = res1;
+//		res1 = res0;
+//		res0 = swap;
+//	}
+//	check_cap0 = c_coor.s1 + res0 + r_dir.s1;
+//	check_cap1 = c_coor.s1 + res1 + r_dir.s1;
+//	if (check_cap0 > (cy->coor.s1 - cy->height / 2) && check_cap0 < (cy->coor.s1 + cy->height / 2))
+//		return (check_cap0);
+//	if (check_cap1 > (cy->coor.s1 - cy->height / 2) && check_cap1 < (cy->coor.s1 + cy->height / 2))
+//		return (check_cap1);
 	if (res0 > 0.0)
 		return (res0);
 	if (res1 > 0.0)
