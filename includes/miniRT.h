@@ -13,19 +13,23 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-// CODE ERREUR
-# define ERROR_MALLOC 1
-# define ERROR_MLX 2
-
 # include <X11/keysymdef.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include "libft.h"
 # include "libmt.h"
-
 # include "mlxRT.h"
 
+// CODE ERREUR
+# define ERROR_MALLOC 1
+# define ERROR_MLX 2
+
+// OBJETS
+# define SPHERE 0
+# define CYLINDER 1
+# define PLANE 2
+# define OBJETS 3
 
 typedef struct	s_check_file
 {
@@ -47,6 +51,7 @@ typedef struct s_camera
 	Tuple4f		vector;
 	Matrix4f	view;
 	float		fov;
+	float		pz;
 }				t_camera;
 
 typedef struct s_light
@@ -98,16 +103,18 @@ int		mlx_key_press(int keycode, t_miniRT *main);
 
 /*			CAMERA				*/
 void	cm_view(Matrix4f *view, Tuple4f coor, Tuple4f vector);
+int 	cm_move(t_camera *c, t_key *key);
 
 /*			RAYTRACING			*/
 Tuple4f	rt_ambient(Tuple4f color, t_light *l);
 Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l);
 Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l);
+float	rt_shadow(t_miniRT *data, t_rayon r);
 int		rt_intersection(t_miniRT *data, t_rayon r);
 float	rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
 float	rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
 int		rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t);
-int		rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point);
+int		rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point, float t);
 int		raytracer(t_miniRT *main);
 int		minirt(t_miniRT *data);
 

@@ -37,19 +37,22 @@ SRC_FILES =	main\
 									parsing\
 									fill_struct\
 									fill_struct_utils)\
-			$(addprefix $(MTH_DIR)/, mt_calculate\
+			$(addprefix $(MTH_DIR)/, equal\
+									mt_calculate\
 									mt_inverse\
 									mt_rotate\
 									mt_transform\
 									tp_rayon\
 									vt_calculate)\
 			$(addprefix $(RTC_DIR)/, cm_init\
+									cm_move\
 									miniRT\
 									raytracer\
 									rt_free\
 									rt_intersection\
 									rt_light\
 									rt_plane\
+									rt_shadow\
 									rt_sphere)\
 			$(addprefix $(UTL_DIR)/, trgb_color)\
 				

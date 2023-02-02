@@ -56,9 +56,18 @@ int	rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t)
 	while (data->l[i])
 	{
 		l_vec = vt_normalize(data->l[i]->coor - point);
-		diffuse = rt_diffuse(sp->color, n_vec, l_vec, data->l[i]);
-		if (diffuse.x)
-			color += diffuse + rt_specular(n_vec, l_vec, data->c->vector, data->l[i]);
+		t_rayon r;
+		r.origin = data->l[i]->coor;
+		r.vector = -l_vec;
+		float shadow = rt_shadow(data, r);
+		if (equalt(point, tp_rayon(r, shadow)))
+		{
+			diffuse = rt_diffuse(sp->color, n_vec, l_vec, data->l[i]);
+			if (diffuse.x)
+				color += diffuse + rt_specular(n_vec, l_vec, data->c->vector, data->l[i]);
+		}
+		// else
+		// 	return (0);
 		i++;
 	}
 	color.x = 1.;

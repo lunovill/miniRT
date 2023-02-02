@@ -42,6 +42,8 @@ typedef struct s_key
 	int rot_left;
 	int befor;
 	int behind;
+	int less;
+	int more;
 }				t_key;
 
 typedef struct s_mlx
