@@ -3,12 +3,10 @@
 
 # include <math.h>
 
-// Cette valeur correspond a FLT_MAX de la lib <float.h>
-# define INF 340282346638528859811704183484516925440.0
-# define EPSILON 0.00001
+# define EPSILON 0.0001
 # define True 1
 # define False 0
-#define	bool int
+# define bool int
 
 typedef float Tuple4f __attribute__((ext_vector_type(4)));
 typedef float Matrix4f __attribute__((ext_vector_type(4*4)));
@@ -17,7 +15,7 @@ typedef struct s_rayon
 {
 	Tuple4f	origin;
 	Tuple4f	vector;
-}t_rayon;
+}				t_rayon;
 
 bool	equalf(float a, float b);
 bool	equalt(Tuple4f a, Tuple4f b);

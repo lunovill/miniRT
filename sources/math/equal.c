@@ -1,7 +1,5 @@
 #include "libmt.h"
 
-// Fonctions representant l'equilvalance entre deux variables
-
 bool	equalf(float a, float b)
 {
 	if (fabs(a - b) < EPSILON)

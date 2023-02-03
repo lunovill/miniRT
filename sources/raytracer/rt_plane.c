@@ -40,17 +40,19 @@ int	rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point, float t)
 	Tuple4f	diffuse;
 	Tuple4f l_vec;
 
+	point += pl->vector * EPSILON;
 	color = rt_ambient(pl->color, data->l[0]);
 	int i = 1;
 	while (data->l[i])
 	{
-		l_vec = vt_normalize(data->l[i]->coor - point);
+		l_vec = data->l[i]->coor - point;
 		t_rayon r;
-		r.origin = data->l[i]->coor;
-		r.vector = -l_vec;
+		r.origin = point;
+		r.vector = vt_normalize(l_vec);
 		float shadow = rt_shadow(data, r);
-		if (equalt(point, tp_rayon(r, shadow)))
+		if (!(shadow && shadow < vt_magnitude(l_vec)))
 		{
+			l_vec = r.vector;
 			diffuse = rt_diffuse(pl->color, pl->vector, l_vec, data->l[i]);
 			if (diffuse.x)
 				color += diffuse + rt_specular(pl->vector, l_vec, data->c->vector, data->l[i]);
