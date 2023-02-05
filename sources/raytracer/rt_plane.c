@@ -24,7 +24,7 @@ static float	ray_to_plane(t_rayon r, t_plane *pl)
 	pl->t = -(vt_dot(pl->vector, (Tuple4f){x, y, z, 0})
 			/ vt_dot(pl->vector, r.vector));
 	if (pl->t > 0.)
-		return (t);
+		return (pl->t);
 	return (0.);
 }
 
