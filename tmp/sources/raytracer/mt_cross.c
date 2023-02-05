@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2)
+void mt_cross_mt(t_mtx4f *result, t_mtx4f *m1, t_mtx4f *m2)
 {
 	(*result).s0 = (*m1).s0 * (*m2).s0 + (*m1).s1 * (*m2).s4 + (*m1).s2 * (*m2).s8 + (*m1).s3 * (*m2).sc;
 	(*result).s1 = (*m1).s0 * (*m2).s1 + (*m1).s1 * (*m2).s5 + (*m1).s2 * (*m2).s9 + (*m1).s3 * (*m2).sd;
@@ -20,7 +20,7 @@ void mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2)
 	(*result).sf = (*m1).sc * (*m2).s3 + (*m1).sd * (*m2).s7 + (*m1).se * (*m2).sb + (*m1).sf * (*m2).sf;
 }
 
-void    cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx)
+void    cr_cross_mt(Coor4f *result, Coor4f coor, t_mtx4f *mtx)
 {
 	(*result).x = coor.x * (*mtx).s0 + coor.y * (*mtx).s4 + coor.z * (*mtx).s8 + coor.w * (*mtx).sc;
 	(*result).y = coor.x * (*mtx).s1 + coor.y * (*mtx).s5 + coor.z * (*mtx).s9 + coor.w * (*mtx).sd;
@@ -28,7 +28,7 @@ void    cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx)
 	(*result).w = coor.x * (*mtx).s3 + coor.y * (*mtx).s7 + coor.z * (*mtx).sb + coor.w * (*mtx).sf;
 }
 
-void	mt_cross_cr(Coor4f *result, Matrix4f *mtx, Coor4f coor)
+void	mt_cross_cr(Coor4f *result, t_mtx4f *mtx, Coor4f coor)
 {
 	(*result).x = (*mtx).s0 * coor.x + (*mtx).s1 * coor.y + (*mtx).s2 * coor.z + (*mtx).s3 * coor.w;
 	(*result).y = (*mtx).s4 * coor.x + (*mtx).s5 * coor.y + (*mtx).s6 * coor.z + (*mtx).s7 * coor.w;

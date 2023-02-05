@@ -14,7 +14,7 @@
 
 int	minirt(t_miniRT *data)
 {
-	data->mlx = mlx_init_window(NULL, 950, 950);
+	data->mlx = mlx_init_window(NULL, WD_WIDTH, WD_HEIGHT);
 	if (!data->mlx)
 		return (rt_free(data, ERROR_MLX));
 	cm_init(&data->c->view, data->c->coor, data->c->vector);

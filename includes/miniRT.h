@@ -31,7 +31,7 @@
 # define PLANE 2
 # define OBJETS 3
 
-typedef struct	s_check_file
+typedef struct s_check_file
 {
 	int			camera;
 	int			light;
@@ -47,43 +47,44 @@ typedef struct	s_check_file
 
 typedef struct s_camera
 {
-	Tuple4f		coor;
-	Tuple4f		vector;
-	Matrix4f	view;
+	t_tpl4f		coor;
+	t_tpl4f		vector;
+	t_mtx4f		view;
 	float		fov;
 	float		pz;
 }				t_camera;
 
 typedef struct s_light
 {
-	Tuple4f		coor;
-	Tuple4f		color;
+	t_tpl4f		coor;
+	t_tpl4f		color;
 }				t_light;
 
 typedef struct s_sphere
 {
-	Tuple4f		coor;
+	t_tpl4f		coor;
 	float		rayon;
+	t_tpl4f		vector;
 	float		t1;
 	float		t2;
-	Tuple4f			color;
+	t_tpl4f		color;
 }				t_sphere;
 
 typedef struct s_plane
 {
-	Tuple4f		coor;
-	Tuple4f		vector;
+	t_tpl4f		coor;
+	t_tpl4f		vector;
 	float		t;
-	Tuple4f		color;
+	t_tpl4f		color;
 }				t_plane;
 
 typedef struct s_cylinder
 {
-	Tuple4f		coor;
-	Tuple4f		vector;
+	t_tpl4f		coor;
+	t_tpl4f		vector;
 	float		rayon;
 	float		height;
-	Tuple4f		color;
+	t_tpl4f		color;
 }				t_cylinder;
 
 typedef struct s_miniRT
@@ -101,54 +102,55 @@ typedef struct s_miniRT
 /********************************************************/
 /*				      	PARSING							*/
 /********************************************************/
- t_miniRT	*init_minirt(void);
- void		parsing(t_miniRT *data, char *file);
- void		fill_struct(t_miniRT *data, char *file);
- int		rgb_color(int r, int g, int b);
- int		check_tab(t_miniRT *data, char **tab);
- float		cara_to_float(char *str);
- void		fill_ambiant(t_miniRT *data, char **tab);
- void		fill_camera(t_miniRT *data, char **tab);
+t_miniRT	*init_minirt(void);
+void		parsing(t_miniRT *data, char *file);
+void		fill_struct(t_miniRT *data, char *file);
+int			rgb_color(int r, int g, int b);
+int			check_tab(t_miniRT *data, char **tab);
+float		cara_to_float(char *str);
+void		fill_ambiant(t_miniRT *data, char **tab);
+void		fill_camera(t_miniRT *data, char **tab);
 
 /********************************************************/
 /*						MINILIBX						*/
 /********************************************************/
-int		mlx_key_press(int keycode, t_miniRT *main);
+int			mlx_key_press(int keycode, t_miniRT *main);
 
 /********************************************************/
 /*						CAMERA							*/
 /********************************************************/
-void	cm_init(Matrix4f *view, Tuple4f coor, Tuple4f vector);
-void 	cm_move(t_camera *c, t_key *key);
+void		cm_init(t_mtx4f *view, t_tpl4f coor, t_tpl4f vector);
+void		cm_move(t_camera *c, t_key *key);
 
 /********************************************************/
 /*						RAYTRACING						*/
 /********************************************************/
-Tuple4f	rt_ambient(Tuple4f color, t_light *l);
-Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l);
-Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l);
-float	rt_shadow(t_miniRT *data, t_rayon r);
-int		rt_intersection(t_miniRT *data, t_rayon r);
-float	rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
-float	rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
-int		rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t);
-int		rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point);
-int		raytracer(t_miniRT *main);
-int		minirt(t_miniRT *data);
+t_tpl4f		rt_ambient(t_tpl4f color, t_light *l);
+t_tpl4f		rt_diffuse(t_tpl4f color, t_tpl4f n_vec, t_tpl4f l_vec, t_light *l);
+t_tpl4f		rt_specular(t_tpl4f n_vec, t_tpl4f l_vec,
+				t_tpl4f forward, t_light *l);
+float		rt_shadow(t_miniRT *data, t_rayon r);
+int			rt_intersection(t_miniRT *data, t_rayon r);
+float		rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
+float		rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
+int			rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point, float t);
+int			rt_plane(t_miniRT *data, t_plane *pl, t_tpl4f point);
+int			raytracer(t_miniRT *main);
+int			minirt(t_miniRT *data);
 
 /********************************************************/
 /*						UTILS							*/
 /********************************************************/
-int		trgb_color(Tuple4f color);
+int			trgb_color(t_tpl4f color);
 
 /********************************************************/
 /*						FREE							*/
 /********************************************************/
-int		rt_free(t_miniRT *main, int code_error);
+int			rt_free(t_miniRT *main, int code_error);
 
 /********************************************************/
 /*						ERROR							*/
 /********************************************************/
- void		gestion_error(t_miniRT *data, int i);
+void		gestion_error(t_miniRT *data, int i);
 
 #endif

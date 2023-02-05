@@ -66,9 +66,9 @@ void	fill_ambiant(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data, 2);
-tmp->color = (Tuple4f){tmp->color.x, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
+tmp->color = (t_tpl4f){tmp->color.x, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
 tmp->color.yzw /= 255.;
-	tmp->coor = (Tuple4f){0., 0., 0., 1.};
+	tmp->coor = (t_tpl4f){0., 0., 0., 1.};
 	data->l[0] = tmp;
 	data->garbage = gbg_add(data->garbage, data->l[0]);
 }
@@ -89,10 +89,10 @@ void	fill_camera(t_miniRT *data, char **tab)
 		gestion_error(data, 2);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
-	tmp->coor = (Tuple4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
+	tmp->coor = (t_tpl4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
 	tab_nb = ft_split(tab[2], ',');
 	check_tab(data, tab_nb);
-	tmp->vector = (Tuple4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
+	tmp->vector = (t_tpl4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
 	if ((tmp->vector.s0 < -1.0 || tmp->vector.s0 > 1.0) ||
 			(tmp->vector.s1 < -1.0 || tmp->vector.s1 > 1.0) ||
 			(tmp->vector.s2 < -1.0 || tmp->vector.s2 > 1.0))

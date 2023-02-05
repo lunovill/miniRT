@@ -27,8 +27,8 @@
 
 # include "mlxRT.h"
 
-typedef float Tuple4f __attribute__((ext_vector_type(4)));
-typedef float Matrix4f __attribute__((ext_vector_type(4*4)));
+typedef float t_tpl4f __attribute__((ext_vector_type(4)));
+typedef float t_mtx4f __attribute__((ext_vector_type(4*4)));
 typedef float Vector4f __attribute__((ext_vector_type(4)));
 typedef float Coor4f __attribute__((ext_vector_type(4)));
 typedef float Color4f __attribute__((ext_vector_type(4)));
@@ -50,9 +50,9 @@ typedef struct s_camera
 {
 	Coor4f		coor;
 	Vector4f	vector;
-	Matrix4f	view;
-	Matrix4f	prjt;
-	Matrix4f	trsfrm;
+	t_mtx4f	view;
+	t_mtx4f	prjt;
+	t_mtx4f	trsfrm;
 	float		fov;
 	float		near;
 	float		far;
@@ -102,22 +102,22 @@ typedef struct s_miniRT
 
 int		mlx_key_press(int keycode, t_miniRT *main);
 
-void    mt_rotate_x(Matrix4f *dst, float theta);
-void    mt_rotate_y(Matrix4f *dst, float theta);
-void    mt_rotate_z(Matrix4f *dst, float theta);
-void 	cr_cross_mt(Coor4f *result, Coor4f coor, Matrix4f *mtx);
-void	mt_cross_cr(Coor4f *result, Matrix4f *mtx, Coor4f coor);
-void	mt_cross_mt(Matrix4f *result, Matrix4f *m1, Matrix4f *m2);
+void    mt_rotate_x(t_mtx4f *dst, float theta);
+void    mt_rotate_y(t_mtx4f *dst, float theta);
+void    mt_rotate_z(t_mtx4f *dst, float theta);
+void 	cr_cross_mt(Coor4f *result, Coor4f coor, t_mtx4f *mtx);
+void	mt_cross_cr(Coor4f *result, t_mtx4f *mtx, Coor4f coor);
+void	mt_cross_mt(t_mtx4f *result, t_mtx4f *m1, t_mtx4f *m2);
 void	cross_product(Vector4f *result, Vector4f u, Vector4f v);
 void	normalize(Vector4f *result);
-void	mt_view(Matrix4f *view, Coor4f coor, Vector4f vector);
-void	mt_projection(Matrix4f *prjt, t_camera *c, float window);
+void	mt_view(t_mtx4f *view, Coor4f coor, Vector4f vector);
+void	mt_projection(t_mtx4f *prjt, t_camera *c, float window);
 float	rt_intersection_sp(t_sphere **sp, int *object, Coor4f rorg, Vector4f rdrt);
 float	rt_intersection_pl(t_plane **pl, int *object, Coor4f rorg, Vector4f rdrt);
-float	rt_intersection_cy(t_cylinder **cy, int *object, Tuple4f c_coor, Tuple4f r_dir);
+float	rt_intersection_cy(t_cylinder **cy, int *object, t_tpl4f c_coor, t_tpl4f r_dir);
 int		rt_sphere(t_miniRT *data, t_sphere *sp, Coor4f orgc, Vector4f ray, float t, t_light **l);
 int		rt_plane(t_miniRT *data, t_plane *pl, Coor4f orgc, Vector4f ray, float t, t_light **l);
-int	rt_cylinder(t_miniRT *data, t_cylinder *cy, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
+int	rt_cylinder(t_miniRT *data, t_cylinder *cy, t_tpl4f orgc, t_tpl4f ray, float t, t_light **l);
 int		rt_intersection(t_miniRT *data, Coor4f rorg, Vector4f rdrt);
 float	rt_shade(t_miniRT *data, Coor4f rorg, Vector4f rdrt);
 int		raytracing(t_miniRT *main);

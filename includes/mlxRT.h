@@ -20,9 +20,8 @@
 
 # define WD_WIDTH 750
 # define WD_HEIGHT 750
-
-# define K_Home 65360
-# define K_End 65367
+# define K_HOME 65360
+# define K_END 65367
 
 typedef struct s_data
 {
@@ -39,14 +38,14 @@ typedef struct s_key
 	int	left;
 	int	down;
 	int	right;
-	int rot_up;
-	int rot_down;
-	int rot_right;
-	int rot_left;
-	int befor;
-	int behind;
-	int less;
-	int more;
+	int	rot_up;
+	int	rot_down;
+	int	rot_right;
+	int	rot_left;
+	int	befor;
+	int	behind;
+	int	less;
+	int	more;
 }				t_key;
 
 typedef struct s_mlx

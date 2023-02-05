@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void	mt_view(Matrix4f *view, Coor4f coor, Vector4f vector)
+void	mt_view(t_mtx4f *view, Coor4f coor, Vector4f vector)
 {
 	Vector4f	Up;
 
@@ -17,7 +17,7 @@ void	mt_view(Matrix4f *view, Coor4f coor, Vector4f vector)
 	// 	1.};
 }
 
-// void	mt_perspective(Matrix4f *prspct, t_camera *c, float window)
+// void	mt_perspective(t_mtx4f *prspct, t_camera *c, float window)
 // {
 // 	float	f;
 	
@@ -28,7 +28,7 @@ void	mt_view(Matrix4f *view, Coor4f coor, Vector4f vector)
 // 	(*prspct).scdef = (Vector4f){0., 0., -(2. * c->far * c->near) / (c->far - c->near), 0.};
 // }
 
-void	mt_projection(Matrix4f *prjt, t_camera *c, float window)
+void	mt_projection(t_mtx4f *prjt, t_camera *c, float window)
 {
 	float	f;
 	

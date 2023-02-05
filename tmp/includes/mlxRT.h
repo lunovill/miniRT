@@ -17,8 +17,8 @@
 # include "libft.h"
 # include "mlx.h"
 # include "mlx_int.h"
-#define K_Home 65360
-#define K_End 65367
+#define K_HOME 65360
+#define K_END 65367
 
 typedef struct s_data
 {

@@ -1,18 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt_light.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/05 01:26:24 by lunovill          #+#    #+#             */
+/*   Updated: 2023/02/05 01:26:26 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 #define SHININESS 150.0 // Entre 10 et 200
 
-Tuple4f	rt_ambient(Tuple4f color, t_light *l)
+t_tpl4f	rt_ambient(t_tpl4f color, t_light *l)
 {
-	Tuple4f ambient;
+	t_tpl4f	ambient;
+
 	ambient.x = l->color.x;
 	ambient.yzw = (color.yzw) * (l->color.yzw) * l->color.x;
 	return (ambient);
 }
 
-Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l)
+t_tpl4f	rt_diffuse(t_tpl4f color, t_tpl4f n_vec, t_tpl4f l_vec, t_light *l)
 {
-	Tuple4f	diffuse;
-	float angle;
+	t_tpl4f	diffuse;
+	float	angle;
 
 	angle = vt_dot(l_vec, n_vec);
 	if (angle > 0. && angle <= M_PI / 2.)
@@ -25,10 +38,10 @@ Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l)
 	return (diffuse);
 }
 
-Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l)
+t_tpl4f	rt_specular(t_tpl4f n_vec, t_tpl4f l_vec, t_tpl4f forward, t_light *l)
 {
-	Tuple4f	specular;
-	Tuple4f	reflect;
+	t_tpl4f	specular;
+	t_tpl4f	reflect;
 	float	angle;
 
 	reflect = l_vec - n_vec * 2.0 * vt_dot(l_vec, n_vec);

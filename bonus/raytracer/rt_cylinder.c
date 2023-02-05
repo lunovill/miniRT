@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-static float	ray_to_cylinder(Tuple4f c_coor, Tuple4f r_dir, t_cylinder *cy, Tuple4f normal)
+static float	ray_to_cylinder(t_tpl4f c_coor, t_tpl4f r_dir, t_cylinder *cy, t_tpl4f normal)
 {
 	float	res0;
 	float	res1;
@@ -26,7 +26,7 @@ static float	ray_to_cylinder(Tuple4f c_coor, Tuple4f r_dir, t_cylinder *cy, Tupl
 	return (0.0);
 }
 
-float	rt_intersection_cy(t_cylinder **cy, int *object, Tuple4f c_coor, Tuple4f r_dir)
+float	rt_intersection_cy(t_cylinder **cy, int *object, t_tpl4f c_coor, t_tpl4f r_dir)
 {
 	float	d;
 	float	d_min;
@@ -49,16 +49,16 @@ float	rt_intersection_cy(t_cylinder **cy, int *object, Tuple4f c_coor, Tuple4f r
 	return (d_min);
 }
 
-int	rt_cylinder(t_cylinder *cy, Tuple4f orgc, Tuple4f ray, float t, t_light **l)
+int	rt_cylinder(t_cylinder *cy, t_tpl4f orgc, t_tpl4f ray, float t, t_light **l)
 {
-	Tuple4f	p_intst = orgc + t * ray;
-	Tuple4f	color;
+	t_tpl4f	p_intst = orgc + t * ray;
+	t_tpl4f	color;
 	color.yzw = l[0]->color.x * (cy->color.ywz + l[0]->color.x * 
 	l[0]->color.yzw);
 	int i = 1;
 	while (l[i])
 	{
-		Tuple4f l_vec = l[i]->coor - p_intst;
+		t_tpl4f l_vec = l[i]->coor - p_intst;
 		normalize(&l_vec);
 		float angle = cy->vector.x * l_vec.x + cy->vector.y * l_vec.y + cy->vector.z * l_vec.z;
 		if (angle > 0.0 && angle <= M_PI / 2)

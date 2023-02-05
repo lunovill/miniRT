@@ -21,7 +21,7 @@ static float	ray_to_plane(t_rayon r, t_plane *pl)
 	x = r.origin.x - pl->coor.x;
 	y = r.origin.y - pl->coor.y;
 	z = r.origin.z - pl->coor.z;
-	pl->t = -(vt_dot(pl->vector, (Tuple4f){x, y, z, 0})
+	pl->t = -(vt_dot(pl->vector, (t_tpl4f){x, y, z, 0})
 			/ vt_dot(pl->vector, r.vector));
 	if (pl->t > 0.)
 		return (pl->t);
@@ -53,31 +53,24 @@ float	rt_intersection_pl(t_rayon r, t_plane **pl, int *object)
 	return (d_min);
 }
 
-int	rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point)
+int	rt_plane(t_miniRT *data, t_plane *pl, t_tpl4f point)
 {
-	int		i;
-	float	shadow;
-	Tuple4f	color;
-	Tuple4f	diffuse;
+	t_tpl4f	color;
 	t_rayon	r;
+	float	shadow;
+	int		i;
 
 	point += pl->vector * EPSILON;
 	color = rt_ambient(pl->color, data->l[0]);
 	i = 0;
 	while (data->l[++i])
 	{
-		r.origin = point;
-		r.vector = vt_normalize(data->l[i]->coor - point);
+		r = ry_init(point, vt_normalize(data->l[i]->coor - point));
 		if (vt_dot(pl->vector, data->c->view.s37bf - point) < 0)
 			pl->vector = -pl->vector;
 		shadow = rt_shadow(data, r);
 		if (!(shadow && shadow < vt_magnitude(data->l[i]->coor - point)))
-		{
-			diffuse = rt_diffuse(pl->color, pl->vector, r.vector, data->l[i]);
-			if (diffuse.x)
-				color += diffuse + rt_specular(
-						pl->vector, r.vector, data->c->view.s89ae, data->l[i]);
-		}
+			color += rt_diffuse(pl->color, pl->vector, r.vector, data->l[i]);
 	}
 	return (trgb_color(color));
 }

@@ -35,9 +35,9 @@ int	mlx_key_press(int keycode, t_miniRT *data)
 		data->mlx->key->rot_right = 1;
 	if (keycode == XK_a)
 		data->mlx->key->rot_left = 1;
-	if (keycode == K_Home)
+	if (keycode == K_HOME)
 		data->mlx->key->befor = 1;
-	if (keycode == K_End)
+	if (keycode == K_END)
 		data->mlx->key->behind = 1;
 	return (1);
 }
@@ -60,9 +60,9 @@ int	mlx_key_release(int keycode, t_mlx *mlx)
 		mlx->key->rot_right = 2;
 	if (keycode == XK_a)
 		mlx->key->rot_left = 2;
-	if (keycode == K_Home)
+	if (keycode == K_HOME)
 		mlx->key->befor = 2;
-	if (keycode == K_End)
+	if (keycode == K_END)
 		mlx->key->behind = 2;
 	return (1);
 }

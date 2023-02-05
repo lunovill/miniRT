@@ -17,14 +17,14 @@ static t_rayon	ray_for_pixel(t_miniRT *data, float px, float py, float aspect)
 	float	x;
 	float	y;
 	float	f;
-	Tuple4f	pixel;
+	t_tpl4f	pixel;
 	t_rayon	r;
 
 	f = tanf(data->c->fov / 2.);
 	x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * aspect * f;
 	y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f;
-	pixel = (Tuple4f){x, y, data->c->pz, 1.};
-	r.origin = mt_cross_tp(&data->c->view, (Tuple4f){0., 0., 0., 1.});
+	pixel = (t_tpl4f){x, y, data->c->pz, 1.};
+	r.origin = mt_cross_tp(&data->c->view, (t_tpl4f){0., 0., 0., 1.});
 	r.vector = mt_cross_tp(&data->c->view, pixel);
 	r.vector = vt_normalize(r.vector - r.origin);
 	return (r);

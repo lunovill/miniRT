@@ -15,17 +15,17 @@
 void	cm_move(t_camera *c, t_key *key)
 {
 	if (key->up == 1)
-		c->view.s37bf += (Tuple4f)c->view.s456d * c->pz * 0.5;
+		c->view.s37bf += (t_tpl4f)c->view.s456d * c->pz * 0.5;
 	if (key->down == 1)
-		c->view.s37bf -= (Tuple4f)c->view.s456d * c->pz * 0.5;
+		c->view.s37bf -= (t_tpl4f)c->view.s456d * c->pz * 0.5;
 	if (key->right == 1)
-		c->view.s37bf += (Tuple4f)c->view.s012c * c->pz * 0.5;
+		c->view.s37bf += (t_tpl4f)c->view.s012c * c->pz * 0.5;
 	if (key->left == 1)
-		c->view.s37bf -= (Tuple4f)c->view.s012c * c->pz * 0.5;
+		c->view.s37bf -= (t_tpl4f)c->view.s012c * c->pz * 0.5;
 	if (key->befor == 1)
-		c->view.s37bf += (Tuple4f)c->view.s89ae * c->pz;
+		c->view.s37bf += (t_tpl4f)c->view.s89ae * c->pz;
 	if (key->behind == 1)
-		c->view.s37bf -= (Tuple4f)c->view.s89ae * c->pz;
+		c->view.s37bf -= (t_tpl4f)c->view.s89ae * c->pz;
 	if (key->rot_up == 1)
 		mt_rotate_x(&c->view, -0.1);
 	if (key->rot_down == 1)

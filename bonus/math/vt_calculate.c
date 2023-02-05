@@ -12,25 +12,25 @@
 
 #include "libmt.h"
 
-float	vt_magnitude(Tuple4f vector)
+float	vt_magnitude(t_tpl4f vector)
 {
 	return (sqrtf(vector.x * vector.x + vector.y
 			* vector.y + vector.z * vector.z));
 }
 
-float	vt_dot(Tuple4f u, Tuple4f v)
+float	vt_dot(t_tpl4f u, t_tpl4f v)
 {
 	return (u.x * v.x + u.y * v.y + u.z * v.z + u.w * v.w);
 }
 
-Tuple4f	vt_normalize(Tuple4f vector)
+t_tpl4f	vt_normalize(t_tpl4f vector)
 {
 	return (vector / vt_magnitude(vector));
 }
 
-Tuple4f	vt_cross(Tuple4f u, Tuple4f v)
+t_tpl4f	vt_cross(t_tpl4f u, t_tpl4f v)
 {
-	Tuple4f	result;
+	t_tpl4f	result;
 
 	result.x = u.y * v.z - u.z * v.y;
 	result.y = u.z * v.x - u.x * v.z;

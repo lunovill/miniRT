@@ -94,7 +94,7 @@ int	main(int argc, char **argv)
     cam = malloc(sizeof(*cam));
     if (!cam)
         return (0);
-    cam->matrix = (Matrix4f){1.0, 2.0, 3.0};
+    cam->matrix = (t_mtx4f){1.0, 2.0, 3.0};
     data->c = cam;
     printf("%f %f %f %f\n", data->c->matrix.s0, data->c->matrix.s1, data->c->matrix.s2, data->c->matrix.s3);
 }

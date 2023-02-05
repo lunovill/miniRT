@@ -15,6 +15,7 @@
  #=============================================================================#
 
 SRCS_DIR = sources
+BNS_DIR = bonus
 MLX_DIR = minilibx
 PSG_DIR = parsing
 MTH_DIR = math
@@ -39,7 +40,7 @@ SRC_FILES =	main\
 									fill_struct_utils)\
 			$(addprefix $(MTH_DIR)/, mt_calculate\
 									mt_rotate\
-									tp_rayon\
+									rayon\
 									vt_calculate)\
 			$(addprefix $(RTC_DIR)/, cm_init\
 									cm_move\
@@ -62,6 +63,7 @@ SRCS = $(addsuffix .c, $(SRC_FILES))
 
 OBJS_DIR = objets
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
+OBJS_BNS = $(SRCS:%.c=$(OBJS_DIR)/%_bonus.o)
 DEPS = $(SRCS:%.c=$(OBJS_DIR)/%.d)
 
  #=============================================================================#
@@ -88,6 +90,7 @@ CLFLAGS =  $(LFT_FLAGS) $(MLX_FLAGS)
  #=============================================================================#
 
 NAME = miniRT
+BONUS = miniRT_bonus
 
 all : $(NAME)
 
@@ -107,14 +110,23 @@ $(OBJS_DIR) :
 $(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
 
+bonus : $(BONUS)
+
+$(BONUS) : $(OBJS_DIR) $(OBJS_BNS)
+	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS_BNS) $(CLFLAGS) -o $(BONUS)
+
+$(OBJS_BNS) : $(OBJS_DIR)/%_bonus.o : $(BNS_DIR)/%.c
+	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
+
 clean :
 	$(MAKE) clean -C $(LFT_LIB)
 	$(MAKE) clean -C $(MLX_LIB)
 	rm -rf $(OBJS_DIR)
 
-fclean: clean
+fclean : clean
 	$(MAKE) fclean -C $(LFT_LIB)
 	rm -rf $(NAME)
+	rm -rf $(BONUS)
 
 re : fclean all
 

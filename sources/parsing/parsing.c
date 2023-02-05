@@ -83,20 +83,20 @@ int	parsing_utils(t_miniRT *data, int fd)
 	{
 		ret = get_next_line(fd, &line, 1);
 		if (line[0] == '\r' || line[0] == '\0')
+		{
+			ft_free(line);
 			continue ;
+		}
 		tab = ft_split(line, ' ');
 		data->check->line++;
 		if (check_begin(data, tab) == -1 || check_nb(tab) == -1)
 		{
-			free(line);
-			close(fd);
-			return (-1);
+			ft_free(line);
+			return (get_next_line(fd, &line, 0), close(fd), -1);
 		}
-		free(line);
+		ft_free(line);
 	}
-	get_next_line(fd, &line, 0);
-	close(fd);
-	return (0);
+	return (get_next_line(fd, &line, 0), close(fd), 0);
 }
 
 void	parsing(t_miniRT *data, char *file)
