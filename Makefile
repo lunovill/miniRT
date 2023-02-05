@@ -65,6 +65,7 @@ OBJS_DIR = objets
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 OBJS_BNS = $(SRCS:%.c=$(OBJS_DIR)/%_bonus.o)
 DEPS = $(SRCS:%.c=$(OBJS_DIR)/%.d)
+DEPS_BNS = $(SRCS:%.c=$(OBJS_DIR)/%_bonus.d)
 
  #=============================================================================#
 #									LIBRARY										#
@@ -130,7 +131,7 @@ fclean : clean
 
 re : fclean all
 
--include $(DEPS)
+-include $(DEPS) $(DEPS_BNS)
 
 .PHONY: all clean fclean re
 

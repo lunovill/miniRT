@@ -16,9 +16,6 @@ int	mlx_key_press(int keycode, t_miniRT *data)
 {
 	if (keycode == XK_Escape)
 		return (rt_free(data, 0));
-	else if (data->mlx->key->up == 1 || data->mlx->key->right == 1
-		|| data->mlx->key->down == 1 || data->mlx->key->left == 1)
-		return (1);
 	else if (keycode == XK_Up)
 		data->mlx->key->up = 1;
 	else if (keycode == XK_Right)

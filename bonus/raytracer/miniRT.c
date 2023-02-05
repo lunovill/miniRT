@@ -18,7 +18,7 @@ int	minirt(t_miniRT *data)
 	if (!data->mlx)
 		return (rt_free(data, ERROR_MLX));
 	cm_init(&data->c->view, data->c->coor, data->c->vector);
-	data->c->pz = 10;
+	data->c->move = 1;
 	mlx_loop_hook(data->mlx->init, raytracer, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, mlx_key_press, data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, mlx_key_release,

@@ -23,7 +23,7 @@ static t_rayon	ray_for_pixel(t_miniRT *data, float px, float py, float aspect)
 	f = tanf(data->c->fov / 2.);
 	x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * aspect * f;
 	y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f;
-	pixel = (t_tpl4f){x, y, data->c->pz, 1.};
+	pixel = (t_tpl4f){x, y, P_Z, 1.};
 	r.origin = mt_cross_tp(&data->c->view, (t_tpl4f){0., 0., 0., 1.});
 	r.vector = mt_cross_tp(&data->c->view, pixel);
 	r.vector = vt_normalize(r.vector - r.origin);
@@ -36,20 +36,23 @@ int	raytracer(t_miniRT *data)
 	int		y;
 	t_rayon	r;
 
-	y = 0;
-	while (y < data->mlx->hrslt)
+	if (data->c->move)
 	{
-		x = 0;
-		while (x < data->mlx->wrslt)
+		y = 0;
+		while (y < data->mlx->hrslt)
 		{
-			r = ray_for_pixel(data, x, y, data->mlx->wrslt / data->mlx->hrslt);
-			mlx_put_pixel(data->mlx->scene, x, y, rt_intersection(data, r));
-			x++;
+			x = 0;
+			while (x < data->mlx->wrslt)
+			{
+				r = ray_for_pixel(data, x, y, data->mlx->wrslt / data->mlx->hrslt);
+				mlx_put_pixel(data->mlx->scene, x, y, rt_intersection(data, r));
+				x++;
+			}
+			y++;
 		}
-		y++;
 	}
 	mlx_put_image_to_window(data->mlx->init,
 		data->mlx->win, data->mlx->scene->img, 0, 0);
-	cm_move(data->c, data->mlx->key);
+	data->c->move = cm_move(data->c, data->mlx->key);
 	return (0);
 }

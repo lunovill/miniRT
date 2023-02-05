@@ -31,6 +31,9 @@
 # define PLANE 2
 # define OBJETS 3
 
+//		CAMERA
+# define P_Z 10
+
 typedef struct s_check_file
 {
 	int			camera;
@@ -51,7 +54,7 @@ typedef struct s_camera
 	t_tpl4f		vector;
 	t_mtx4f		view;
 	float		fov;
-	float		pz;
+	int			move;
 }				t_camera;
 
 typedef struct s_light
@@ -120,7 +123,7 @@ int			mlx_key_press(int keycode, t_miniRT *main);
 /*						CAMERA							*/
 /********************************************************/
 void		cm_init(t_mtx4f *view, t_tpl4f coor, t_tpl4f vector);
-void		cm_move(t_camera *c, t_key *key);
+int			cm_move(t_camera *c, t_key *key);
 
 /********************************************************/
 /*						RAYTRACING						*/
