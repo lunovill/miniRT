@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cm_init.c                                          :+:      :+:    :+:   */
+/*   mlx_init_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/05 00:19:25 by lunovill          #+#    #+#             */
-/*   Updated: 2023/02/05 00:19:28 by lunovill         ###   ########.fr       */
+/*   Created: 2022/11/21 05:39:21 by lunovill          #+#    #+#             */
+/*   Updated: 2022/11/21 05:39:22 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "mlxRT.h"
 
-void	cm_init(Matrix4f *view, Tuple4f coor, Tuple4f vector)
+t_key	*mlx_init_key(void)
 {
-	(*view).s0123 = vt_cross(vector, (Tuple4f){0., 1., 0., 0.});
-	(*view).s0123 = vt_normalize((*view).s0123);
-	(*view).s4567 = vt_cross((Tuple4f)(*view).s0123, vector);
-	(*view).s4567 = vt_normalize((Tuple4f)(*view).s4567);
-	(*view).s89ab = vector;
-	(*view).s37bf = coor;
-	(*view).scdef = (Tuple4f){0., 0., 0., 1.};
+	t_key	*key;
+
+	key = malloc(sizeof(*key));
+	key->up = 0;
+	key->left = 0;
+	key->down = 0;
+	key->right = 0;
+	key->rot_up = 0;
+	key->rot_down = 0;
+	key->rot_right = 0;
+	key->rot_left = 0;
+	key->befor = 0;
+	key->behind = 0;
+	return (key);
 }

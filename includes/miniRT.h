@@ -21,11 +21,11 @@
 # include "libmt.h"
 # include "mlxRT.h"
 
-// CODE ERREUR
+//		 CODE ERREUR
 # define ERROR_MALLOC 1
 # define ERROR_MLX 2
 
-// OBJETS
+// 		 OBJETS
 # define SPHERE 0
 # define CYLINDER 1
 # define PLANE 2
@@ -57,7 +57,6 @@ typedef struct s_camera
 typedef struct s_light
 {
 	Tuple4f		coor;
-	float		brightness;
 	Tuple4f		color;
 }				t_light;
 
@@ -74,6 +73,7 @@ typedef struct s_plane
 {
 	Tuple4f		coor;
 	Tuple4f		vector;
+	float		t;
 	Tuple4f		color;
 }				t_plane;
 
@@ -98,42 +98,9 @@ typedef struct s_miniRT
 	t_garbage		*garbage;
 }				t_miniRT;
 
-/*			MINILIBX			*/
-int		mlx_key_press(int keycode, t_miniRT *main);
-
-/*			CAMERA				*/
-void	cm_view(Matrix4f *view, Tuple4f coor, Tuple4f vector);
-int 	cm_move(t_camera *c, t_key *key);
-
-/*			RAYTRACING			*/
-Tuple4f	rt_ambient(Tuple4f color, t_light *l);
-Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l);
-Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l);
-float	rt_shadow(t_miniRT *data, t_rayon r);
-int		rt_intersection(t_miniRT *data, t_rayon r);
-float	rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
-float	rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
-int		rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t);
-int		rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point, float t);
-int		raytracer(t_miniRT *main);
-int		minirt(t_miniRT *data);
-
-/*			UTILS				*/
-int		trgb_color(Tuple4f color);
-
-/*			FREE				*/
-int		rt_free(t_miniRT *main, int code_error);
-
-// void		mt_projection(Matrix4f *prjt, t_camera *c, float window);
-// float		rt_intersection_pl(t_plane **pl, int *object, Tuple4f rorg, Tuple4f rdrt);
-// int			rt_sphere(t_sphere *sp, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
-// int			rt_plane(t_plane *pl, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
-// float		rt_intersection_pl(t_plane **pl, int *object, Tuple4f c_coor, Tuple4f r_dir);
-// int			rt_plane(t_plane *pl, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
-// float		rt_intersection_cy(t_cylinder **cy, int *object, Tuple4f c_coor, Tuple4f r_dir);
-// int			rt_cylinder(t_cylinder *cy, Tuple4f orgc, Tuple4f ray, float t, t_light **l);
-
-/*      	PARSING			*/
+/********************************************************/
+/*				      	PARSING							*/
+/********************************************************/
  t_miniRT	*init_minirt(void);
  void		parsing(t_miniRT *data, char *file);
  void		fill_struct(t_miniRT *data, char *file);
@@ -143,7 +110,45 @@ int		rt_free(t_miniRT *main, int code_error);
  void		fill_ambiant(t_miniRT *data, char **tab);
  void		fill_camera(t_miniRT *data, char **tab);
 
-/*					ERROR				*/
+/********************************************************/
+/*						MINILIBX						*/
+/********************************************************/
+int		mlx_key_press(int keycode, t_miniRT *main);
+
+/********************************************************/
+/*						CAMERA							*/
+/********************************************************/
+void	cm_init(Matrix4f *view, Tuple4f coor, Tuple4f vector);
+void 	cm_move(t_camera *c, t_key *key);
+
+/********************************************************/
+/*						RAYTRACING						*/
+/********************************************************/
+Tuple4f	rt_ambient(Tuple4f color, t_light *l);
+Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l);
+Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l);
+float	rt_shadow(t_miniRT *data, t_rayon r);
+int		rt_intersection(t_miniRT *data, t_rayon r);
+float	rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
+float	rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
+int		rt_sphere(t_miniRT *data, t_sphere *sp, Tuple4f point, float t);
+int		rt_plane(t_miniRT *data, t_plane *pl, Tuple4f point);
+int		raytracer(t_miniRT *main);
+int		minirt(t_miniRT *data);
+
+/********************************************************/
+/*						UTILS							*/
+/********************************************************/
+int		trgb_color(Tuple4f color);
+
+/********************************************************/
+/*						FREE							*/
+/********************************************************/
+int		rt_free(t_miniRT *main, int code_error);
+
+/********************************************************/
+/*						ERROR							*/
+/********************************************************/
  void		gestion_error(t_miniRT *data, int i);
 
 #endif

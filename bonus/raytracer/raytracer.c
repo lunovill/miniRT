@@ -14,13 +14,12 @@
 
 static t_rayon	ray_for_pixel(t_miniRT *data, float px, float py, float aspect)
 {
+	t_rayon	r;
 	float	x;
 	float	y;
-	float	f;
 	Tuple4f	pixel;
-	t_rayon	r;
 
-	f = tanf(data->c->fov / 2.);
+	float f = tanf(data->c->fov / 2.);
 	x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * aspect * f;
 	y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f;
 	pixel = (Tuple4f){x, y, data->c->pz, 1.};
@@ -32,8 +31,9 @@ static t_rayon	ray_for_pixel(t_miniRT *data, float px, float py, float aspect)
 
 int	raytracer(t_miniRT *data)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
+	int	move;
 	t_rayon	r;
 
 	y = 0;
@@ -42,14 +42,15 @@ int	raytracer(t_miniRT *data)
 		x = 0;
 		while (x < data->mlx->wrslt)
 		{
-			r = ray_for_pixel(data, x, y, data->mlx->wrslt / data->mlx->hrslt);
+			r = ray_for_pixel(data, x, y, data->mlx->wrslt/ data->mlx->hrslt);
 			mlx_put_pixel(data->mlx->scene, x, y, rt_intersection(data, r));
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(data->mlx->init,
-		data->mlx->win, data->mlx->scene->img, 0, 0);
-	cm_move(data->c, data->mlx->key);
+	mlx_put_image_to_window(data->mlx->init, data->mlx->win, data->mlx->scene->img, 0, 0);
+	move = cm_move(data->c, data->mlx->key);
+	// if (move == 2)
+	// 	printf("%f, %f, %f, %f\n\n", data->c->view.s8, data->c->view.s9, data->c->view.sa, data->c->view.se);
 	return (0);
 }

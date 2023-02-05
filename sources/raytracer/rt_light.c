@@ -1,24 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt_light.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/05 01:26:24 by lunovill          #+#    #+#             */
+/*   Updated: 2023/02/05 01:26:26 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
-#define SHININESS 200.0 // Entre 10 et 200
+#define SHININESS 150.0 // Entre 10 et 200
 
 Tuple4f	rt_ambient(Tuple4f color, t_light *l)
 {
-	Tuple4f ambient;
+	Tuple4f	ambient;
+
 	ambient.x = l->color.x;
-	ambient.yzw = (color.yzw / 255.) * (l->color.yzw / 255.) * l->color.x;
+	ambient.yzw = (color.yzw) * (l->color.yzw) * l->color.x;
 	return (ambient);
 }
 
 Tuple4f	rt_diffuse(Tuple4f color, Tuple4f n_vec, Tuple4f l_vec, t_light *l)
 {
 	Tuple4f	diffuse;
-	float angle;
+	float	angle;
 
 	angle = vt_dot(l_vec, n_vec);
 	if (angle > 0. && angle <= M_PI / 2.)
 	{
 		diffuse.x = 1.;
-		diffuse.yzw = (color.yzw / 255.) * (l->color.yzw / 255.) * l->color.x * angle;
+		diffuse.yzw = (color.yzw) * (l->color.yzw) * l->color.x * angle;
 	}
 	else
 		diffuse = 0.;
@@ -36,8 +49,7 @@ Tuple4f	rt_specular(Tuple4f n_vec, Tuple4f l_vec, Tuple4f forward, t_light *l)
 	if (angle > 0.)
 	{
 		specular.x = 1.;
-		specular.yzw = l->color.x * (l->color.yzw / 255.) * powf(angle, SHININESS);
-		// printf("ici ");
+		specular.yzw = l->color.x * (l->color.yzw) * powf(angle, SHININESS);
 	}
 	else
 		specular = 0.;

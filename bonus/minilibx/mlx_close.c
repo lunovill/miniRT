@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cm_init.c                                          :+:      :+:    :+:   */
+/*   mlx_close.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/05 00:19:25 by lunovill          #+#    #+#             */
-/*   Updated: 2023/02/05 00:19:28 by lunovill         ###   ########.fr       */
+/*   Created: 2022/11/21 05:39:03 by lunovill          #+#    #+#             */
+/*   Updated: 2022/11/21 05:39:04 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "mlxRT.h"
 
-void	cm_init(Matrix4f *view, Tuple4f coor, Tuple4f vector)
+void	mlx_close(t_mlx *mlx)
 {
-	(*view).s0123 = vt_cross(vector, (Tuple4f){0., 1., 0., 0.});
-	(*view).s0123 = vt_normalize((*view).s0123);
-	(*view).s4567 = vt_cross((Tuple4f)(*view).s0123, vector);
-	(*view).s4567 = vt_normalize((Tuple4f)(*view).s4567);
-	(*view).s89ab = vector;
-	(*view).s37bf = coor;
-	(*view).scdef = (Tuple4f){0., 0., 0., 1.};
+	if (!mlx)
+		return ;
+	ft_free(mlx->key);
+	if (mlx->scene && mlx->scene->img)
+		mlx_destroy_image(mlx->init, mlx->scene->img);
+	ft_free(mlx->scene);
+	if (mlx->win)
+		mlx_destroy_window(mlx->init, mlx->win);
+	if (mlx->init)
+		mlx_destroy_display(mlx->init);
+	ft_free(mlx->init);
+	ft_free(mlx);
 }

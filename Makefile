@@ -37,11 +37,8 @@ SRC_FILES =	main\
 									parsing\
 									fill_struct\
 									fill_struct_utils)\
-			$(addprefix $(MTH_DIR)/, equal\
-									mt_calculate\
-									mt_inverse\
+			$(addprefix $(MTH_DIR)/, mt_calculate\
 									mt_rotate\
-									mt_transform\
 									tp_rayon\
 									vt_calculate)\
 			$(addprefix $(RTC_DIR)/, cm_init\

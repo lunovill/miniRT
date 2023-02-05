@@ -6,7 +6,6 @@ int trgb_color(Tuple4f color)
     int g;
     int b;
 
-	color.x = 1.;
     color.yzw *= 255.;
 	color.y = (color.y > 255.) ? 255. : color.y;
 	color.z = (color.z > 255.) ? 255. : color.z;

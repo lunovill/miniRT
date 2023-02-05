@@ -14,8 +14,8 @@ void	fill_light(t_miniRT *data, char **tab)
 		i++;
 	if (i != 4)
 		gestion_error(data, 2);
-	tmp->brightness = cara_to_float(tab[2]);
-	if (tmp->brightness < 0.0 || tmp->brightness > 1.0)
+	tmp->color.x = cara_to_float(tab[2]);
+	if (tmp->color.x < 0.0 || tmp->color.x > 1.0)
 		gestion_error(data, 2);
 	tab_nb = ft_split(tab[1], ',');
 	check_tab(data, tab_nb);
@@ -26,7 +26,8 @@ void	fill_light(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data, 2);
-	tmp->color = (Tuple4f){tmp->brightness, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
+tmp->color = (Tuple4f){tmp->color.x, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
+tmp->color.yzw /= 255.;
 	data->l[1] = tmp;
 	data->garbage = gbg_add(data->garbage, data->l[1]);
 	data->l[2] = NULL;
@@ -58,7 +59,8 @@ void	fill_plane(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data, 2);
-	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
+	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
+tmp->color.yzw /= 255.;
 	data->pl[data->check->nb_pl] = tmp;
 	data->garbage = gbg_add(data->garbage, data->pl[data->check->nb_pl]);
 	data->pl[data->check->nb_pl + 1] = NULL;
@@ -89,7 +91,8 @@ void	fill_sphere(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data, 2);
-	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
+	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
+tmp->color.yzw /= 255.;
 	data->sp[data->check->nb_sp] = tmp;
 	data->garbage = gbg_add(data->garbage, data->sp[data->check->nb_sp]);
 	data->sp[data->check->nb_sp + 1] = NULL;
@@ -124,7 +127,8 @@ void	fill_cylinder(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data, 2);
-	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
+	tmp->color = (Tuple4f){1, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
+tmp->color.yzw /= 255.;
 	data->cy[data->check->nb_cy] = tmp;
 	data->garbage = gbg_add(data->garbage, data->cy[data->check->nb_cy]);
 	data->cy[data->check->nb_cy + 1] = NULL;

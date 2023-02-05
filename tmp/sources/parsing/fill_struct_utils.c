@@ -57,8 +57,8 @@ void	fill_ambiant(t_miniRT *data, char **tab)
 		i++;
 	if (i != 3)
 		gestion_error(data, 2);
-	tmp->brightness = cara_to_float(tab[1]);
-	if (tmp->brightness < 0.0 || tmp->brightness > 1.0)
+	tmp->color.x = cara_to_float(tab[1]);
+	if (tmp->color.x < 0.0 || tmp->color.x > 1.0)
 		gestion_error(data, 2);
 	tab_nb = ft_split(tab[2], ',');
 	check_tab(data, tab_nb);
@@ -66,7 +66,8 @@ void	fill_ambiant(t_miniRT *data, char **tab)
 			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
 			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
 		gestion_error(data, 2);
-	tmp->color = (Tuple4f){tmp->brightness, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])};
+tmp->color = (Tuple4f){tmp->color.x, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
+tmp->color.yzw /= 255.;
 	tmp->coor = (Tuple4f){0, 0, 0, 2};
 	data->l[0] = tmp;
 	data->garbage = gbg_add(data->garbage, data->l[0]);

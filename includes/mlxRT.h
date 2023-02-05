@@ -18,8 +18,11 @@
 # include "mlx.h"
 # include "mlx_int.h"
 
-#define K_Home 65360
-#define K_End 65367
+# define WD_WIDTH 750
+# define WD_HEIGHT 750
+
+# define K_Home 65360
+# define K_End 65367
 
 typedef struct s_data
 {
