@@ -12,18 +12,28 @@
 
 #include "miniRT.h"
 
-static t_rayon	ray_for_pixel(t_miniRT *data, float px, float py, float aspect)
+static t_rayon	ray_for_pixel(t_miniRT *data, float px, float py)
 {
-	float	x;
-	float	y;
 	float	f;
+	float	aspect;
 	t_tpl4f	pixel;
 	t_rayon	r;
 
 	f = tanf(data->c->fov / 2.);
-	x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * aspect * f;
-	y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f;
-	pixel = (t_tpl4f){x, y, P_Z, 1.};
+	if (data->mlx->wrslt > data->mlx->hrslt)
+	{
+		aspect = data->mlx->wrslt / data->mlx->hrslt;
+		pixel.x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * f * aspect;
+		pixel.y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f;
+	}
+	else
+	{
+		aspect = data->mlx->hrslt / data->mlx->wrslt;
+		pixel.x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * f;
+		pixel.y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f * aspect;
+	}
+	pixel.z = P_Z;
+	pixel.w = 1.;
 	r.origin = mt_cross_tp(&data->c->view, (t_tpl4f){0., 0., 0., 1.});
 	r.vector = mt_cross_tp(&data->c->view, pixel);
 	r.vector = vt_normalize(r.vector - r.origin);
