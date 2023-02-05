@@ -20,18 +20,9 @@ static t_rayon	ray_for_pixel(t_miniRT *data, float px, float py)
 	t_rayon	r;
 
 	f = tanf(data->c->fov / 2.);
-	if (data->mlx->wrslt > data->mlx->hrslt)
-	{
-		aspect = data->mlx->wrslt / data->mlx->hrslt;
-		pixel.x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * f * aspect;
-		pixel.y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f;
-	}
-	else
-	{
-		aspect = data->mlx->hrslt / data->mlx->wrslt;
-		pixel.x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * f;
-		pixel.y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f * aspect;
-	}
+	aspect = (float)data->mlx->wrslt / (float)data->mlx->hrslt;
+	pixel.x = (2. * (px + 0.5) / (float)data->mlx->wrslt - 1.) * f * aspect;
+	pixel.y = (1. - 2. * (py + 0.5) / (float)data->mlx->hrslt) * f;
 	pixel.z = P_Z;
 	pixel.w = 1.;
 	r.origin = mt_cross_tp(&data->c->view, (t_tpl4f){0., 0., 0., 1.});
@@ -54,8 +45,7 @@ int	raytracer(t_miniRT *data)
 			x = 0;
 			while (x < data->mlx->wrslt)
 			{
-				r = ray_for_pixel(data, x, y, data->mlx->wrslt
-						/ data->mlx->hrslt);
+				r = ray_for_pixel(data, x, y);
 				mlx_put_pixel(data->mlx->scene, x, y, rt_intersection(data, r));
 				x++;
 			}

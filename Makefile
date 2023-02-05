@@ -38,7 +38,8 @@ SRC_FILES =	main\
 									parsing\
 									fill_struct\
 									fill_struct_utils)\
-			$(addprefix $(MTH_DIR)/, mt_calculate\
+			$(addprefix $(MTH_DIR)/, equal\
+									mt_calculate\
 									mt_rotate\
 									rayon\
 									vt_calculate)\
