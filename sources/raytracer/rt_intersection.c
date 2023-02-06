@@ -25,7 +25,7 @@ int	rt_intersection(t_miniRT *data, t_rayon r)
 	d[PLANE] = rt_intersection_pl(r, data->pl, &object[PLANE]);
 	d_min = d[SPHERE];
 	if (d[CYLINDER] && (!d_min || d[CYLINDER] < d_min))
-	 	d_min = d[CYLINDER];
+		d_min = d[CYLINDER];
 	if (d[PLANE] && (!d_min || d[PLANE] < d_min))
 		d_min = d[2];
 	if (d_min && d_min == d[SPHERE])
@@ -39,6 +39,6 @@ int	rt_intersection(t_miniRT *data, t_rayon r)
 	return (0);
 }
 
-	// else if (d_min && d_min == d[CYLINDER])
-	// 	return (rt_cylinder(data, data->cy[object[CYLINDER]],
-				// ry_distance(r, d_min), d_min));
+// else if (d_min && d_min == d[CYLINDER])
+// 	return (rt_cylinder(data, data->cy[object[CYLINDER]],
+// ry_distance(r, d_min), d_min));
