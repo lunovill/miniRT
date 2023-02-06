@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 20:15:54 by lunovill          #+#    #+#             */
-/*   Updated: 2022/11/22 20:15:55 by lunovill         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:04:38 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,22 @@ typedef struct s_miniRT
 /********************************************************/
 t_miniRT	*init_minirt(void);
 void		parsing(t_miniRT *data, char *file);
+void		fill_struct_utils(t_miniRT *data, char *line, int fd);
+void		init_struct(t_miniRT *data);
+void		fill_cylinder_utils(t_miniRT *data, t_cylinder *tmp, char **tab);
+void		fill_sphere_utils(t_miniRT *data, t_sphere *tmp, char **tab);
+void		fill_plane_utils(t_miniRT *data, t_plane *tmp, char **tab);
+void		fill_light_utils(t_miniRT *data, t_light *tmp, char **tab);
+void		fill_ambiant_utils(t_miniRT *data, t_light *tmp, char **tab);
+void		fill_camera_utils(t_miniRT *data, t_camera *tmp, char **check_tab);
+void		fill_light(t_miniRT *data, char **tab);
+void		fill_plane(t_miniRT *data, char **tab);
+void		fill_sphere(t_miniRT *data, char **tab);
+void		fill_cylinder(t_miniRT *data, char **tab);
 void		fill_struct(t_miniRT *data, char *file);
 int			rgb_color(int r, int g, int b);
 int			check_tab(t_miniRT *data, char **tab);
-float		cara_to_float(char *str);
+float		c_to_f(char *str, float n, float div, unsigned int i);
 void		fill_ambiant(t_miniRT *data, char **tab);
 void		fill_camera(t_miniRT *data, char **tab);
 

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/05 18:37:06 by hucoulon          #+#    #+#             */
+/*   Updated: 2023/02/05 18:37:38 by hucoulon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 t_miniRT	*init_minirt(void)
 {
 	t_miniRT		*data;
-	t_check_file		*tmp;
+	t_check_file	*tmp;
 
 	data = malloc(sizeof(*data));
 	if (!data)

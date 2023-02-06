@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/05 18:37:10 by hucoulon          #+#    #+#             */
+/*   Updated: 2023/02/05 20:34:28 by hucoulon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 int	check_begin(t_miniRT *data, char **tab)
@@ -64,6 +76,7 @@ int	check_nb(char **tab)
 				return (-1);
 			j++;
 		}
+		ft_ftab(tmp);
 		if (j != 1 && j != 3)
 			return (-1);
 		i++;
@@ -83,20 +96,21 @@ int	parsing_utils(t_miniRT *data, int fd)
 	{
 		ret = get_next_line(fd, &line, 1);
 		if (line[0] == '\r' || line[0] == '\0')
+		{
+			ft_free(line);
 			continue ;
+		}
 		tab = ft_split(line, ' ');
 		data->check->line++;
 		if (check_begin(data, tab) == -1 || check_nb(tab) == -1)
 		{
-			free(line);
-			close(fd);
-			return (-1);
+			ft_free(line);
+			return (get_next_line(fd, &line, 0), close(fd), -1);
 		}
-		free(line);
+		ft_ftab(tab);
+		ft_free(line);
 	}
-	get_next_line(fd, &line, 0);
-	close(fd);
-	return (0);
+	return (get_next_line(fd, &line, 0), close(fd), 0);
 }
 
 void	parsing(t_miniRT *data, char *file)

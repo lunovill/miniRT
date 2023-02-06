@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_struct_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/05 18:36:33 by hucoulon          #+#    #+#             */
+/*   Updated: 2023/02/05 20:14:04 by hucoulon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 int	check_tab(t_miniRT *data, char **tab)
@@ -12,16 +24,10 @@ int	check_tab(t_miniRT *data, char **tab)
 	return (0);
 }
 
-float	cara_to_float(char *str)
+float	c_to_f(char *str, float n, float div, unsigned int i)
 {
 	int				neg;
-	float			n;
-	float			div;
-	unsigned int	i;
 
-	div = 1;
-	i = 0;
-	n = 0;
 	neg = 1;
 	if (str[i] == '-')
 		neg = -1;
@@ -45,7 +51,6 @@ float	cara_to_float(char *str)
 
 void	fill_ambiant(t_miniRT *data, char **tab)
 {
-	char		**tab_nb;
 	t_light		*tmp;
 	int			i;
 
@@ -57,30 +62,17 @@ void	fill_ambiant(t_miniRT *data, char **tab)
 		i++;
 	if (i != 3)
 		gestion_error(data, 2);
-	tmp->color.x = cara_to_float(tab[1]);
-	if (tmp->color.x < 0.0 || tmp->color.x > 1.0)
-		gestion_error(data, 2);
-	tab_nb = ft_split(tab[2], ',');
-	check_tab(data, tab_nb);
-	if ((ft_atoi(tab_nb[0]) < 0 || ft_atoi(tab_nb[0]) > 255) ||
-			(ft_atoi(tab_nb[1]) < 0 || ft_atoi(tab_nb[1]) > 255) ||
-			(ft_atoi(tab_nb[2]) < 0 || ft_atoi(tab_nb[2]) > 255))
-		gestion_error(data, 2);
-tmp->color = (t_tpl4f){tmp->color.x, ft_atoi(tab_nb[0]), ft_atoi(tab_nb[1]), ft_atoi(tab_nb[2])} ;
-ft_ftab(tab_nb);
-tmp->color.yzw /= 255.;
-	tmp->coor = (t_tpl4f){0., 0., 0., 1.};
+	fill_ambiant_utils(data, tmp, tab);
 	data->l[0] = tmp;
 	data->garbage = gbg_add(data->garbage, data->l[0]);
 }
 
 void	fill_camera(t_miniRT *data, char **tab)
 {
-	char		**tab_nb;
 	t_camera	*tmp;
 	int			i;
 
-	i = 0;	
+	i = 0;
 	tmp = malloc(sizeof(*tmp));
 	if (!tmp)
 		gestion_error(data, 2);
@@ -88,19 +80,33 @@ void	fill_camera(t_miniRT *data, char **tab)
 		i++;
 	if (i != 4)
 		gestion_error(data, 2);
-	tab_nb = ft_split(tab[1], ',');
-	check_tab(data, tab_nb);
-	tmp->coor = (t_tpl4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 1};
-	ft_ftab(tab_nb);
-	tab_nb = ft_split(tab[2], ',');
-	check_tab(data, tab_nb);
-	tmp->vector = (t_tpl4f){cara_to_float(tab_nb[0]), cara_to_float(tab_nb[1]), cara_to_float(tab_nb[2]), 0};
-	ft_ftab(tab_nb);
-	if ((tmp->vector.s0 < -1.0 || tmp->vector.s0 > 1.0) ||
-			(tmp->vector.s1 < -1.0 || tmp->vector.s1 > 1.0) ||
-			(tmp->vector.s2 < -1.0 || tmp->vector.s2 > 1.0))
-		gestion_error(data, 2);
-	tmp->fov = cara_to_float(tab[3]) * M_PI / 180.0;
+	fill_camera_utils(data, tmp, tab);
 	data->c = tmp;
 	data->garbage = gbg_add(data->garbage, data->c);
+}
+
+void	fill_struct_utils(t_miniRT *data, char *line, int fd)
+{
+	char	**tab;
+
+	tab = ft_split(line, ' ');
+	if (ft_strncmp(tab[0], "A", 2) == 0)
+		fill_ambiant(data, tab);
+	else if (ft_strncmp(tab[0], "C", 2) == 0)
+		fill_camera(data, tab);
+	else if (ft_strncmp(tab[0], "L", 2) == 0)
+		fill_light(data, tab);
+	else if (ft_strncmp(tab[0], "pl", 3) == 0)
+		fill_plane(data, tab);
+	else if (ft_strncmp(tab[0], "sp", 3) == 0)
+		fill_sphere(data, tab);
+	else if (ft_strncmp(tab[0], "cy", 3) == 0)
+		fill_cylinder(data, tab);
+	else
+	{
+		ft_free(line);
+		close(fd);
+		gestion_error(data, 2);
+	}
+	ft_ftab(tab);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/05 18:37:10 by hucoulon          #+#    #+#             */
+/*   Updated: 2023/02/05 20:28:59 by hucoulon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 int	check_begin(t_miniRT *data, char **tab)
@@ -64,6 +76,7 @@ int	check_nb(char **tab)
 				return (-1);
 			j++;
 		}
+		ft_ftab(tmp);
 		if (j != 1 && j != 3)
 			return (-1);
 		i++;
@@ -94,6 +107,7 @@ int	parsing_utils(t_miniRT *data, int fd)
 			ft_free(line);
 			return (get_next_line(fd, &line, 0), close(fd), -1);
 		}
+		ft_ftab(tab);
 		ft_free(line);
 	}
 	return (get_next_line(fd, &line, 0), close(fd), 0);
@@ -108,9 +122,9 @@ void	parsing(t_miniRT *data, char *file)
 		gestion_error(data, 1);
 	if (parsing_utils(data, fd) == -1)
 		gestion_error(data, 1);
-	if (data->check->camera != 1)
+	if (data->check->camera != 1 || data->check->light != 3)
 		gestion_error(data, 1);
 	if (data->check->line - (data->check->sphere + data->check->cylinder + \
-		data->check->plane + data->check->light) != 0)
+		data->check->plane + 3) != 0)
 		gestion_error(data, 1);
 }

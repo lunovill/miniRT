@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skhali <skhali@student.42.fr>              +#+  +:+       +#+         #
+#    By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/11/07 19:03:27 by skhali           ###   ########.fr        #
+#    Updated: 2023/02/06 16:04:15 by hucoulon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,9 @@ SRC_FILES =	main\
 									error\
 									parsing\
 									fill_struct\
-									fill_struct_utils)\
+									fill_struct_utils\
+									fill_struct_utils_2\
+									fill_struct_utils_3)\
 			$(addprefix $(MTH_DIR)/, equal\
 									mt_calculate\
 									mt_rotate\
