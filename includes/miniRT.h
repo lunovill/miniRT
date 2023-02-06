@@ -87,6 +87,8 @@ typedef struct s_cylinder
 	t_tpl4f		vector;
 	float		rayon;
 	float		height;
+	float		t1;
+	float		t2;
 	t_tpl4f		color;
 }				t_cylinder;
 
@@ -148,8 +150,10 @@ float		rt_shadow(t_miniRT *data, t_rayon r);
 int			rt_intersection(t_miniRT *data, t_rayon r);
 float		rt_intersection_sp(t_rayon r, t_sphere **sp, int *object);
 float		rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
+float		rt_intersection_cy(t_rayon r, t_cylinder **cy, int *object);
 int			rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point, float t);
 int			rt_plane(t_miniRT *data, t_plane *pl, t_tpl4f point);
+int			rt_cylinder(t_cylinder *cy, t_tpl4f orgc, t_tpl4f ray, float t, t_light **l);
 int			raytracer(t_miniRT *main);
 int			minirt(t_miniRT *data);
 

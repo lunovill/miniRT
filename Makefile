@@ -54,7 +54,8 @@ SRC_FILES =	main\
 									rt_light\
 									rt_plane\
 									rt_shadow\
-									rt_sphere)\
+									rt_sphere\
+									rt_cylinder)\
 			$(addprefix $(UTL_DIR)/, trgb_color)\
 				
 
