@@ -6,7 +6,7 @@
 /*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:37:10 by hucoulon          #+#    #+#             */
-/*   Updated: 2023/02/25 04:22:54 by hucoulon         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:39:10 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ void	parsing(t_miniRT *data, char *file)
 	if (data->check->light != 0 && data->check->light != 1)
 		gestion_error(data, 1);
 	if (data->check->line - (data->check->sphere + data->check->cylinder + \
-		data->check->plane + data->check->ambiance + data->check->light) != 0)
+		data->check->plane + 2 + data->check->light) != 0)
 		gestion_error(data, 1);
 }
