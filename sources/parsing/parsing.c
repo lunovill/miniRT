@@ -6,7 +6,7 @@
 /*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:37:10 by hucoulon          #+#    #+#             */
-/*   Updated: 2023/02/05 20:28:59 by hucoulon         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:22:54 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_begin(t_miniRT *data, char **tab)
 {
 	if (ft_strncmp(tab[0], "A", 2) == 0)
-		data->check->light = data->check->light + 2;
+		data->check->ambiance++;
 	else if (ft_strncmp(tab[0], "C", 2) == 0)
 		data->check->camera++;
 	else if (ft_strncmp(tab[0], "L", 2) == 0)
@@ -122,9 +122,11 @@ void	parsing(t_miniRT *data, char *file)
 		gestion_error(data, 1);
 	if (parsing_utils(data, fd) == -1)
 		gestion_error(data, 1);
-	if (data->check->camera != 1 || data->check->light != 3)
+	if (data->check->camera != 1 || data->check->ambiance != 1)
+		gestion_error(data, 1);
+	if (data->check->light != 0 && data->check->light != 1)
 		gestion_error(data, 1);
 	if (data->check->line - (data->check->sphere + data->check->cylinder + \
-		data->check->plane + 3) != 0)
+		data->check->plane + data->check->ambiance + data->check->light) != 0)
 		gestion_error(data, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 20:15:54 by lunovill          #+#    #+#             */
-/*   Updated: 2023/02/06 16:04:38 by hucoulon         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:15:21 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 typedef struct s_check_file
 {
 	int			camera;
+	int			ambiance;
 	int			light;
 	int			sphere;
 	int			plane;
