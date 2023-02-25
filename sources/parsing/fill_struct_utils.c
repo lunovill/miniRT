@@ -6,7 +6,7 @@
 /*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:36:33 by hucoulon          #+#    #+#             */
-/*   Updated: 2023/02/05 20:14:04 by hucoulon         ###   ########.fr       */
+/*   Updated: 2023/02/25 05:48:19 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	fill_ambiant(t_miniRT *data, char **tab)
 		gestion_error(data, 2);
 	fill_ambiant_utils(data, tmp, tab);
 	data->l[0] = tmp;
+	data->l[1] = NULL;
 	data->garbage = gbg_add(data->garbage, data->l[0]);
 }
 

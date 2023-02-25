@@ -6,7 +6,7 @@
 /*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:53:50 by hucoulon          #+#    #+#             */
-/*   Updated: 2023/02/25 04:51:48 by hucoulon         ###   ########.fr       */
+/*   Updated: 2023/02/25 05:50:51 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	init_struct(t_miniRT *data)
 	t_sphere	**sphere;
 	t_plane		**plane;
 
-	light = malloc(sizeof(*light) * (data->check->light + 1));
+	light = malloc(sizeof(*light) * (data->check->light + 2));
 	if (!light)
 		return ;
 	light[0] = NULL;
