@@ -60,14 +60,14 @@ int	rt_plane(t_miniRT *data, t_plane *pl, t_tpl4f point)
 	float	shadow;
 	int		i;
 
+	if (vt_dot(pl->normal, data->c->view.s37bf - point) < 0)
+		pl->normal = -pl->normal;
 	point += pl->normal * EPSILON;
 	color = rt_ambient(pl->color, data->l[0]);
 	i = 0;
 	while (data->l[++i])
 	{
 		r = ry_init(point, vt_normalize(data->l[i]->coor - point));
-		if (vt_dot(pl->normal, data->c->view.s37bf - point) < 0)
-			pl->normal = -pl->normal;
 		shadow = rt_shadow(data, r);
 		if (!(shadow && shadow < vt_magnitude(data->l[i]->coor - point)))
 			color += rt_diffuse(pl->color, pl->normal, r.vector, data->l[i]);

@@ -43,6 +43,8 @@ void	mt_rotate_x(t_mtx4f *rx, float theta);
 void	mt_rotate_y(t_mtx4f *ry, float theta);
 void	mt_rotate_z(t_mtx4f *rz, float theta);
 
+void	mt_inverse(t_mtx4f *ivs, t_mtx4f *mtx);
+
 t_tpl4f	ry_distance(t_rayon r, float t);
 t_rayon	ry_init(t_tpl4f origin, t_tpl4f vector);
 

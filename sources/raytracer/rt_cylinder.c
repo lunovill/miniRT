@@ -101,18 +101,16 @@ int	rt_cylinder(t_miniRT *data, t_cylinder *cy, t_tpl4f point)
 	float	shadow;
 	int		i;
 
-	cy->normal = vt_normalize(point - vt_dot(point, cy->vector) * cy->vector);
+	cy->normal = vt_normalize(vt_normalize(point - cy->coor) - vt_dot(vt_normalize(point - cy->coor), cy->vector) * cy->vector);
 	if (vt_dot(cy->normal, data->c->view.s37bf - point) < 0)
-		point -= cy->normal * EPSILON;
-	else
-		point += cy->normal * EPSILON * 100.;
+		cy->normal = -cy->normal;
+		// return (255);
+	point += cy->normal * EPSILON * 100.;
 	color = rt_ambient(cy->color, data->l[0]);
 	i = 0;
 	while (data->l[++i])
 	{
 		r = ry_init(point, vt_normalize(data->l[i]->coor - point));
-		if (vt_dot(cy->normal, data->c->view.s37bf - point) < 0)
-			cy->normal = -cy->normal;
 		shadow = rt_shadow(data, r);
 		if (!(shadow && shadow < vt_magnitude(data->l[i]->coor - point)))
 			color += rt_diffuse(cy->color, cy->normal, r.vector, data->l[i]);
