@@ -33,7 +33,7 @@ static t_rayon	ry_projection(t_rayon r, t_cylinder *cy)
 		prjt.s4567 = vt_normalize((t_tpl4f)prjt.s4567);
 	}
 	prjt.s89ab = cy->vector;
-	prjt.s37bf = cy->coor;
+	prjt.s37bf = (t_tpl4f){0., 0., 0., 1.};
 	prjt.scdef = (t_tpl4f){0., 0., 0., 1.};
 	new.origin = mt_cross_tp(&prjt, r.origin);
 	new.vector = mt_cross_tp(&prjt, r.vector);
@@ -100,7 +100,7 @@ static t_tpl4f	cy_point(t_miniRT *data, t_cylinder *cy, t_tpl4f point)
 	if (vt_dot(cy->normal, data->c->view.s37bf - point) < 0)
 		return (point - cy->normal * EPSILON);
 	else
-		return (point + cy->normal * EPSILON * 100.);
+		return (point + cy->normal * EPSILON * 100);
 }
 
 int	rt_cylinder(t_miniRT *data, t_cylinder *cy, t_tpl4f point)
