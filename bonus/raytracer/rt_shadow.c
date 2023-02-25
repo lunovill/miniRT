@@ -20,13 +20,13 @@ float	rt_shadow(t_miniRT *data, t_rayon r)
 
 	if (data->sp)
 		d[SPHERE] = rt_intersection_sp(r, data->sp, &object[SPHERE]);
-	// if (data->cy)
-	// 	d[CYLINDER] = rt_intersectio_cy(r, data->cy, &object[CYLINDER]);
+	if (data->cy)
+		d[CYLINDER] = rt_intersection_cy(r, data->cy, &object[CYLINDER]);
 	if (data->pl)
 		d[PLANE] = rt_intersection_pl(r, data->pl, &object[PLANE]);
 	d_min = d[SPHERE];
-	// if (d[CYLINDER] && (!d_min || d[CYLINDER] < d_min))
-	// 	d_min = d[CYLINDER];
+	if (d[CYLINDER] && (!d_min || d[CYLINDER] < d_min))
+		d_min = d[CYLINDER];
 	if (d[PLANE] && (!d_min || d[PLANE] < d_min))
 		d_min = d[PLANE];
 	return (d_min);

@@ -33,7 +33,7 @@ int	rt_intersection(t_miniRT *data, t_rayon r)
 				ry_distance(r, d_min), d_min));
 	else if (d_min && d_min == d[CYLINDER])
 		return (rt_cylinder(data, data->cy[object[CYLINDER]],
-				ry_distance(r, d_min), d_min));
+				ry_distance(r, d_min)));
 	else if (d_min && d_min == d[PLANE])
 		return (rt_plane(data, data->pl[object[PLANE]],
 				ry_distance(r, d_min)));
