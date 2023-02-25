@@ -1,0 +1,4 @@
+rule cucumber
+  command = cucumber tuples.feature
+
+build tuples.feature: cucumber

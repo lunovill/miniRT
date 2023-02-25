@@ -6,7 +6,7 @@
 /*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:37:06 by hucoulon          #+#    #+#             */
-/*   Updated: 2023/02/05 18:37:38 by hucoulon         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:20:32 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_miniRT	*init_minirt(void)
 	if (!tmp)
 		return (NULL);
 	tmp->camera = 0;
+	tmp->ambiance = 0;
 	tmp->light = 0;
 	tmp->sphere = 0;
 	tmp->plane = 0;
