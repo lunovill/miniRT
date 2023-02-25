@@ -32,13 +32,10 @@ int	rt_intersection(t_miniRT *data, t_rayon r)
 		return (rt_sphere(data, data->sp[object[SPHERE]],
 				ry_distance(r, d_min), d_min));
 	else if (d_min && d_min == d[CYLINDER])
-		return (rt_cylinder(data->cy[object[CYLINDER]], r.vector, r.origin, d_min, data->l));
+		return (rt_cylinder(data, data->cy[object[CYLINDER]],
+				ry_distance(r, d_min), d_min));
 	else if (d_min && d_min == d[PLANE])
 		return (rt_plane(data, data->pl[object[PLANE]],
 				ry_distance(r, d_min)));
 	return (0);
 }
-
-// else if (d_min && d_min == d[CYLINDER])
-// 	return (rt_cylinder(data, data->cy[object[CYLINDER]],
-// ry_distance(r, d_min), d_min));

@@ -67,10 +67,10 @@ int	rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point, float t)
 	float	shadow;
 	int		i;
 
-	sp->vector = vt_normalize(point - sp->coor);
+	sp->normal = vt_normalize(point - sp->coor);
 	if (t < sp->rayon)
-		sp->vector = -sp->vector;
-	point += sp->vector * EPSILON * 100.;
+		sp->normal = -sp->normal;
+	point += sp->normal * EPSILON * 100.;
 	color = rt_ambient(sp->color, data->l[0]);
 	i = 0;
 	while (data->l[++i])
@@ -78,7 +78,7 @@ int	rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point, float t)
 		r = ry_init(point, vt_normalize(data->l[i]->coor - point));
 		shadow = rt_shadow(data, r);
 		if (!(shadow && shadow < vt_magnitude(data->l[i]->coor - point)))
-			color += rt_diffuse(sp->color, sp->vector, r.vector, data->l[i]);
+			color += rt_diffuse(sp->color, sp->normal, r.vector, data->l[i]);
 	}
 	return (trgb_color(color));
 }

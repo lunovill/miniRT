@@ -18,8 +18,8 @@
 # include "mlx.h"
 # include "mlx_int.h"
 
-# define WD_WIDTH 700
-# define WD_HEIGHT 1000
+# define WD_WIDTH 1200
+# define WD_HEIGHT 950
 # define K_HOME 65360
 # define K_END 65367
 

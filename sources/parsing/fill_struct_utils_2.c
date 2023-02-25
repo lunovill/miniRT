@@ -76,7 +76,7 @@ void	fill_plane_utils(t_miniRT *data, t_plane *tmp, char **tab)
 	ft_ftab(tab_nb);
 	tab_nb = ft_split(tab[2], ',');
 	check_tab(data, tab_nb);
-	tmp->vector = (t_tpl4f){c_to_f(tab_nb[0], 0, 1, 0),
+	tmp->normal = (t_tpl4f){c_to_f(tab_nb[0], 0, 1, 0),
 		c_to_f(tab_nb[1], 0, 1, 0),
 		c_to_f(tab_nb[2], 0, 1, 0), 0};
 	ft_ftab(tab_nb);

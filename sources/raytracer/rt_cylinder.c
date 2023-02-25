@@ -1,102 +1,63 @@
 #include "miniRT.h"
 
-// static float	ray_to_cylinder(t_tpl4f c_coor, t_tpl4f r_dir, t_cylinder *cy, t_tpl4f normal)
-// {
-// 	float	res0;
-// 	float	res1;
-// 	float	disc;
-// 	float	a;
-// 	float	b;
-// 	float	c;
+static t_rayon	ry_projection(t_rayon r, t_cylinder *cy)
+{
+	t_mtx4f	prjt;
+	t_rayon	new;
 
-// 	(void)normal;
-// 	(void)cy;
-// 	a = (r_dir.s0 * r_dir.s0 + r_dir.s2 * r_dir.s2);
-// 	b = (2 * c_coor.s0 * r_dir.s0) + (2 * c_coor.s2 * r_dir.s2);
-// 	c = (c_coor.s0 * c_coor.s0) + (c_coor.s2 * c_coor.s2) -1;
-// 	disc = (b * b) - 4 * a * c;
-// 	if (disc < 0)
-// 		return (0);
-// 	res0 = ((b * -1) - sqrtf(disc)) / (2 * a);
-// 	res1 = ((b * -1) + sqrtf(disc)) / (2 * a);
-// 	if (res0 > 0.0)
-// 		return (res0);
-// 	if (res1 > 0.0)
-// 		return (res1);
-// 	return (0.0);
-// }
+	cy->vector = vt_normalize(cy->vector);
+	if (equalt(cy->vector, (t_tpl4f){0., 1., 0., 0.}))
+	{
+		prjt.s4567 = vt_cross((t_tpl4f){1., 0., 0., 0.}, cy->vector);
+		prjt.s4567 = vt_normalize(prjt.s4567);
+		prjt.s0123 = vt_cross(cy->vector, (t_tpl4f)prjt.s4567);
+		prjt.s0123 = vt_normalize((t_tpl4f)prjt.s0123);
+	}
+	else
+	{
+		prjt.s0123 = vt_cross(cy->vector, (t_tpl4f){0., 1., 0., 0.});
+		prjt.s0123 = vt_normalize(prjt.s0123);
+		prjt.s4567 = vt_cross((t_tpl4f)prjt.s0123, cy->vector);
+		prjt.s4567 = vt_normalize((t_tpl4f)prjt.s4567);
+	}
+	prjt.s89ab = cy->vector;
+	prjt.s37bf = cy->coor;
+	prjt.scdef = (t_tpl4f){0., 0., 0., 1.};
+	new.origin = mt_cross_tp(&prjt, r.origin);
+	new.vector = mt_cross_tp(&prjt, r.vector);
+	return (new);
+}
 
 static float	ray_to_cylinder(t_rayon r, t_cylinder *cy)
 {
 	float	a;
 	float	b;
 	float	c;
-	float	disc;
-	float	check_cap0;
-	float	check_cap1;
-//	float	do_cap_x;
-//	float	do_cap_z;
-//	float	do_cap_res;
-	float	swap;
+	float	d;
 
-	a = (r.vector.s0 * r.vector.s0 + r.vector.s2 * r.vector.s2);
- 	b = (2 * (r.origin.s0 - cy->coor.s0) * r.vector.s0) + (2 * (r.origin.s2 - cy->coor.s2) * r.vector.s2);
- 	c = ((r.origin.s0 - cy->coor.s0) * (r.origin.s0 - cy->coor.s0)) + ((r.origin.s2 - cy->coor.s2) * (r.origin.s2 - cy->coor.s2)) - (cy->rayon * cy->rayon);
-	disc = (b * b) - 4 * (a * c);
-	if (disc < 0)
-		return (0);
- 	cy->t1 = ((b * -1) - sqrtf(disc)) / (2 * a);
- 	cy->t2 = ((b * -1) + sqrtf(disc)) / (2 * a);
-	if (cy->t1 > cy->t2)
+	a = r.vector.x * r.vector.x + r.vector.y * r.vector.y;
+	b = 2. * (r.vector.x * (r.origin.x - cy->coor.x) + r.vector.y * (r.origin.y - cy->coor.y));
+	c = (r.origin.x - cy->coor.x) * (r.origin.x - cy->coor.x) + (r.origin.y - cy->coor.y) * (r.origin.y - cy->coor.y) -  cy->rayon * cy->rayon;
+
+	d = b * b - 4. * a * c;
+	if (d < 0.)
+		return (0.);
+	cy->t1 = (-b - sqrtf(d)) / (2. * a);
+	cy->t2 = (-b + sqrtf(d)) / (2. * a);
+	if (cy->t1 > 0.)
 	{
-		swap = cy->t2;
-		cy->t2 = cy->t1;
-		cy->t1 = swap;
+		float z1 = (r.origin.z - cy->coor.z) + cy->t1 * r.vector.z;
+		if (z1 >= -cy->height / 2. && z1 <= cy->height / 2.)
+			return (cy->t1);
 	}
-//	do_cap_x = (((r.origin.s0 - cy->coor.s0) + (((cy->coor.s1 - cy->height) - (r.origin.s1 - cy->coor.s1)) / r.vector.s1)) * r.vector.s0);
-//	do_cap_z = (((r.origin.s2 - cy->coor.s2) + (((cy->coor.s1 - cy->height) - (r.origin.s1 - cy->coor.s1)) / r.vector.s1)) * r.vector.s2);
-//	do_cap_res = ((do_cap_x * do_cap_x) + (do_cap_z * do_cap_z));
-//	if (do_cap_res > (cy->rayon))
-//		return (do_cap_res);
-	check_cap0 = (r.origin.s1 - cy->coor.s1) + cy->t1 * r.vector.s1;
-	check_cap1 = (r.origin.s1 - cy->coor.s1) + cy->t2 * r.vector.s1;
-	if (check_cap0 < (cy->coor.s1 - cy->height) && check_cap1 < (cy->coor.s1 - cy->height))
-		return (0);
-	if (check_cap0 > (cy->coor.s1 + cy->height) && check_cap1 > (cy->coor.s1 + cy->height))
-		return (0);
-	if (check_cap0 < (cy->coor.s1 - cy->height) || check_cap0 > (cy->coor.s1 + cy->height))
-		return (cy->t2);
-	if (check_cap1 < (cy->coor.s1 - cy->height) || check_cap1 > (cy->coor.s1 + cy->height))
-		return (cy->t1);
-	if (cy->t2 < cy->t1 && cy->t2 > 0)
-		return (cy->t2);
-	if (cy->t1 > 0)
-		return (cy->t1);
-	return (0);
+	if (cy->t2 > 0.)
+	{
+		float z2 = (r.origin.z - cy->coor.z) + cy->t2 * r.vector.z;
+		if (z2 > -cy->height / 2. && z2 <= cy->height / 2.)
+			return (cy->t2);
+	}
+	return (0.);
 }
-
-// float	rt_intersection_cy(t_cylinder **cy, int *object, t_tpl4f c_coor, t_tpl4f r_dir)
-// {
-// 	float	d;
-// 	float	d_min;
-// 	int		i;
-
-// 	d_min = 0.0;
-// 	*object = -1;
-// 	i = 0;
-// 	if (cy)
-// 		while (cy[i])
-// 		{
-// 			d = ray_to_cylinder(c_coor, r_dir, cy[i], cy[i]->vector);
-// 			if (d > 0 && (!d_min || d < d_min))
-// 			{
-// 				d_min = d;
-// 				*object = i;
-// 			}
-// 			i++;
-// 		}
-// 	return (d_min);
-// }
 
 float	rt_intersection_cy(t_rayon r, t_cylinder **cy, int *object)
 {
@@ -108,9 +69,10 @@ float	rt_intersection_cy(t_rayon r, t_cylinder **cy, int *object)
 	*object = -1;
 	i = 0;
 	if (cy)
+	{
 		while (cy[i])
 		{
-			d = ray_to_cylinder(r, cy[i]);
+			d = ray_to_cylinder(ry_projection(r, cy[i]), cy[i]);
 			if (d > 0 && (!d_min || d < d_min))
 			{
 				d_min = d;
@@ -118,51 +80,33 @@ float	rt_intersection_cy(t_rayon r, t_cylinder **cy, int *object)
 			}
 			i++;
 		}
+	}
 	return (d_min);
 }
 
-int	rt_cylinder(t_cylinder *cy, t_tpl4f orgc, t_tpl4f ray, float t, t_light **l)
+int	rt_cylinder(t_miniRT *data, t_cylinder *cy, t_tpl4f point, float t)
 {
-	t_tpl4f	p_intst = orgc + t * ray;
 	t_tpl4f	color;
-	color.yzw = l[0]->color.x * (cy->color.ywz + l[0]->color.x * 
-	l[0]->color.yzw);
-	int i = 1;
-	while (l[i])
-	{
-		t_tpl4f l_vec = l[i]->coor - p_intst;
-		vt_normalize(l_vec);
-		float angle = cy->vector.x * l_vec.x + cy->vector.y * l_vec.y + cy->vector.z * l_vec.z;
-		if (angle > 0.0 && angle <= M_PI / 2)
-			color.yzw += l[i]->color.x * l[i]->color.yzw * angle;
-		i++;
-	}
-	color.x = 1;
-	color.y = (color.y > 255.0) ? 255.0 : color.y;
-	color.z = (color.z > 255.0) ? 255.0 : color.z;
-	color.w = (color.w > 255.0) ? 255.0 : color.w;
-	return (trgb_color(color));
-}
+	t_rayon	r;
+	float	shadow;
+	int		i;
 
-// int	rt_cylinder(t_cylinder *cy, t_tpl4f orgc, t_tpl4f ray, float t, t_light **l)
-// {
-// 	t_tpl4f	p_intst = orgc + t * ray;
-// 	t_tpl4f	color;
-// 	color.yzw = l[0]->color.x * (cy->color.ywz + l[0]->color.x * 
-// 	l[0]->color.yzw);
-// 	int i = 1;
-// 	while (l[i])
-// 	{
-// 		t_tpl4f l_vec = l[i]->coor - p_intst;
-// 		vt_normalize(l_vec);
-// 		float angle = cy->vector.x * l_vec.x + cy->vector.y * l_vec.y + cy->vector.z * l_vec.z;
-// 		if (angle > 0.0 && angle <= M_PI / 2)
-// 			color.yzw += l[i]->color.x * l[i]->color.yzw * angle;
-// 		i++;
-// 	}
-// 	color.x = 1;
-// 	color.y = (color.y > 255.0) ? 255.0 : color.y;
-// 	color.z = (color.z > 255.0) ? 255.0 : color.z;
-// 	color.w = (color.w > 255.0) ? 255.0 : color.w;
-// 	return (trgb_color(color));
-// }
+	cy->normal = vt_normalize(point - vt_dot(point, cy->vector) * cy->vector);
+	if (vt_dot(cy->normal, data->c->view.s37bf - point) < 0)
+		point -= cy->normal * EPSILON * 100;
+	else
+		point += cy->normal * EPSILON * 100;
+	color = rt_ambient(cy->color, data->l[0]);
+	i = 0;
+	while (data->l[++i])
+	{
+		r = ry_init(point, vt_normalize(data->l[i]->coor - point));
+		shadow = rt_shadow(data, r);
+		if (vt_dot(cy->normal, data->c->view.s37bf - point) < 0)
+			cy->normal = -cy->normal;
+		if (!(shadow && shadow < vt_magnitude(data->l[i]->coor - point)))
+			color += rt_diffuse(cy->color, cy->normal, r.vector, data->l[i]);
+	}
+	return (trgb_color(color));
+	(void)t;
+}

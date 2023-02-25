@@ -67,7 +67,7 @@ typedef struct s_sphere
 {
 	t_tpl4f		coor;
 	float		rayon;
-	t_tpl4f		vector;
+	t_tpl4f		normal;
 	float		t1;
 	float		t2;
 	t_tpl4f		color;
@@ -76,7 +76,7 @@ typedef struct s_sphere
 typedef struct s_plane
 {
 	t_tpl4f		coor;
-	t_tpl4f		vector;
+	t_tpl4f		normal;
 	float		t;
 	t_tpl4f		color;
 }				t_plane;
@@ -85,6 +85,7 @@ typedef struct s_cylinder
 {
 	t_tpl4f		coor;
 	t_tpl4f		vector;
+	t_tpl4f		normal;
 	float		rayon;
 	float		height;
 	float		t1;
@@ -153,7 +154,7 @@ float		rt_intersection_pl(t_rayon r, t_plane **pl, int *object);
 float		rt_intersection_cy(t_rayon r, t_cylinder **cy, int *object);
 int			rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point, float t);
 int			rt_plane(t_miniRT *data, t_plane *pl, t_tpl4f point);
-int			rt_cylinder(t_cylinder *cy, t_tpl4f orgc, t_tpl4f ray, float t, t_light **l);
+int			rt_cylinder(t_miniRT *data, t_cylinder *cy, t_tpl4f point, float t);
 int			raytracer(t_miniRT *main);
 int			minirt(t_miniRT *data);
 
