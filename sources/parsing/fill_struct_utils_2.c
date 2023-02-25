@@ -6,7 +6,7 @@
 /*   By: hucoulon <hucoulon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 18:53:50 by hucoulon          #+#    #+#             */
-/*   Updated: 2023/02/05 20:16:05 by hucoulon         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:51:48 by hucoulon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	init_struct_utils(t_miniRT *data)
 	cylinder = malloc(sizeof(*cylinder) * (data->check->cylinder + 1));
 	if (!cylinder)
 		return ;
+	cylinder[0] = NULL;
 	data->cy = cylinder;
 	data->garbage = gbg_add(data->garbage, data->cy);
 	camera = malloc(sizeof(camera));
@@ -118,16 +119,19 @@ void	init_struct(t_miniRT *data)
 	light = malloc(sizeof(*light) * (data->check->light + 1));
 	if (!light)
 		return ;
+	light[0] = NULL;
 	data->l = light;
 	data->garbage = gbg_add(data->garbage, data->l);
 	sphere = malloc(sizeof(*sphere) * (data->check->sphere + 1));
 	if (!sphere)
 		return ;
+	sphere[0] = NULL;
 	data->sp = sphere;
 	data->garbage = gbg_add(data->garbage, data->sp);
 	plane = malloc(sizeof(*plane) * (data->check->plane + 1));
 	if (!plane)
 		return ;
+	plane[0] = NULL;
 	data->pl = plane;
 	data->garbage = gbg_add(data->garbage, data->pl);
 	init_struct_utils(data);
