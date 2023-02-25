@@ -60,7 +60,7 @@ float	rt_intersection_sp(t_rayon r, t_sphere **sp, int *object)
 	return (d_min);
 }
 
-int	rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point, float t)
+int	rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point)
 {
 	t_tpl4f	color;
 	t_rayon	r;
@@ -68,7 +68,7 @@ int	rt_sphere(t_miniRT *data, t_sphere *sp, t_tpl4f point, float t)
 	int		i;
 
 	sp->normal = vt_normalize(point - sp->coor);
-	if (t < sp->rayon)
+	if (vt_dot(sp->normal, data->c->view.s37bf - point) < 0)
 		sp->normal = -sp->normal;
 	point += sp->normal * EPSILON * 100.;
 	color = rt_ambient(sp->color, data->l[0]);

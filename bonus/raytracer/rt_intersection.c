@@ -30,7 +30,7 @@ int	rt_intersection(t_miniRT *data, t_rayon r)
 		d_min = d[2];
 	if (d_min && d_min == d[SPHERE])
 		return (rt_sphere(data, data->sp[object[SPHERE]],
-				ry_distance(r, d_min), d_min));
+				ry_distance(r, d_min)));
 	else if (d_min && d_min == d[CYLINDER])
 		return (rt_cylinder(data, data->cy[object[CYLINDER]],
 				ry_distance(r, d_min)));

@@ -85,7 +85,7 @@ MLX_FLAGS = -L$(MLX_LIB) -lmlx -lXext -lX11 -lm -lz
  #=============================================================================#
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror -O3 -g3
 CDFLAGS = -MMD -MP
 CIFLAGS = -Iincludes -I$(LFT_LIB)/includes -I$(MLX_LIB)
 CLFLAGS =  $(LFT_FLAGS) $(MLX_FLAGS)
