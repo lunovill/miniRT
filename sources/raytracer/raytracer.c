@@ -46,6 +46,8 @@ int	raytracer(t_miniRT *data)
 			while (x < data->mlx->wrslt)
 			{
 				r = ray_for_pixel(data, x, y);
+				if (data->c->move && x == data->mlx->wrslt / 2 && y == data->mlx->hrslt / 2)
+					printf("%f %f %f %f\n", r.vector.x, r.vector.y, r.vector.z, r.vector.w);
 				mlx_put_pixel(data->mlx->scene, x, y, rt_intersection(data, r));
 				x++;
 			}
@@ -55,5 +57,7 @@ int	raytracer(t_miniRT *data)
 	mlx_put_image_to_window(data->mlx->init,
 		data->mlx->win, data->mlx->scene->img, 0, 0);
 	data->c->move = cm_move(data->c, data->mlx->key);
+	if (data->c->move)
+		printf("%f %f %f %f\n\n", data->c->view.s8, data->c->view.s9, data->c->view.sa, data->c->view.sb);
 	return (0);
 }

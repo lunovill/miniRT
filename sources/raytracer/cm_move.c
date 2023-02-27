@@ -27,12 +27,12 @@ int	cm_move(t_camera *c, t_key *key)
 	if (key->behind == 1)
 		return (c->view.s37bf -= (t_tpl4f)c->view.s89ae * P_Z, 1);
 	if (key->rot_up == 1)
-		return (mt_rotate_x(&c->view, -0.1), 1);
-	if (key->rot_down == 1)
 		return (mt_rotate_x(&c->view, 0.1), 1);
+	if (key->rot_down == 1)
+		return (mt_rotate_x(&c->view, -0.1), 1);
 	if (key->rot_right == 1)
-		return (mt_rotate_y(&c->view, 0.1), 1);
-	if (key->rot_left == 1)
 		return (mt_rotate_y(&c->view, -0.1), 1);
+	if (key->rot_left == 1)
+		return (mt_rotate_y(&c->view, 0.1), 1);
 	return (0);
 }
